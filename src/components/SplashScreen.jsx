@@ -55,7 +55,7 @@ function SplashScreen({ onSignIn }) {
         <div className="windows-spinner mt-14" aria-label="Starting Windows" />
 
         <p className="absolute bottom-8 text-xs tracking-wide text-white/45">
-          Developed by Anshumaan Khare
+          @Developed by Anshumaan Khare
         </p>
       </div>
     );
@@ -80,13 +80,13 @@ function SplashScreen({ onSignIn }) {
             <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/90 shadow-2xl sm:h-36 sm:w-36">
               <img
                 src={userAvatar}
-                alt="Anshumaan Khare"
+                alt="Users"
                 className="h-[82%] w-[82%] object-contain"
               />
             </div>
 
             <h1 className="mt-5 text-2xl font-medium tracking-tight sm:text-3xl">
-              Anshumaan Khare
+              User
             </h1>
 
             <form onSubmit={handleSubmit} className="mt-6">

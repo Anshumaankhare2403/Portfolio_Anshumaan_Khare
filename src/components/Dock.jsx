@@ -21,28 +21,26 @@ function Dock({
   return (
     <div
       className="absolute bottom-4 left-1/2 -translate-x-1/2
-                 min-h-20 w-[min(98vw,920px)] rounded-[1.75rem]
+                 w-195 h-16 rounded-2xl
                  bg-white/10 backdrop-blur-xl
                  border border-white/20 shadow-lg"
     >
       <div className="flex h-full items-center justify-between gap-4 px-4 py-3">
         {/* App Icons */}
-        <div className="flex flex-wrap items-end gap-2">
+        <div className="flex flex-wrap items-end gap-1">
           <button
             type="button"
             onClick={onLauncherToggle}
             title="Open app menu"
             aria-label="Open app menu"
-            className="flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 transition hover:bg-white/15 focus:bg-white/15 focus:outline-none"
+            className="flex min-w-17 pb-2 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
           >
             <img
               src={launcherIcon}
               alt=""
               className="h-8 w-8 object-contain opacity-95"
             />
-            <span className="text-[11px] font-medium text-white/80">
-              Apps
-            </span>
+            
           </button>
 
           {apps.map((app) => (
@@ -52,16 +50,14 @@ function Dock({
               onClick={app.open}
               title={app.title}
               aria-label={app.title}
-              className="flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 transition hover:bg-white/15 focus:bg-white/15 focus:outline-none"
+              className="flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
             >
               <img
                 src={app.image}
                 alt=""
                 className="h-10 w-10 object-contain transition hover:scale-110"
               />
-              <span className="max-w-16 text-center text-[11px] font-medium leading-tight text-white/80">
-                {app.shortTitle || app.title}
-              </span>
+              
             </button>
           ))}
         </div>
@@ -93,7 +89,7 @@ function Dock({
             onClick={onLogout}
             title="Sign out"
             aria-label="Sign out"
-            className="grid h-12 w-12 place-items-center rounded-lg text-xl transition hover:bg-white/15 hover:text-red-300"
+            className="grid h-13 w-13 place-items-center rounded-lg text-xl transition hover:bg-white/15 hover:text-red-300"
           >
             <IoLogOutOutline />
           </button>

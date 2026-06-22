@@ -23,7 +23,7 @@ function About({onClose}) {
       {/* Top Bar */}
       <div className="flex h-10 items-center border-b border-white/10 bg-black/20 px-3 text-white">
         <span className="flex-1 text-sm">About Me</span>
-        <button className="p-2  hover:bg-white/10 text-sm">
+        <button className="p-2  hover:bg-white/10 text-xs">
           <IoRemove />
         </button>
         <button className="p-2  hover:bg-white/10 text-xs">
