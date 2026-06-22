@@ -10,6 +10,7 @@ function Dock({
   image5,
   onFilesClick,
   onChromeClick,
+   onAboutClick,
 }) {
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -49,6 +50,8 @@ function Dock({
           />
           <img
             src={image4}
+            alt="About Me"
+            onClick={ onAboutClick}
             className="w-12 h-12 object-contain hover:scale-110 transition p-[2px]"
           />
           <img

@@ -9,6 +9,7 @@ import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
 import Terminal from "../components/Terminal";
 import Chrome from "../components/Chrome";
+import About from "../components/About";
 // import icons1 from "../assets/color-lightblue/*.svg";
 
 const svgs = import.meta.glob("../assets/color-lightblue/*.svg", {
@@ -31,7 +32,7 @@ function HomePage() {
   const [isYtOpen, setYtOpen] = useState(false);
   const [isTerminalOpen, setTerminalOpen] = useState(false);
   const [isChromeOpen, setChromeOpen] = useState(false);
-  // const [isUserOpen, setUserOpen] = useState(false);
+  const [isAboutOpen, setAboutOpen] = useState(false);
 
   return (
     <>
@@ -50,7 +51,7 @@ function HomePage() {
         />
         <App_icons image={images[24]} 
         title={`About Me`}
-        // onClick={() => setUserOpen(true)}
+        onClick={() => setAboutOpen(true)}
          />
         <App_icons image={imgs[0]} 
         title={`Chrome`} 
@@ -105,6 +106,11 @@ function HomePage() {
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        {isAboutOpen && (
+          <About key="About" onClose={() => setAboutOpen(false)} />
+        )}
+      </AnimatePresence>
       {/* <FileExp/> */}
       <Dock
         image1={images[21]}
@@ -114,6 +120,7 @@ function HomePage() {
         image5={imgs[4]}
         onFilesClick={() => setIsFileExplorerOpen(true)}
         onChromeClick={() => setChromeOpen(true)}
+        onAboutClick={() => setAboutOpen(true)}
       />
 
       {/* <ThreeModel/> */}
