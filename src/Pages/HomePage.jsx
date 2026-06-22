@@ -7,6 +7,7 @@ import Dock from "../components/Dock";
 import FileExp from "../components/FileExp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
+import Terminal from "../components/Terminal";
 // import Terminal from "../components/Terminal";
 // import icons1 from "../assets/color-lightblue/*.svg";
 
@@ -28,6 +29,8 @@ function HomePage() {
   const [isFileExplorerOpen, setIsFileExplorerOpen] = useState(false);
   const [isVSCodeOpen, setIsVSCodeOpen] = useState(false);
   const [isYtOpen, setYtOpen] = useState(false);
+  const [isTerminalOpen, setTerminalOpen] = useState(false);
+  // const [isUserOpen, setUserOpen] = useState(false);
 
   return (
     <>
@@ -44,19 +47,25 @@ function HomePage() {
           title={`This PC`}
           onClick={() => setIsFileExplorerOpen(true)}
         />
-        <App_icons image={images[24]} title={`Users`} />
-        <App_icons image={imgs[0]} title={`Android Studio`} />
+        <App_icons image={images[24]} 
+        title={`About Me`}
+        // onClick={() => setUserOpen(true)}
+         />
+        <App_icons image={imgs[0]} title={`Chrome`} />
         <App_icons
-          image={imgs[4]}
+          image={imgs[5]}
           title={`Visual Studio Code`}
           onClick={() => setIsVSCodeOpen(true)}
         />
         <App_icons
-          image={imgs[5]}
+          image={imgs[6]}
           title={`YouTube Music`}
           onClick={() => setYtOpen(true)}
         />
-        <App_icons image={imgs[1]} title={`Terminal`} />
+        <App_icons image={imgs[2]} 
+        title={`Terminal`} 
+        onClick={() => setTerminalOpen(true)}
+        />
       </div>
 
       <AnimatePresence>
@@ -77,6 +86,12 @@ function HomePage() {
       <AnimatePresence>
         {isYtOpen && (
           <YtMusice key="youtube-music" onClose={() => setYtOpen(false)} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isTerminalOpen && (
+          <Terminal key="terminal" onClose={() => setTerminalOpen(false)} />
         )}
       </AnimatePresence>
 

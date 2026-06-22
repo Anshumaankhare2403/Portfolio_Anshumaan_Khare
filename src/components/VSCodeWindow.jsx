@@ -12,7 +12,7 @@ function VSCodeWindow({ onClose }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       className="fixed left-10 top-10 z-30
-           h-[85vh] w-[90vw]
+           h-[80vh] w-[75vw]
            overflow-hidden
            rounded-2xl
            bg-white/10

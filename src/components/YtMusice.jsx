@@ -123,16 +123,16 @@ function YtMusice({ onClose }) {
         scale: 0.9,
       }}
       className="fixed left-10 top-10 z-30
-           h-[85vh] w-[90vw]
+           h-[75vh] w-[75vw]
            overflow-hidden
            rounded-2xl
-           bg-white/10
+           bg-black/20
            backdrop-blur-2xl
            border border-white/20
            shadow-[0_8px_32px_rgba(0,0,0,0.37)]"
     >
       {/* Header */}
-      <div className="flex h-10 items-center bg-gray-800 px-3">
+      <div className="flex h-10 items-center border-white/10 bg-black/20 px-3">
         <span className="flex-1 text-sm text-white">YouTube Music</span>
         <button className="p-2 text-white hover:bg-white/10 text-sm">
           <IoRemove  />
@@ -148,7 +148,7 @@ function YtMusice({ onClose }) {
 
       <div className="flex h-[calc(100%-40px)]">
         {/* Playlist */}
-        <div className="w-72 overflow-y-auto bg-gray-800 text-white">
+        <div className="w-72 overflow-y-auto border-white/10 bg-black/20 text-white">
           {songs.map((song) => (
             <button
               key={song.videoId}
