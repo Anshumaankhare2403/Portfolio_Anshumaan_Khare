@@ -101,7 +101,7 @@ function HomePage() {
 
       <AnimatePresence>
         {isChromeOpen && (
-          <Chrome key="terminal" onClose={() => setChromeOpen(false)} />
+          <Chrome key="chrome" onClose={() => setChromeOpen(false)} />
         )}
       </AnimatePresence>
 
@@ -112,6 +112,8 @@ function HomePage() {
         image3={imgs[1]}
         image4={imgs[3]}
         image5={imgs[4]}
+        onFilesClick={() => setIsFileExplorerOpen(true)}
+        onChromeClick={() => setChromeOpen(true)}
       />
 
       {/* <ThreeModel/> */}

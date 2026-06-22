@@ -2,7 +2,15 @@
 import { useEffect, useState } from "react";
 import { FaWifi, FaVolumeUp, FaBatteryThreeQuarters } from "react-icons/fa";
 
-function Dock({ image1,image2,image3,image4,image5 }) {
+function Dock({
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  onFilesClick,
+  onChromeClick,
+}) {
   const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
@@ -25,15 +33,19 @@ function Dock({ image1,image2,image3,image4,image5 }) {
         <div className="flex gap-3 ">
           <img
             src={image1}
-            className="w-12 h-12 object-contain hover:scale-110 transition p-[2px]"
+            alt="Files"
+            onClick={onFilesClick}
+            className="w-12 h-12 cursor-pointer object-contain hover:scale-110 transition p-[2px]"
           />
           <img
             src={image2}
-            className="w-12 h-12 object-contain hover:scale-110 transition p-[2px]"
+            alt="Chrome"
+            onClick={onChromeClick}
+            className="w-11 h-11 cursor-pointer object-contain hover:scale-110 transition p-[2px]"
           />
           <img
             src={image3}
-            className="w-12 h-12 object-contain hover:scale-110 transition p-[2px]"
+            className="w-11 h-11 object-contain hover:scale-110 transition p-[2px]"
           />
           <img
             src={image4}
@@ -41,7 +53,7 @@ function Dock({ image1,image2,image3,image4,image5 }) {
           />
           <img
             src={image5}
-            className="w-12 h-12 object-contain hover:scale-110 transition p-[6px]"
+            className="w-12 h-12 object-contain hover:scale-110 transition p-[2px]"
           />
         </div>
 
