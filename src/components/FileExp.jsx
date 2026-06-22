@@ -7,6 +7,19 @@ import {
   IoSquareOutline,
 } from "react-icons/io5";
 import { GoPin } from "react-icons/go";
+import { FaCss3Alt } from "react-icons/fa";
+import { VscVscode } from "react-icons/vsc";
+import {
+  SiAndroidstudio,
+  SiGit,
+  SiGithub,
+  SiHtml5,
+  SiJavascript,
+  SiNodedotjs,
+  SiReact,
+  SiTailwindcss,
+  SiVite,
+} from "react-icons/si";
 
 import desktopIcon from "../assets/color-lightblue/user-home.svg";
 import userIcon from "../assets/color-lightblue/user-identity.svg";
@@ -27,10 +40,25 @@ import heroImage from "../assets/hero.png";
 import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
 import resumePdf from "../assets/resume/anshumaanKhare.pdf";
 
+const skills = [
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
+  { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
+  { name: "GitHub", icon: SiGithub, color: "#FFFFFF" },
+  { name: "Vite", icon: SiVite, color: "#BD34FE" },
+  { name: "VS Code", icon: VscVscode, color: "#23A8F2" },
+  { name: "Android Studio", icon: SiAndroidstudio, color: "#3DDC84" },
+];
+
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
   { name: "Downloads", location: "Stored locally", icon: downloadsIcon },
   { name: "Documents", location: "Anshumaan - Personal", icon: documentsIcon },
+  { name: "Skills", location: "Development toolkit", icon: codeIcon },
   { name: "Pictures", location: "Anshumaan - Personal", icon: picturesIcon },
   { name: "Music", location: "Stored locally", icon: musicIcon },
   { name: "Videos", location: "Stored locally", icon: videosIcon },
@@ -54,11 +82,9 @@ const folderContents = {
     { name: "Projects", icon: projectsIcon, section: "Projects" },
     { name: "Certificates", icon: folderIcon, section: "Certificates" },
     {
-      name: "Skills.txt",
-      icon: documentsIcon,
-      description: "A quick view of my development skills.",
-      content:
-        "React • JavaScript • Tailwind CSS • Node.js • Git • UI/UX • Responsive Web Design",
+      name: "Skills",
+      icon: codeIcon,
+      section: "Skills",
     },
     {
       name: "Resume.pdf",
@@ -209,11 +235,18 @@ const folderContents = {
       description: "Open Terminal for the command-line demo.",
     },
   ],
+  Skills: skills.map((skill) => ({
+    name: skill.name,
+    skillIcon: skill.icon,
+    color: skill.color,
+    description: `${skill.name} is part of my development toolkit.`,
+  })),
 };
 
 const parentFolders = {
   Projects: "Documents",
   Certificates: "Documents",
+  Skills: "Documents",
   "Project Assets": "Downloads",
   Screenshots: "Pictures",
   Recordings: "Videos",
@@ -395,11 +428,19 @@ function FileExp({
                         : "border-transparent"
                     }`}
                   >
-                    <img
-                      src={item.icon}
-                      alt=""
-                      className="h-16 w-16 object-contain"
-                    />
+                    {item.skillIcon ? (
+                      <item.skillIcon
+                        className="h-16 w-16"
+                        style={{ color: item.color }}
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <img
+                        src={item.icon}
+                        alt=""
+                        className="h-16 w-16 object-contain"
+                      />
+                    )}
                     <span className="w-full break-words text-sm">
                       {item.name}
                     </span>
@@ -414,6 +455,12 @@ function FileExp({
                       src={selectedPreview.preview}
                       alt={selectedPreview.name}
                       className="mb-4 h-36 w-full rounded-lg object-cover"
+                    />
+                  ) : selectedPreview.skillIcon ? (
+                    <selectedPreview.skillIcon
+                      className="mx-auto mb-4 h-20 w-20"
+                      style={{ color: selectedPreview.color }}
+                      aria-hidden="true"
                     />
                   ) : (
                     <img
@@ -434,6 +481,29 @@ function FileExp({
                     <p className="mt-3 rounded-lg bg-white/5 p-3 text-sm leading-6 text-gray-300">
                       {selectedPreview.content}
                     </p>
+                  )}
+                  {selectedPreview.skills && (
+                    <div className="mt-4 grid grid-cols-2 gap-2">
+                      {selectedPreview.skills.map((skill) => {
+                        const SkillIcon = skill.icon;
+
+                        return (
+                          <div
+                            key={skill.name}
+                            className="flex min-w-0 items-center gap-2 rounded-lg border border-white/10 bg-white/5 p-2"
+                          >
+                            <SkillIcon
+                              className="h-6 w-6 shrink-0"
+                              style={{ color: skill.color }}
+                              aria-hidden="true"
+                            />
+                            <span className="truncate text-xs">
+                              {skill.name}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   )}
                 </aside>
               )}
