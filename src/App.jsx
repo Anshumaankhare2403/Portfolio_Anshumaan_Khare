@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import SplashScreen from "./components/SplashScreen";
-import HomePage from "./Pages/HomePage"
+import HomePage from "./Pages/HomePage";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-    return () => clearTimeout(timer);
-  }, []);
   return (
-    <div>
-       {loading ? <SplashScreen /> : <HomePage />}
+    <div className="min-h-screen">
+      {isSignedIn ? (
+        <HomePage />
+      ) : (
+        <SplashScreen onSignIn={() => setIsSignedIn(true)} />
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
