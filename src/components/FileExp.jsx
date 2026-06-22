@@ -186,6 +186,49 @@ const skills = skillGroups.flatMap((group) =>
   group.items.map((skill) => ({ ...skill, category: group.title }))
 );
 
+const readmeSections = [
+  {
+    title: "About Me",
+    content:
+      "I am Anshumaan Khare, a Software Developer focused on building modern, responsive, and scalable web and mobile applications. I enjoy transforming ideas into polished digital products with clean interfaces, reliable APIs, and maintainable code.",
+  },
+  {
+    title: "Education",
+    content:
+      "Master of Computer Applications (MCA)\nJAIN (Deemed-to-be University)\n2025–2027",
+  },
+  {
+    title: "Development Stack",
+    content:
+      "Frontend: React.js, JavaScript, HTML5, CSS3, Tailwind CSS, and Bootstrap.\nBackend: Node.js, Express.js, REST APIs, JWT authentication, and authorization.\nMobile: Flutter and Dart.\nDatabases: MongoDB, MySQL, Firebase, and Mongoose.",
+  },
+  {
+    title: "Cloud & DevOps",
+    content:
+      "Experience with AWS EC2, S3, VPC, IAM, CloudWatch, SNS, Application Load Balancer, and NAT Gateway. I also deploy applications using Netlify and Vercel.",
+  },
+  {
+    title: "Tools & Libraries",
+    content:
+      "Git, GitHub, Postman, Linux, WSL2, VS Code, Framer Motion, Axios, Material UI, and responsive UI development workflows.",
+  },
+  {
+    title: "Core Expertise",
+    content:
+      "MERN stack development, Flutter development, full-stack application development, API integration, database design, CRUD operations, authentication and authorization, responsive web design, debugging, and performance optimization.",
+  },
+  {
+    title: "Soft Skills",
+    content:
+      "Problem solving, clear communication, team collaboration, debugging, adaptability, and time management.",
+  },
+  {
+    title: "Portfolio",
+    content:
+      "This portfolio recreates a desktop operating-system experience in the browser. It includes an interactive File Explorer, application launcher, terminal, browser, music player, code editor, resume viewer, login screen, and desktop dock.",
+  },
+];
+
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
   { name: "Downloads", location: "Stored locally", icon: downloadsIcon },
@@ -223,6 +266,11 @@ const folderContents = {
       icon: documentsIcon,
       description: "Open Anshumaan Khare's resume in a new tab.",
       url: resumePdf,
+    },
+    {
+      name: "README.md",
+      icon: codeIcon,
+      section: "README",
     },
   ],
   Downloads: [
@@ -374,12 +422,14 @@ const folderContents = {
     category: skill.category,
     description: `${skill.name} — ${skill.category}`,
   })),
+  README: [],
 };
 
 const parentFolders = {
   Projects: "Documents",
   Certificates: "Documents",
   Skills: "Documents",
+  README: "Documents",
   "Project Assets": "Downloads",
   Screenshots: "Pictures",
   Recordings: "Videos",
@@ -550,7 +600,34 @@ function FileExp({
           ) : (
             <div className="flex gap-5">
               <div className="min-w-0 flex-1">
-                {activeFolder === "Skills" ? (
+                {activeFolder === "README" ? (
+                  <article className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-black/20 shadow-xl">
+                    <header className="border-b border-white/10 bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-7">
+                      <p className="text-sm font-medium text-blue-300">
+                        README.md
+                      </p>
+                      <h3 className="mt-2 text-3xl font-bold">
+                        Anshumaan Khare
+                      </h3>
+                      <p className="mt-2 text-lg text-gray-300">
+                        Software Developer
+                      </p>
+                    </header>
+
+                    <div className="space-y-7 p-7">
+                      {readmeSections.map((section) => (
+                        <section key={section.title}>
+                          <h4 className="mb-3 text-xl font-semibold text-blue-300">
+                            {section.title}
+                          </h4>
+                          <p className="whitespace-pre-line leading-7 text-gray-300">
+                            {section.content}
+                          </p>
+                        </section>
+                      ))}
+                    </div>
+                  </article>
+                ) : activeFolder === "Skills" ? (
                   <div className="space-y-8">
                     {skillGroups.map((group) => (
                       <section key={group.title}>
