@@ -8,7 +8,7 @@ import FileExp from "../components/FileExp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
 import Terminal from "../components/Terminal";
-// import Terminal from "../components/Terminal";
+import Chrome from "../components/Chrome";
 // import icons1 from "../assets/color-lightblue/*.svg";
 
 const svgs = import.meta.glob("../assets/color-lightblue/*.svg", {
@@ -30,6 +30,7 @@ function HomePage() {
   const [isVSCodeOpen, setIsVSCodeOpen] = useState(false);
   const [isYtOpen, setYtOpen] = useState(false);
   const [isTerminalOpen, setTerminalOpen] = useState(false);
+  const [isChromeOpen, setChromeOpen] = useState(false);
   // const [isUserOpen, setUserOpen] = useState(false);
 
   return (
@@ -51,7 +52,10 @@ function HomePage() {
         title={`About Me`}
         // onClick={() => setUserOpen(true)}
          />
-        <App_icons image={imgs[0]} title={`Chrome`} />
+        <App_icons image={imgs[0]} 
+        title={`Chrome`} 
+        onClick={() => setChromeOpen(true)}
+        />
         <App_icons
           image={imgs[5]}
           title={`Visual Studio Code`}
@@ -92,6 +96,12 @@ function HomePage() {
       <AnimatePresence>
         {isTerminalOpen && (
           <Terminal key="terminal" onClose={() => setTerminalOpen(false)} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isChromeOpen && (
+          <Chrome key="terminal" onClose={() => setChromeOpen(false)} />
         )}
       </AnimatePresence>
 

@@ -33,6 +33,15 @@ function Terminal({onClose}) {
           <IoClose />
         </button>
       </div>
+
+      <div className="ps-4 pt-2">
+        <p>
+            user@DESKTOP-XXXXX  {":~$"}{" "}
+            <span>
+              <input className="border-none bg-transparent outline-none focus:outline-none" />
+            </span>
+        </p>
+      </div>
       
     </motion.div>
   )
