@@ -68,9 +68,7 @@ function AppMenu({ apps, query, onClose, onQueryChange }) {
             </div>
           )}
 
-          <div className="mt-8 text-center text-sm text-white/55">
-            Press Windows or Esc to close
-          </div>
+          
         </div>
       </motion.div>
     </motion.div>

@@ -21,6 +21,7 @@ import videosIcon from "../assets/color-lightblue/folder-videos.svg";
 import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
+import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
 
 const folders = [
@@ -34,10 +35,17 @@ const folders = [
 
 const folderContents = {
   Desktop: [
-    { name: "This PC", icon: windowsIcon },
-    { name: "About Me", icon: userIcon },
-    { name: "Visual Studio Code", icon: vscodeIcon },
-    { name: "Chrome", icon: chromeIcon },
+    { name: "This PC", icon: windowsIcon, section: null },
+    { name: "Documents", icon: documentsIcon, section: "Documents" },
+    { name: "Downloads", icon: downloadsIcon, section: "Downloads" },
+    { name: "Pictures", icon: picturesIcon, section: "Pictures" },
+    { name: "Music", icon: musicIcon, section: "Music" },
+    { name: "Videos", icon: videosIcon, section: "Videos" },
+    { name: "About Me", icon: userIcon, app: "about" },
+    { name: "Visual Studio Code", icon: vscodeIcon, app: "vscode" },
+    { name: "Chrome", icon: chromeIcon, app: "chrome" },
+    { name: "YouTube Music", icon: youtubeIcon, app: "youtube" },
+    { name: "Terminal", icon: terminalIcon, app: "terminal" },
   ],
   Documents: [
     { name: "Projects", icon: projectsIcon },
@@ -66,11 +74,36 @@ const folderContents = {
   ],
 };
 
-function FileExp({ onClose }) {
+function FileExp({
+  onClose,
+  onOpenAbout,
+  onOpenChrome,
+  onOpenVSCode,
+  onOpenYouTube,
+  onOpenTerminal,
+}) {
   const [maximized, setMaximized] = useState(false);
   const [activeFolder, setActiveFolder] = useState(null);
 
+  const appActions = {
+    about: onOpenAbout,
+    chrome: onOpenChrome,
+    vscode: onOpenVSCode,
+    youtube: onOpenYouTube,
+    terminal: onOpenTerminal,
+  };
+
   const openItem = (item) => {
+    if (Object.prototype.hasOwnProperty.call(item, "section")) {
+      setActiveFolder(item.section);
+      return;
+    }
+
+    if (item.app && appActions[item.app]) {
+      appActions[item.app]();
+      return;
+    }
+
     if (item.url) {
       window.open(item.url, "_blank", "noopener,noreferrer");
     }
@@ -195,7 +228,7 @@ function FileExp({ onClose }) {
                 <button
                   type="button"
                   key={item.name}
-                  onClick={() => item.url && openItem(item)}
+                  onClick={() => openItem(item)}
                   className="flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border border-transparent p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:bg-blue-500/20 focus:outline-none"
                 >
                   <img

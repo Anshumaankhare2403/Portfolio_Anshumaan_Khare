@@ -157,7 +157,15 @@ function HomePage({ onLogout }) {
 
       <AnimatePresence>
         {isFileExplorerOpen && (
-          <FileExp key="file-explorer" onClose={() => setIsFileExplorerOpen(false)} />
+          <FileExp
+            key="file-explorer"
+            onClose={() => setIsFileExplorerOpen(false)}
+            onOpenAbout={openAbout}
+            onOpenChrome={openChrome}
+            onOpenVSCode={openVSCode}
+            onOpenYouTube={openYouTube}
+            onOpenTerminal={openTerminal}
+          />
         )}
       </AnimatePresence>
 
