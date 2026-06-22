@@ -8,18 +8,52 @@ import {
   FaMusic,
 } from "react-icons/fa";
 
+import { GoPin } from "react-icons/go";
+
 import desktopIcon from "../assets/color-lightblue/user-home.svg";
 import documentsIcon from "../assets/color-lightblue/folder-documents.svg";
 import downloadsIcon from "../assets/color-lightblue/folder-download.svg";
 import picturesIcon from "../assets/color-lightblue/folder-images.svg";
 import musicIcon from "../assets/color-lightblue/folder-music.svg";
+import videosIcon from "../assets/color-lightblue/folder-videos.svg";
 
+const folders = [
+  {
+    name: "Desktop",
+    location: "Anshumaan - Personal",
+    icon: desktopIcon,
+  },
+  {
+    name: "Downloads",
+    location: "Stored locally",
+    icon: downloadsIcon,
+  },
+  {
+    name: "Documents",
+    location: "Anshumaan - Personal",
+    icon: documentsIcon,
+  },
+  {
+    name: "Pictures",
+    location: "Anshumaan - Personal",
+    icon: picturesIcon,
+  },
+  {
+    name: "Music",
+    location: "Stored locally",
+    icon: musicIcon,
+  },
+  {
+    name: "Videos",
+    location: "Stored locally",
+    icon: videosIcon,
+  },
+];
 function FileExp({ onClose }) {
   return (
     <motion.div
       drag
       dragMomentum={false}
-      
       initial={{
         x: 180,
         y: 80,
@@ -77,58 +111,67 @@ function FileExp({ onClose }) {
           <p>Musice</p>
         </aside> */}
 
-        <div className="flex flex-col w-50 h-full p-6 gap-5 border-r border-white/20 bg-black/10">
-          <div className="flex cursor-pointer items-center gap-3 hover:text-blue-300">
+        <div className="flex flex-col pt-2 self-center w-40 h-full  gap-2 border-r border-white/20 bg-black/10">
+          <div className="flex cursor-pointer ps-6  items-center gap-3 hover:bg-white/10 h-10 w-full  rounded-md ">
             <FaDesktop className="text-xl text-blue-400" />
-            <p className="text-sm">Desktop</p>
+            <p className="text-xs">Desktop</p>
           </div>
 
-          <div className="flex cursor-pointer items-center gap-3 hover:text-yellow-300">
+          <div className="flex cursor-pointer ps-6 items-center gap-3 hover:bg-white/10 h-10 w-full  rounded-md">
             <FaFileAlt className="text-xl text-yellow-400" />
-            <p className="text-sm">Documents</p>
+            <p className="text-xs">Documents</p>
           </div>
 
-          <div className="flex cursor-pointer items-center gap-3 hover:text-green-300">
+          <div className="flex cursor-pointer ps-6 items-center gap-3 hover:bg-white/10 h-10 w-full  rounded-md">
             <FaDownload className="text-xl text-green-400" />
-            <p className="text-sm">Downloads</p>
+            <p className="text-xs">Downloads</p>
           </div>
 
-          <div className="flex cursor-pointer items-center gap-3 hover:text-purple-300">
+          <div className="flex cursor-pointer ps-6 items-center gap-3 hover:bg-white/10 h-10 w-full  rounded-md">
             <FaImage className="text-xl text-purple-400" />
-            <p className="text-sm">Pictures</p>
+            <p className="text-xs">Pictures</p>
           </div>
 
-          <div className="flex cursor-pointer items-center gap-3 hover:text-pink-300">
+          <div className="flex cursor-pointer ps-6 items-center gap-3 hover:bg-white/10 h-10 w-full  rounded-md">
             <FaMusic className="text-xl text-pink-400" />
-            <p className="text-sm">Music</p>
+            <p className="text-xs">Music</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-10 p-5">
-          {[
-            { name: "Desktop", icon: desktopIcon },
-            { name: "Documents", icon: documentsIcon },
-            { name: "Downloads", icon: downloadsIcon },
-            { name: "Pictures", icon: picturesIcon },
-            { name: "Music", icon: musicIcon },
-          ].map((item) => (
-            <div
-              key={item.name}
-              className="flex h-20 w-full cursor-pointer items-center gap-3
-                 rounded-lg border border-transparent p-3
-                 transition-all duration-200
-                 hover:border-white/20 hover:bg-white/15"
-            >
-              <img
-                src={item.icon}
-                alt=""
-                className="h-12 w-12 shrink-0 object-contain"
-              />
+        <div className=" p-6 text-white">
+      {/* <h2 className="mb-6 text-lg font-semibold">
+        Quick access
+      </h2> */}
 
-              <p className="truncate text-sm text-white">{item.name}</p>
+      <div className="grid grid-cols-2 gap-x-16 gap-y-4">
+        {folders.map((folder) => (
+          <div
+            key={folder.name}
+            className="flex items-center gap-4 rounded-md p-2  hover:bg-white/10 cursor-pointer"
+          >
+            <img
+              src={folder.icon}
+              alt={folder.name}
+              className="h-14 w-14"
+            />
+
+            <div className="flex flex-col">
+              <span className="text-lg">
+                {folder.name}
+              </span>
+
+              <span className="text-sm text-gray-400">
+                {folder.location}
+              </span>
+
+              <span className="text-xs text-gray-500">
+                <GoPin />
+              </span>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
+    </div>
       </div>
     </motion.div>
   );

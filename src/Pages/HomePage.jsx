@@ -7,7 +7,7 @@ import Dock from "../components/Dock";
 import FileExp from "../components/FileExp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
-import Terminal from "../components/Terminal";
+// import Terminal from "../components/Terminal";
 // import icons1 from "../assets/color-lightblue/*.svg";
 
 const svgs = import.meta.glob("../assets/color-lightblue/*.svg", {
