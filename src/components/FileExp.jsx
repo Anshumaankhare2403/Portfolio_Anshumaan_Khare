@@ -38,7 +38,7 @@ import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
 import heroImage from "../assets/hero.png";
 import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
-import resumePdf from "../assets/resume/anshumaanKhare.pdf";
+import resumePdf from "https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview";
 
 const skills = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
