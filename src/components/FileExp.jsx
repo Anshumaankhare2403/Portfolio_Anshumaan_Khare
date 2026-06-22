@@ -23,6 +23,9 @@ import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
+import heroImage from "../assets/hero.png";
+import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import resumePdf from "../assets/resume/anshumaanKhare.pdf";
 
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
@@ -48,30 +51,172 @@ const folderContents = {
     { name: "Terminal", icon: terminalIcon, app: "terminal" },
   ],
   Documents: [
-    { name: "Projects", icon: projectsIcon },
-    { name: "Certificates", icon: folderIcon },
-    { name: "Skills.txt", icon: documentsIcon },
+    { name: "Projects", icon: projectsIcon, section: "Projects" },
+    { name: "Certificates", icon: folderIcon, section: "Certificates" },
+    {
+      name: "Skills.txt",
+      icon: documentsIcon,
+      description: "A quick view of my development skills.",
+      content:
+        "React • JavaScript • Tailwind CSS • Node.js • Git • UI/UX • Responsive Web Design",
+    },
+    {
+      name: "Resume.pdf",
+      icon: documentsIcon,
+      description: "Open Anshumaan Khare's resume in a new tab.",
+      url: resumePdf,
+    },
   ],
   Downloads: [
-    { name: "Portfolio Source", icon: codeIcon },
-    // { name: "Resume.pdf", icon: documentsIcon, url: resume },
-    { name: "Project Assets", icon: folderIcon },
+    {
+      name: "Portfolio Source",
+      icon: codeIcon,
+      app: "vscode",
+      description: "Open the portfolio source workspace in Visual Studio Code.",
+    },
+    {
+      name: "Resume Copy.pdf",
+      icon: documentsIcon,
+      description: "Open a downloadable copy of the resume.",
+      url: resumePdf,
+    },
+    { name: "Project Assets", icon: folderIcon, section: "Project Assets" },
   ],
   Pictures: [
-    { name: "Portfolio Preview.png", icon: picturesIcon },
-    { name: "Desktop Wallpaper.jpg", icon: picturesIcon },
-    { name: "Screenshots", icon: folderIcon },
+    {
+      name: "Portfolio Preview.png",
+      icon: picturesIcon,
+      preview: heroImage,
+      description: "Portfolio hero preview.",
+    },
+    {
+      name: "Desktop Wallpaper.jpg",
+      icon: picturesIcon,
+      preview: wallpaperImage,
+      description: "The default desktop wallpaper.",
+    },
+    { name: "Screenshots", icon: folderIcon, section: "Screenshots" },
   ],
   Music: [
-    { name: "Coding Playlist", icon: musicIcon },
-    { name: "Favourite Tracks", icon: musicIcon },
-    { name: "YouTube Music", icon: youtubeIcon },
+    {
+      name: "Coding Playlist",
+      icon: musicIcon,
+      app: "youtube",
+      description: "Open the coding playlist in YouTube Music.",
+    },
+    {
+      name: "Favourite Tracks",
+      icon: musicIcon,
+      app: "youtube",
+      description: "Open favourite tracks in YouTube Music.",
+    },
+    { name: "YouTube Music", icon: youtubeIcon, app: "youtube" },
   ],
   Videos: [
-    { name: "Project Demo.mp4", icon: videosIcon },
-    { name: "Portfolio Walkthrough.mp4", icon: videosIcon },
-    { name: "Recordings", icon: folderIcon },
+    {
+      name: "Project Demo.mp4",
+      icon: videosIcon,
+      app: "chrome",
+      description: "Open the project demo in Chrome.",
+    },
+    {
+      name: "Portfolio Walkthrough.mp4",
+      icon: videosIcon,
+      app: "chrome",
+      description: "Open the portfolio walkthrough in Chrome.",
+    },
+    { name: "Recordings", icon: folderIcon, section: "Recordings" },
   ],
+  Projects: [
+    {
+      name: "Portfolio Website",
+      icon: codeIcon,
+      app: "vscode",
+      description: "Open this portfolio project in Visual Studio Code.",
+    },
+    {
+      name: "Live Portfolio",
+      icon: chromeIcon,
+      app: "chrome",
+      description: "Open the live portfolio browser.",
+    },
+    {
+      name: "Project Terminal",
+      icon: terminalIcon,
+      app: "terminal",
+      description: "Open a terminal for project commands.",
+    },
+  ],
+  Certificates: [
+    {
+      name: "Web Development",
+      icon: documentsIcon,
+      description: "Web development certificate.",
+      content: "Certificate preview will be available here.",
+    },
+    {
+      name: "Frontend Development",
+      icon: documentsIcon,
+      description: "Frontend development certificate.",
+      content: "Certificate preview will be available here.",
+    },
+  ],
+  "Project Assets": [
+    {
+      name: "Hero Image.png",
+      icon: picturesIcon,
+      preview: heroImage,
+      description: "Hero image used by the portfolio.",
+    },
+    {
+      name: "Wallpaper.jpg",
+      icon: picturesIcon,
+      preview: wallpaperImage,
+      description: "Desktop wallpaper asset.",
+    },
+    {
+      name: "Source Files",
+      icon: codeIcon,
+      app: "vscode",
+      description: "Open project source files in Visual Studio Code.",
+    },
+  ],
+  Screenshots: [
+    {
+      name: "Home Screen.png",
+      icon: picturesIcon,
+      preview: wallpaperImage,
+      description: "Desktop home-screen preview.",
+    },
+    {
+      name: "About Preview.png",
+      icon: picturesIcon,
+      preview: heroImage,
+      description: "About page preview.",
+    },
+  ],
+  Recordings: [
+    {
+      name: "Desktop Tour.mp4",
+      icon: videosIcon,
+      app: "chrome",
+      description: "Open the desktop tour in Chrome.",
+    },
+    {
+      name: "Terminal Demo.mp4",
+      icon: videosIcon,
+      app: "terminal",
+      description: "Open Terminal for the command-line demo.",
+    },
+  ],
+};
+
+const parentFolders = {
+  Projects: "Documents",
+  Certificates: "Documents",
+  "Project Assets": "Downloads",
+  Screenshots: "Pictures",
+  Recordings: "Videos",
 };
 
 function FileExp({
@@ -84,6 +229,7 @@ function FileExp({
 }) {
   const [maximized, setMaximized] = useState(false);
   const [activeFolder, setActiveFolder] = useState(null);
+  const [selectedPreview, setSelectedPreview] = useState(null);
 
   const appActions = {
     about: onOpenAbout,
@@ -96,8 +242,11 @@ function FileExp({
   const openItem = (item) => {
     if (Object.prototype.hasOwnProperty.call(item, "section")) {
       setActiveFolder(item.section);
+      setSelectedPreview(null);
       return;
     }
+
+    setSelectedPreview(item);
 
     if (item.app && appActions[item.app]) {
       appActions[item.app]();
@@ -107,6 +256,16 @@ function FileExp({
     if (item.url) {
       window.open(item.url, "_blank", "noopener,noreferrer");
     }
+  };
+
+  const openFolder = (folderName) => {
+    setActiveFolder(folderName);
+    setSelectedPreview(null);
+  };
+
+  const goBack = () => {
+    setActiveFolder((current) => parentFolders[current] || null);
+    setSelectedPreview(null);
   };
 
   return (
@@ -155,7 +314,7 @@ function FileExp({
               <button
                 type="button"
                 key={folder.name}
-                onClick={() => setActiveFolder(folder.name)}
+                onClick={() => openFolder(folder.name)}
                 className={`flex w-full items-center gap-3 rounded-lg p-3 text-left transition hover:bg-white/10 ${
                   activeFolder === folder.name ? "bg-white/15" : ""
                 }`}
@@ -177,7 +336,7 @@ function FileExp({
               {activeFolder && (
                 <button
                   type="button"
-                  onClick={() => setActiveFolder(null)}
+                  onClick={goBack}
                   aria-label="Back to Quick Access"
                   className="rounded-lg p-2 text-lg hover:bg-white/10"
                 >
@@ -201,7 +360,7 @@ function FileExp({
                 <button
                   type="button"
                   key={folder.name}
-                  onClick={() => setActiveFolder(folder.name)}
+                  onClick={() => openFolder(folder.name)}
                   className="group flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 p-4 text-left transition-all duration-200 hover:scale-[1.02] hover:border-white/20 hover:bg-white/10"
                 >
                   <img
@@ -223,22 +382,61 @@ function FileExp({
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-4">
-              {folderContents[activeFolder].map((item) => (
-                <button
-                  type="button"
-                  key={item.name}
-                  onClick={() => openItem(item)}
-                  className="flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border border-transparent p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:bg-blue-500/20 focus:outline-none"
-                >
-                  <img
-                    src={item.icon}
-                    alt=""
-                    className="h-16 w-16 object-contain"
-                  />
-                  <span className="w-full break-words text-sm">{item.name}</span>
-                </button>
-              ))}
+            <div className="flex gap-5">
+              <div className="grid min-w-0 flex-1 grid-cols-[repeat(auto-fill,minmax(130px,1fr))] content-start gap-4">
+                {(folderContents[activeFolder] || []).map((item) => (
+                  <button
+                    type="button"
+                    key={item.name}
+                    onClick={() => openItem(item)}
+                    className={`flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:outline-none ${
+                      selectedPreview?.name === item.name
+                        ? "border-blue-400/40 bg-blue-500/20"
+                        : "border-transparent"
+                    }`}
+                  >
+                    <img
+                      src={item.icon}
+                      alt=""
+                      className="h-16 w-16 object-contain"
+                    />
+                    <span className="w-full break-words text-sm">
+                      {item.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              {selectedPreview && (
+                <aside className="w-64 shrink-0 rounded-xl border border-white/10 bg-black/20 p-4">
+                  {selectedPreview.preview ? (
+                    <img
+                      src={selectedPreview.preview}
+                      alt={selectedPreview.name}
+                      className="mb-4 h-36 w-full rounded-lg object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={selectedPreview.icon}
+                      alt=""
+                      className="mx-auto mb-4 h-20 w-20 object-contain"
+                    />
+                  )}
+                  <h3 className="break-words font-semibold">
+                    {selectedPreview.name}
+                  </h3>
+                  {selectedPreview.description && (
+                    <p className="mt-2 text-sm leading-6 text-gray-300">
+                      {selectedPreview.description}
+                    </p>
+                  )}
+                  {selectedPreview.content && (
+                    <p className="mt-3 rounded-lg bg-white/5 p-3 text-sm leading-6 text-gray-300">
+                      {selectedPreview.content}
+                    </p>
+                  )}
+                </aside>
+              )}
             </div>
           )}
         </main>
