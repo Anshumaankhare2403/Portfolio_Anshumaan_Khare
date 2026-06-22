@@ -1,0 +1,184 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
+
+function YtMusice({ onClose }) {
+  const [videoId, setVideoId] = useState("jfKfPfyJRdk");
+
+  const songs = [
+    
+    {
+      title: "Relaxing Music",
+      videoId: "DWcJFNfaw9c",
+      image: "https://img.youtube.com/vi/DWcJFNfaw9c/hqdefault.jpg",
+    },
+    {
+      title: "Coding Music",
+      videoId: "4xDzrJKXOOY",
+      image: "https://img.youtube.com/vi/4xDzrJKXOOY/hqdefault.jpg",
+    },
+    {
+      title: "Chill Beats",
+      videoId: "5qap5aO4i9A",
+      image: "https://img.youtube.com/vi/5qap5aO4i9A/hqdefault.jpg",
+    },
+    {
+      title: "Study Music",
+      videoId: "lTRiuFIWV54",
+      image: "https://img.youtube.com/vi/lTRiuFIWV54/hqdefault.jpg",
+    },
+    {
+      title: "Night Drive",
+      videoId: "rUxyKA_-grg",
+      image: "https://img.youtube.com/vi/rUxyKA_-grg/hqdefault.jpg",
+    },
+    {
+      title: "Deep Focus",
+      videoId: "WPni755-Krg",
+      image: "https://img.youtube.com/vi/WPni755-Krg/hqdefault.jpg",
+    },
+    {
+      title: "Jazz Cafe",
+      videoId: "Dx5qFachd3A",
+      image: "https://img.youtube.com/vi/Dx5qFachd3A/hqdefault.jpg",
+    },
+    {
+      title: "Morning Coffee",
+      videoId: "HuFYqnbVbzY",
+      image: "https://img.youtube.com/vi/HuFYqnbVbzY/hqdefault.jpg",
+    },
+    {
+      title: "Soft Piano",
+      videoId: "sF80I-TQiW0",
+      image: "https://img.youtube.com/vi/sF80I-TQiW0/hqdefault.jpg",
+    },
+    {
+      title: "Ambient Space",
+      videoId: "a0muF8abA6I",
+      image: "https://img.youtube.com/vi/a0muF8abA6I/hqdefault.jpg",
+    },
+    {
+      title: "Rain Sounds",
+      videoId: "mPZkdNFkNps",
+      image: "https://img.youtube.com/vi/mPZkdNFkNps/hqdefault.jpg",
+    },
+    {
+      title: "Focus Flow",
+      videoId: "TtkFsfOP9QI",
+      image: "https://img.youtube.com/vi/TtkFsfOP9QI/hqdefault.jpg",
+    },
+    {
+      title: "Calm Evening",
+      videoId: "7NOSDKb0HlU",
+      image: "https://img.youtube.com/vi/7NOSDKb0HlU/hqdefault.jpg",
+    },
+    {
+      title: "Work Vibes",
+      videoId: "M5QY2_8704o",
+      image: "https://img.youtube.com/vi/M5QY2_8704o/hqdefault.jpg",
+    },
+    {
+      title: "Synthwave",
+      videoId: "MVPTGNGiI-4",
+      image: "https://img.youtube.com/vi/MVPTGNGiI-4/hqdefault.jpg",
+    },
+    {
+      title: "Late Night Coding",
+      videoId: "f02mOEt11OQ",
+      image: "https://img.youtube.com/vi/f02mOEt11OQ/hqdefault.jpg",
+    },
+    {
+      title: "Acoustic Chill",
+      videoId: "kgx4WGK0oNU",
+      image: "https://img.youtube.com/vi/kgx4WGK0oNU/hqdefault.jpg",
+    },
+    {
+      title: "Nature Sounds",
+      videoId: "eKFTSSKCzWA",
+      image: "https://img.youtube.com/vi/eKFTSSKCzWA/hqdefault.jpg",
+    },
+    {
+      title: "Meditation Music",
+      videoId: "inpok4MKVLM",
+      image: "https://img.youtube.com/vi/inpok4MKVLM/hqdefault.jpg",
+    },
+  ];
+
+  return (
+    <motion.div
+      drag
+      dragMomentum={false}
+      initial={{
+        x: 120,
+        y: 50,
+        opacity: 0,
+        scale: 0.9,
+      }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        scale: 0.9,
+      }}
+      className="fixed left-10 top-10 z-30
+           h-[85vh] w-[90vw]
+           overflow-hidden
+           rounded-2xl
+           bg-white/10
+           backdrop-blur-2xl
+           border border-white/20
+           shadow-[0_8px_32px_rgba(0,0,0,0.37)]"
+    >
+      {/* Header */}
+      <div className="flex h-10 items-center bg-gray-800 px-3">
+        <span className="flex-1 text-sm text-white">YouTube Music</span>
+        <button className="p-2 text-white hover:bg-white/10 text-sm">
+          <IoRemove  />
+        </button>
+        <button  className="p-2 text-white hover:bg-white/10 text-sm">
+          <IoSquareOutline />
+        </button>
+
+        <button onClick={onClose} className="p-2 text-white hover:bg-red-600">
+          <IoClose />
+        </button>
+      </div>
+
+      <div className="flex h-[calc(100%-40px)]">
+        {/* Playlist */}
+        <div className="w-72 overflow-y-auto bg-gray-800 text-white">
+          {songs.map((song) => (
+            <button
+              key={song.videoId}
+              onClick={() => setVideoId(song.videoId)}
+              className="flex w-full items-center gap-3 p-3 hover:bg-gray-700"
+            >
+              <img
+                src={song.image}
+                alt={song.title}
+                className="h-14 w-14 rounded object-cover"
+              />
+
+              <span className="text-sm">{song.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Player */}
+        <div className="flex-1">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="Music Player"
+            className="h-full w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default YtMusice;
