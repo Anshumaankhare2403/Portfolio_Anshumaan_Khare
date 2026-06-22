@@ -22,7 +22,6 @@ import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).sv
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
-import resume from "https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview";
 
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
@@ -41,14 +40,13 @@ const folderContents = {
     { name: "Chrome", icon: chromeIcon },
   ],
   Documents: [
-    { name: "Anshumaan Khare Resume.pdf", icon: documentsIcon, url: resume },
     { name: "Projects", icon: projectsIcon },
     { name: "Certificates", icon: folderIcon },
     { name: "Skills.txt", icon: documentsIcon },
   ],
   Downloads: [
     { name: "Portfolio Source", icon: codeIcon },
-    { name: "Resume.pdf", icon: documentsIcon, url: resume },
+    // { name: "Resume.pdf", icon: documentsIcon, url: resume },
     { name: "Project Assets", icon: folderIcon },
   ],
   Pictures: [
