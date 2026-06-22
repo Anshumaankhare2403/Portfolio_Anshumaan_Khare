@@ -1,30 +1,23 @@
-import { useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
 import App_icons from "../components/App_icons";
+import AppMenu from "../components/AppMenu";
 import Dock from "../components/Dock";
-// import ThreeModel from "../components/ThreeModel";
 import FileExp from "../components/FileExp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
 import Terminal from "../components/Terminal";
 import Chrome from "../components/Chrome";
 import About from "../components/About";
-// import icons1 from "../assets/color-lightblue/*.svg";
 
-const svgs = import.meta.glob("../assets/color-lightblue/*.svg", {
-  eager: true,
-  import: "default",
-});
-
-const images = Object.values(svgs);
-
-const svgs1 = import.meta.glob("../assets/scalable/*.svg", {
-  eager: true,
-  import: "default",
-});
-
-const imgs = Object.values(svgs1);
+import launcherIcon from "../assets/This PC/Windows11.svg";
+import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
+import aboutIcon from "../assets/scalable/users.svg";
+import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
+import vscodeIcon from "../assets/scalable/vscode.svg";
+import youtubeIcon from "../assets/scalable/yt.svg";
+import terminalIcon from "../assets/scalable/terminal.svg";
 
 function HomePage({ onLogout }) {
   const [isFileExplorerOpen, setIsFileExplorerOpen] = useState(false);
@@ -33,52 +26,138 @@ function HomePage({ onLogout }) {
   const [isTerminalOpen, setTerminalOpen] = useState(false);
   const [isChromeOpen, setChromeOpen] = useState(false);
   const [isAboutOpen, setAboutOpen] = useState(false);
+  const [isLauncherOpen, setIsLauncherOpen] = useState(false);
+  const [launcherQuery, setLauncherQuery] = useState("");
+  const deferredLauncherQuery = useDeferredValue(launcherQuery);
+
+  const closeLauncher = () => {
+    setIsLauncherOpen(false);
+    setLauncherQuery("");
+  };
+
+  const toggleLauncher = () => {
+    setIsLauncherOpen((current) => !current);
+    setLauncherQuery("");
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const isWindowsKey =
+        event.key === "Meta" ||
+        event.code === "MetaLeft" ||
+        event.code === "MetaRight";
+
+      if (isWindowsKey && !event.repeat) {
+        event.preventDefault();
+        setIsLauncherOpen((current) => !current);
+        setLauncherQuery("");
+      }
+
+      if (event.key === "Escape") {
+        setIsLauncherOpen(false);
+        setLauncherQuery("");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const openFileExplorer = () => setIsFileExplorerOpen(true);
+  const openAbout = () => setAboutOpen(true);
+  const openChrome = () => setChromeOpen(true);
+  const openVSCode = () => setIsVSCodeOpen(true);
+  const openYouTube = () => setYtOpen(true);
+  const openTerminal = () => setTerminalOpen(true);
+
+  const apps = [
+    {
+      id: "files",
+      title: "This PC",
+      shortTitle: "This PC",
+      image: fileExplorerIcon,
+      open: openFileExplorer,
+    },
+    {
+      id: "about",
+      title: "About Me",
+      shortTitle: "About",
+      image: aboutIcon,
+      open: openAbout,
+    },
+    {
+      id: "chrome",
+      title: "Chrome",
+      shortTitle: "Chrome",
+      image: chromeIcon,
+      open: openChrome,
+    },
+    {
+      id: "vscode",
+      title: "Visual Studio Code",
+      shortTitle: "VS Code",
+      image: vscodeIcon,
+      open: openVSCode,
+    },
+    {
+      id: "youtube",
+      title: "YouTube Music",
+      shortTitle: "YT Music",
+      image: youtubeIcon,
+      open: openYouTube,
+    },
+    {
+      id: "terminal",
+      title: "Terminal",
+      shortTitle: "Terminal",
+      image: terminalIcon,
+      open: openTerminal,
+    },
+  ];
+
+  const launchApp = (openApp) => {
+    openApp();
+    closeLauncher();
+  };
+
+  const launcherApps = apps.map((app) => ({
+    ...app,
+    onOpen: () => launchApp(app.open),
+  }));
+
+  const filteredApps = launcherApps.filter((app) =>
+    app.title.toLowerCase().includes(deferredLauncherQuery.trim().toLowerCase())
+  );
 
   return (
     <>
-      <div className="flex flex-col gap-4 ">
-        {/* {images.map((image, index) => (
+      <div className="flex flex-col gap-4">
+        {apps.map((app) => (
           <App_icons
-            key={index}
-            image={image}
-            title={`File ${index + 1}`}
+            key={app.id}
+            image={app.image}
+            title={app.title}
+            onClick={app.open}
           />
-        ))} */}
-        <App_icons
-          image={images[23]}
-          title={`This PC`}
-          onClick={() => setIsFileExplorerOpen(true)}
-        />
-        <App_icons image={images[24]} 
-        title={`About Me`}
-        onClick={() => setAboutOpen(true)}
-         />
-        <App_icons image={imgs[0]} 
-        title={`Chrome`} 
-        onClick={() => setChromeOpen(true)}
-        />
-        <App_icons
-          image={imgs[5]}
-          title={`Visual Studio Code`}
-          onClick={() => setIsVSCodeOpen(true)}
-        />
-        <App_icons
-          image={imgs[6]}
-          title={`YouTube Music`}
-          onClick={() => setYtOpen(true)}
-        />
-        <App_icons image={imgs[2]} 
-        title={`Terminal`} 
-        onClick={() => setTerminalOpen(true)}
-        />
+        ))}
       </div>
 
       <AnimatePresence>
-        {isFileExplorerOpen && (
-          <FileExp
-            key="file-explorer"
-            onClose={() => setIsFileExplorerOpen(false)}
+        {isLauncherOpen && (
+          <AppMenu
+            key="app-menu"
+            apps={filteredApps}
+            query={launcherQuery}
+            onClose={closeLauncher}
+            onQueryChange={setLauncherQuery}
           />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isFileExplorerOpen && (
+          <FileExp key="file-explorer" onClose={() => setIsFileExplorerOpen(false)} />
         )}
       </AnimatePresence>
 
@@ -113,18 +192,12 @@ function HomePage({ onLogout }) {
       </AnimatePresence>
       {/* <FileExp/> */}
       <Dock
-        image1={images[21]}
-        image2={imgs[0]}
-        image3={imgs[1]}
-        image4={imgs[3]}
-        image5={imgs[4]}
-        onFilesClick={() => setIsFileExplorerOpen(true)}
-        onChromeClick={() => setChromeOpen(true)}
-        onAboutClick={() => setAboutOpen(true)}
+        launcherIcon={launcherIcon}
+        apps={apps}
+        onLauncherToggle={toggleLauncher}
         onLogout={onLogout}
       />
 
-      {/* <ThreeModel/> */}
     </>
   );
 }

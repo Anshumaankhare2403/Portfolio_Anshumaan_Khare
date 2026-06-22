@@ -1,24 +1,17 @@
 
-function App_icons({ image, title,onClick }) {
-
+function App_icons({ image, title, onClick }) {
   return (
-    <>
-      <div
-        className="pt-2 w-24 flex flex-col items-center cursor-pointer hover:bg-sky-700 hover:rounded-sm"
-        onClick={onClick}
-      >
-        <img
-          src={image}
-          alt={title}
-          className="w-13 h-13 object-contain"
-        />
+    <button
+      type="button"
+      className="flex w-24 flex-col items-center rounded-lg pt-2 transition hover:bg-sky-700/70 focus:bg-sky-700/70 focus:outline-none"
+      onClick={onClick}
+    >
+      <img src={image} alt={title} className="h-14 w-14 object-contain" />
 
-        <span className="mt-2 text-white text-xs text-center drop-shadow-md">
-          {title}
-        </span>
-      </div>
-
-    </>
+      <span className="mt-2 text-center text-xs text-white drop-shadow-md">
+        {title}
+      </span>
+    </button>
   );
 }
 
