@@ -3,22 +3,55 @@ import { motion } from "framer-motion";
 import {
   IoArrowBack,
   IoClose,
+  IoPhonePortraitOutline,
   IoRemove,
   IoSquareOutline,
 } from "react-icons/io5";
 import { GoPin } from "react-icons/go";
-import { FaCss3Alt } from "react-icons/fa";
-import { VscVscode } from "react-icons/vsc";
 import {
-  SiAndroidstudio,
+  FaAws,
+  FaBug,
+  FaClock,
+  FaCloud,
+  FaCode,
+  FaComments,
+  FaCss3Alt,
+  FaDatabase,
+  FaExchangeAlt,
+  FaKey,
+  FaLayerGroup,
+  FaMobileAlt,
+  FaNetworkWired,
+  FaPuzzlePiece,
+  FaRegHandshake,
+  FaRocket,
+  FaServer,
+} from "react-icons/fa";
+import { VscTerminal, VscVscode } from "react-icons/vsc";
+import {
+  SiAxios,
+  SiBootstrap,
+  SiDart,
+  SiExpress,
+  SiFirebase,
+  SiFlutter,
+  SiFramer,
   SiGit,
   SiGithub,
   SiHtml5,
   SiJavascript,
+  SiJsonwebtokens,
+  SiLinux,
+  SiMongodb,
+  SiMongoose,
+  SiMui,
+  SiMysql,
+  SiNetlify,
   SiNodedotjs,
+  SiPostman,
   SiReact,
   SiTailwindcss,
-  SiVite,
+  SiVercel,
 } from "react-icons/si";
 
 import desktopIcon from "../assets/color-lightblue/user-home.svg";
@@ -42,19 +75,116 @@ import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.
 const resumePdf =
   "https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview";
 
-const skills = [
-  { name: "React", icon: SiReact, color: "#61DAFB" },
-  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
-  { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
-  { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
-  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
-  { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-  { name: "Git", icon: SiGit, color: "#F05032" },
-  { name: "GitHub", icon: SiGithub, color: "#FFFFFF" },
-  { name: "Vite", icon: SiVite, color: "#BD34FE" },
-  { name: "VS Code", icon: VscVscode, color: "#23A8F2" },
-  { name: "Android Studio", icon: SiAndroidstudio, color: "#3DDC84" },
+const skillGroups = [
+  {
+    title: "Programming Languages",
+    items: [
+      { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+      { name: "Dart", icon: SiDart, color: "#0175C2" },
+    ],
+  },
+  {
+    title: "Frontend",
+    items: [
+      { name: "React.js", icon: SiReact, color: "#61DAFB" },
+      { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
+      { name: "CSS3", icon: FaCss3Alt, color: "#1572B6" },
+      { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "Bootstrap", icon: SiBootstrap, color: "#7952B3" },
+    ],
+  },
+  {
+    title: "Backend",
+    items: [
+      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+      { name: "Express.js", icon: SiExpress, color: "#FFFFFF" },
+      { name: "REST APIs", icon: FaExchangeAlt, color: "#38BDF8" },
+    ],
+  },
+  {
+    title: "Mobile Development",
+    items: [{ name: "Flutter", icon: SiFlutter, color: "#02569B" }],
+  },
+  {
+    title: "Databases",
+    items: [
+      { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+      { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+      { name: "Firebase", icon: SiFirebase, color: "#FFCA28" },
+    ],
+  },
+  {
+    title: "Cloud & DevOps",
+    items: [
+      { name: "AWS EC2", icon: FaAws, color: "#FF9900" },
+      { name: "AWS S3", icon: FaAws, color: "#FF9900" },
+      { name: "AWS VPC", icon: FaNetworkWired, color: "#FF9900" },
+      { name: "AWS IAM", icon: FaKey, color: "#FF9900" },
+      { name: "AWS CloudWatch", icon: FaCloud, color: "#FF9900" },
+      { name: "AWS SNS", icon: FaComments, color: "#FF9900" },
+      { name: "AWS ALB", icon: FaServer, color: "#FF9900" },
+      { name: "AWS NAT Gateway", icon: FaNetworkWired, color: "#FF9900" },
+      { name: "Netlify", icon: SiNetlify, color: "#00C7B7" },
+      { name: "Vercel", icon: SiVercel, color: "#FFFFFF" },
+    ],
+  },
+  {
+    title: "Tools & Platforms",
+    items: [
+      { name: "Git", icon: SiGit, color: "#F05032" },
+      { name: "GitHub", icon: SiGithub, color: "#FFFFFF" },
+      { name: "Postman", icon: SiPostman, color: "#FF6C37" },
+      { name: "Linux", icon: SiLinux, color: "#FCC624" },
+      { name: "WSL2", icon: VscTerminal, color: "#4ADE80" },
+      { name: "VS Code", icon: VscVscode, color: "#23A8F2" },
+    ],
+  },
+  {
+    title: "Libraries & Frameworks",
+    items: [
+      { name: "Framer Motion", icon: SiFramer, color: "#F5A9FF" },
+      { name: "Axios", icon: SiAxios, color: "#5A29E4" },
+      { name: "Mongoose", icon: SiMongoose, color: "#880000" },
+      { name: "Material UI", icon: SiMui, color: "#007FFF" },
+    ],
+  },
+  {
+    title: "Expertise",
+    items: [
+      { name: "MERN Stack Development", icon: FaLayerGroup, color: "#61DAFB" },
+      { name: "Flutter Development", icon: FaMobileAlt, color: "#42A5F5" },
+      { name: "Full Stack Development", icon: FaCode, color: "#A78BFA" },
+      { name: "API Integration", icon: FaPuzzlePiece, color: "#38BDF8" },
+      {
+        name: "Authentication & Authorization (JWT)",
+        icon: SiJsonwebtokens,
+        color: "#D63AFF",
+      },
+      { name: "Database Design", icon: FaDatabase, color: "#47A248" },
+      { name: "CRUD Operations", icon: FaExchangeAlt, color: "#F59E0B" },
+      {
+        name: "Responsive Web Design",
+        icon: IoPhonePortraitOutline,
+        color: "#38BDF8",
+      },
+      { name: "Performance Optimization", icon: FaRocket, color: "#F43F5E" },
+    ],
+  },
+  {
+    title: "Soft Skills",
+    items: [
+      { name: "Problem Solving", icon: FaPuzzlePiece, color: "#FBBF24" },
+      { name: "Communication", icon: FaComments, color: "#60A5FA" },
+      { name: "Team Collaboration", icon: FaRegHandshake, color: "#34D399" },
+      { name: "Debugging", icon: FaBug, color: "#F87171" },
+      { name: "Time Management", icon: FaClock, color: "#C084FC" },
+    ],
+  },
 ];
+
+const skills = skillGroups.flatMap((group) =>
+  group.items.map((skill) => ({ ...skill, category: group.title }))
+);
 
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
@@ -241,7 +371,8 @@ const folderContents = {
     name: skill.name,
     skillIcon: skill.icon,
     color: skill.color,
-    description: `${skill.name} is part of my development toolkit.`,
+    category: skill.category,
+    description: `${skill.name} — ${skill.category}`,
   })),
 };
 
@@ -418,36 +549,76 @@ function FileExp({
             </div>
           ) : (
             <div className="flex gap-5">
-              <div className="grid min-w-0 flex-1 grid-cols-[repeat(auto-fill,minmax(130px,1fr))] content-start gap-4">
-                {(folderContents[activeFolder] || []).map((item) => (
-                  <button
-                    type="button"
-                    key={item.name}
-                    onClick={() => openItem(item)}
-                    className={`flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:outline-none ${
-                      selectedPreview?.name === item.name
-                        ? "border-blue-400/40 bg-blue-500/20"
-                        : "border-transparent"
-                    }`}
-                  >
-                    {item.skillIcon ? (
-                      <item.skillIcon
-                        className="h-16 w-16"
-                        style={{ color: item.color }}
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <img
-                        src={item.icon}
-                        alt=""
-                        className="h-16 w-16 object-contain"
-                      />
-                    )}
-                    <span className="w-full break-words text-sm">
-                      {item.name}
-                    </span>
-                  </button>
-                ))}
+              <div className="min-w-0 flex-1">
+                {activeFolder === "Skills" ? (
+                  <div className="space-y-8">
+                    {skillGroups.map((group) => (
+                      <section key={group.title}>
+                        <h3 className="mb-3 border-b border-white/10 pb-2 text-sm font-semibold uppercase tracking-wider text-blue-300">
+                          {group.title}
+                        </h3>
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-4">
+                          {group.items.map((item) => {
+                            const SkillIcon = item.icon;
+
+                            return (
+                              <button
+                                type="button"
+                                key={item.name}
+                                onClick={() =>
+                                  openItem({
+                                    ...item,
+                                    skillIcon: item.icon,
+                                    category: group.title,
+                                    description: `${item.name} — ${group.title}`,
+                                  })
+                                }
+                                className={`flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:outline-none ${
+                                  selectedPreview?.name === item.name
+                                    ? "border-blue-400/40 bg-blue-500/20"
+                                    : "border-transparent"
+                                }`}
+                              >
+                                <SkillIcon
+                                  className="h-16 w-16"
+                                  style={{ color: item.color }}
+                                  aria-hidden="true"
+                                />
+                                <span className="w-full break-words text-sm">
+                                  {item.name}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </section>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] content-start gap-4">
+                    {(folderContents[activeFolder] || []).map((item) => (
+                      <button
+                        type="button"
+                        key={item.name}
+                        onClick={() => openItem(item)}
+                        className={`flex min-h-36 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition hover:border-white/10 hover:bg-white/10 focus:outline-none ${
+                          selectedPreview?.name === item.name
+                            ? "border-blue-400/40 bg-blue-500/20"
+                            : "border-transparent"
+                        }`}
+                      >
+                        <img
+                          src={item.icon}
+                          alt=""
+                          className="h-16 w-16 object-contain"
+                        />
+                        <span className="w-full break-words text-sm">
+                          {item.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {selectedPreview && (
