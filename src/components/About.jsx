@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
 
-import AkResume from "../assets/resume/anshumaanKhare.pdf"
+// import AkResume from "../assets/resume/anshumaanKhare.pdf"
 
 function About({onClose}) {
   return (
@@ -36,7 +36,7 @@ function About({onClose}) {
 
       <div className="h-[calc(100%-40px)]">
   <iframe
-    src={AkResume}
+    src="https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview"
     title="Resume"
     className="w-full h-full "
   />
