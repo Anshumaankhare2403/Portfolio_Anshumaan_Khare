@@ -22,7 +22,7 @@ import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).sv
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
-import resume from "../assets/resume/anshumaanKhare.pdf";
+import resume from "https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview";
 
 const folders = [
   { name: "Desktop", location: "Anshumaan - Personal", icon: desktopIcon },
