@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { FaWifi, FaVolumeUp, FaBatteryThreeQuarters } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 
 function Dock({
   image1,
@@ -10,7 +11,8 @@ function Dock({
   image5,
   onFilesClick,
   onChromeClick,
-   onAboutClick,
+  onAboutClick,
+  onLogout,
 }) {
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -25,7 +27,7 @@ function Dock({
   return (
     <div
       className="absolute bottom-4 left-1/2 -translate-x-1/2
-                 w-130 h-16 rounded-2xl
+                 w-[min(94vw,580px)] h-16 rounded-2xl
                  bg-white/10 backdrop-blur-xl
                  border border-white/20 shadow-lg"
     >
@@ -61,7 +63,7 @@ function Dock({
         </div>
 
         {/* System Tray */}
-        <div className="flex items-center gap-4 text-white">
+        <div className="flex items-center gap-3 text-white">
           <FaWifi size={17} />
           <FaVolumeUp size={17} />
           <FaBatteryThreeQuarters size={17} />
@@ -81,6 +83,16 @@ function Dock({
               })}
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={onLogout}
+            title="Sign out"
+            aria-label="Sign out"
+            className="grid h-12 w-12 place-items-center rounded-lg text-xl transition hover:bg-white/15 hover:text-red-300"
+          >
+            <IoLogOutOutline />
+          </button>
         </div>
       </div>
     </div>

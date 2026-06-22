@@ -26,7 +26,7 @@ const svgs1 = import.meta.glob("../assets/scalable/*.svg", {
 
 const imgs = Object.values(svgs1);
 
-function HomePage() {
+function HomePage({ onLogout }) {
   const [isFileExplorerOpen, setIsFileExplorerOpen] = useState(false);
   const [isVSCodeOpen, setIsVSCodeOpen] = useState(false);
   const [isYtOpen, setYtOpen] = useState(false);
@@ -121,6 +121,7 @@ function HomePage() {
         onFilesClick={() => setIsFileExplorerOpen(true)}
         onChromeClick={() => setChromeOpen(true)}
         onAboutClick={() => setAboutOpen(true)}
+        onLogout={onLogout}
       />
 
       {/* <ThreeModel/> */}
