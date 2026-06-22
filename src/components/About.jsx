@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
 
-import AkResume from "../assets/resume/anshumaanKhare.pdf"
+// import AkResume from "../assets/resume/anshumaanKhare.pdf"
 
 function About({onClose}) {
   return (
@@ -35,11 +35,11 @@ function About({onClose}) {
       </div>
 
       <div className="h-[calc(100%-40px)]">
-  <iframe
+  {/* <iframe
     src={AkResume}
     title="Resume"
     className="w-full h-full "
-  />
+  /> */}
 </div>
       
     </motion.div>
