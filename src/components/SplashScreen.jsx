@@ -3,23 +3,31 @@ import Logo from "../assets/This PC/Windows11.svg";
 
 function SplashScreen() {
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black/20 backdrop-blur-2xl">
-      <img src={Logo} alt="Windows 11" className="w-40 h-40 object-contain" />
+    <div
+      className="
+        fixed inset-0 z-[9999]
+        flex flex-col items-center justify-center
+        bg-black
+      "
+    >
+      <img
+        src={Logo}
+        alt="Windows 11"
+        className="h-40 w-40 object-contain"
+      />
 
-      <div className="mt-12">
+      <div className="mt-10">
         <ClipLoader
           color="#ffffff"
-          size={50}
-          cssOverride={{
-            font_weight: "900",
-          }}
+          size={40}
           speedMultiplier={0.8}
         />
       </div>
-      <div className="flex flex-row-20 justify-items-start">
-        <p>
-            Developed By : Anshumaan Khare
-        </p>
+
+      <div className="absolute bottom-8 text-center text-sm text-gray-400">
+        Developed By <span className="font-semibold text-white">
+          Anshumaan Khare
+        </span>
       </div>
     </div>
   );
