@@ -8,8 +8,10 @@ import {
   IoWifi,
 } from "react-icons/io5";
 
+import { FaUser } from "react-icons/fa";
+
 import Logo from "../assets/This PC/Windows11.svg";
-import userAvatar from "../assets/color-lightblue/user-identity.svg";
+
 import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
 
 function SplashScreen({ onSignIn }) {
@@ -71,21 +73,19 @@ function SplashScreen({ onSignIn }) {
 
       <div className="relative flex h-full min-h-[560px] flex-col items-center">
         <header className="pt-[6vh] text-center drop-shadow-lg">
-          <p className="text-6xl font-light tracking-tight sm:text-7xl">{time}</p>
-          <p className="mt-2 text-lg font-light sm:text-xl">{date}</p>
+          <p className="text-6xl font-bold tracking-tight sm:text-7xl">{time}</p>
+          <p className="mt-2 text-lg font-bold sm:text-xl">{date}</p>
         </header>
 
         <main className="flex flex-1 items-center justify-center pb-[8vh]">
           <div className="w-[min(88vw,320px)] text-center">
-            <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/90 shadow-2xl sm:h-36 sm:w-36">
-              <img
-                src={userAvatar}
-                alt="Users"
-                className="h-[82%] w-[82%] object-contain"
-              />
-            </div>
+            <FaUser className="h-40 w-40 object-containv mx-auto flex  items-center justify-center overflow-hidden"/>
+            {/* <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/90 shadow-2xl sm:h-36 sm:w-36">
+              
+              
+            </div> */}
 
-            <h1 className="mt-5 text-2xl font-medium tracking-tight sm:text-3xl">
+            <h1 className="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">
               User
             </h1>
 
@@ -119,7 +119,7 @@ function SplashScreen({ onSignIn }) {
 
               <button
                 type="submit"
-                className="mt-4 rounded px-3 py-1 text-sm font-medium text-white/90 drop-shadow hover:bg-white/10 hover:text-white"
+                className="mt-4 rounded px-3 py-1 text-sm font-bold text-white/90 drop-shadow hover:bg-white/10 hover:text-white"
               >
                 Sign in to explore my portfolio
               </button>

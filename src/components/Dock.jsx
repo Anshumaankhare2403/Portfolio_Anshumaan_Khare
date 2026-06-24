@@ -84,15 +84,12 @@ function Dock({
             </div>
           </div>
 
-          <button
-            type="button"
+          <dev
             onClick={onLogout}
-            title="Sign out"
-            aria-label="Sign out"
             className="grid h-13 w-13 place-items-center rounded-lg text-xl transition hover:bg-white/15 hover:text-red-300"
           >
             <IoLogOutOutline />
-          </button>
+          </dev>
         </div>
       </div>
     </div>
