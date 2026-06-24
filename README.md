@@ -253,4 +253,3 @@ The interface is designed primarily for desktop and laptop screens.
 
 Software Developer
 
-Master of Computer Applications, JAIN (Deemed-to-be University)
