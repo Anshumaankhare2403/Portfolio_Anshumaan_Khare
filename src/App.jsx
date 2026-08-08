@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import SplashScreen from "./components/SplashScreen";
 import HomePage from "./Pages/HomePage";
-import wallpaper from "./assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+// import wallpaper from "./assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
 import HomepageForMobile from "./Pages/HomepageForMobile";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
