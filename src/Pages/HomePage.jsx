@@ -5,7 +5,6 @@ import App_icons from "../components/App_icons";
 import AppMenu from "../components/AppMenu";
 import Dock from "../components/Dock";
 import FileExp from "../components/FileExp";
-import VSCodeWindow from "../components/VSCodeWindow";
 import YtMusice from "../components/YtMusice";
 import Terminal from "../components/Terminal";
 import Chrome from "../components/Chrome";
@@ -15,13 +14,11 @@ import launcherIcon from "../assets/This PC/Windows11.svg";
 import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
 import aboutIcon from "../assets/scalable/users.svg";
 import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
-import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 
 function HomePage({ onLogout }) {
   const [isFileExplorerOpen, setIsFileExplorerOpen] = useState(false);
-  const [isVSCodeOpen, setIsVSCodeOpen] = useState(false);
   const [isYtOpen, setYtOpen] = useState(false);
   const [isTerminalOpen, setTerminalOpen] = useState(false);
   const [isChromeOpen, setChromeOpen] = useState(false);
@@ -67,7 +64,6 @@ function HomePage({ onLogout }) {
   const openFileExplorer = () => setIsFileExplorerOpen(true);
   const openAbout = () => setAboutOpen(true);
   const openChrome = () => setChromeOpen(true);
-  const openVSCode = () => setIsVSCodeOpen(true);
   const openYouTube = () => setYtOpen(true);
   const openTerminal = () => setTerminalOpen(true);
 
@@ -92,13 +88,6 @@ function HomePage({ onLogout }) {
       shortTitle: "Chrome",
       image: chromeIcon,
       open: openChrome,
-    },
-    {
-      id: "vscode",
-      title: "Visual Studio Code",
-      shortTitle: "VS Code",
-      image: vscodeIcon,
-      open: openVSCode,
     },
     {
       id: "youtube",
@@ -162,7 +151,6 @@ function HomePage({ onLogout }) {
             onClose={() => setIsFileExplorerOpen(false)}
             onOpenAbout={openAbout}
             onOpenChrome={openChrome}
-            onOpenVSCode={openVSCode}
             onOpenYouTube={openYouTube}
             onOpenTerminal={openTerminal}
           />
@@ -170,9 +158,6 @@ function HomePage({ onLogout }) {
       </AnimatePresence>
 
       <AnimatePresence>
-        {isVSCodeOpen && (
-          <VSCodeWindow key="vscode" onClose={() => setIsVSCodeOpen(false)} />
-        )}
       </AnimatePresence>
 
       <AnimatePresence>

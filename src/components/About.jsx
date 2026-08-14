@@ -3,7 +3,7 @@ import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
 
 // import AkResume from "../assets/resume/anshumaanKhare.pdf"
 
-function About({onClose}) {
+function About({ onClose, mobile = false }) {
   return (
     <motion.div
       drag
@@ -11,14 +11,13 @@ function About({onClose}) {
       initial={{ x: 120, y: 50, opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="fixed left-10 top-10 z-30
-           h-[85vh] w-[75vw]
+      className={`fixed z-30
+           ${mobile ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app" : "left-10 top-10 h-[85vh] w-[75vw] rounded-2xl"}
            overflow-hidden
-           rounded-2xl
            bg-black/20
            backdrop-blur-2xl
            border border-white/20
-           shadow-[0_8px_32px_rgba(0,0,0,0.37)]"
+           shadow-[0_8px_32px_rgba(0,0,0,0.37)]`}
     >
       {/* Top Bar */}
       <div className="flex h-10 items-center border-b border-white/10 bg-black/20 px-3 text-white">

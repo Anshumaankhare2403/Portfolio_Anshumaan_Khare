@@ -3,9 +3,16 @@ import { motion } from "framer-motion";
 import {
   IoArrowBack,
   IoClose,
+  IoDocumentOutline,
+  IoEllipsisVertical,
+  IoFolderOpenOutline,
+  IoGridOutline,
   IoPhonePortraitOutline,
   IoRemove,
+  IoSearch,
+  IoShareSocialOutline,
   IoSquareOutline,
+  IoTrashOutline,
 } from "react-icons/io5";
 import { GoPin } from "react-icons/go";
 import {
@@ -65,7 +72,6 @@ import picturesIcon from "../assets/color-lightblue/folder-images.svg";
 import musicIcon from "../assets/color-lightblue/folder-music.svg";
 import videosIcon from "../assets/color-lightblue/folder-videos.svg";
 import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
-import vscodeIcon from "../assets/scalable/vscode.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
@@ -248,7 +254,6 @@ const folderContents = {
     { name: "Music", icon: musicIcon, section: "Music" },
     { name: "Videos", icon: videosIcon, section: "Videos" },
     { name: "About Me", icon: userIcon, app: "about" },
-    { name: "Visual Studio Code", icon: vscodeIcon, app: "vscode" },
     { name: "Chrome", icon: chromeIcon, app: "chrome" },
     { name: "YouTube Music", icon: youtubeIcon, app: "youtube" },
     { name: "Terminal", icon: terminalIcon, app: "terminal" },
@@ -274,12 +279,6 @@ const folderContents = {
     },
   ],
   Downloads: [
-    {
-      name: "Portfolio Source",
-      icon: codeIcon,
-      app: "vscode",
-      description: "Open the portfolio source workspace in Visual Studio Code.",
-    },
     {
       name: "Resume Copy.pdf",
       icon: documentsIcon,
@@ -335,12 +334,6 @@ const folderContents = {
   ],
   Projects: [
     {
-      name: "Portfolio Website",
-      icon: codeIcon,
-      app: "vscode",
-      description: "Open this portfolio project in Visual Studio Code.",
-    },
-    {
       name: "Live Portfolio",
       icon: chromeIcon,
       app: "chrome",
@@ -379,12 +372,6 @@ const folderContents = {
       icon: picturesIcon,
       preview: wallpaperImage,
       description: "Desktop wallpaper asset.",
-    },
-    {
-      name: "Source Files",
-      icon: codeIcon,
-      app: "vscode",
-      description: "Open project source files in Visual Studio Code.",
     },
   ],
   Screenshots: [
@@ -439,9 +426,9 @@ function FileExp({
   onClose,
   onOpenAbout,
   onOpenChrome,
-  onOpenVSCode,
   onOpenYouTube,
   onOpenTerminal,
+  mobile = false,
 }) {
   const [maximized, setMaximized] = useState(false);
   const [activeFolder, setActiveFolder] = useState(null);
@@ -450,7 +437,6 @@ function FileExp({
   const appActions = {
     about: onOpenAbout,
     chrome: onOpenChrome,
-    vscode: onOpenVSCode,
     youtube: onOpenYouTube,
     terminal: onOpenTerminal,
   };
@@ -484,6 +470,18 @@ function FileExp({
     setSelectedPreview(null);
   };
 
+  if (mobile) {
+    return (
+      <MobileFileExplorer
+        onClose={onClose}
+        onOpenAbout={onOpenAbout}
+        onOpenChrome={onOpenChrome}
+        onOpenYouTube={onOpenYouTube}
+        onOpenTerminal={onOpenTerminal}
+      />
+    );
+  }
+
   return (
     <motion.div
       drag
@@ -492,7 +490,9 @@ function FileExp({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       className={`fixed pointer-events-auto flex flex-col overflow-hidden border border-white/20 bg-black/20 text-white shadow-2xl backdrop-blur-3xl ${
-        maximized
+        mobile
+          ? "inset-0 z-50 h-[100svh] w-full rounded-none mobile-file-explorer"
+          : maximized
           ? "inset-0 z-50 rounded-none"
           : "absolute left-10 top-10 h-[70vh] w-[60vw] rounded-2xl"
       }`}
@@ -766,3 +766,73 @@ function FileExp({
 }
 
 export default FileExp;
+
+function MobileFileExplorer({
+  onClose,
+  onOpenAbout,
+  onOpenChrome,
+  onOpenYouTube,
+  onOpenTerminal,
+}) {
+  const [activeFolder, setActiveFolder] = useState(null);
+  const [activeTab, setActiveTab] = useState("Browse");
+  const [query, setQuery] = useState("");
+  const appActions = { about: onOpenAbout, chrome: onOpenChrome, youtube: onOpenYouTube, terminal: onOpenTerminal };
+  const contents = activeFolder ? folderContents[activeFolder] || [] : folders;
+  const filteredContents = contents.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+
+  const openItem = (item) => {
+    if (Object.prototype.hasOwnProperty.call(folderContents, item.name)) {
+      setActiveFolder(item.name);
+      return;
+    }
+    if (item.app && appActions[item.app]) {
+      appActions[item.app]();
+      return;
+    }
+    if (item.url) {
+      window.open(item.url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (Object.prototype.hasOwnProperty.call(item, "section")) setActiveFolder(item.section);
+  };
+
+  return (
+    <section className="google-files" aria-label="Files">
+      <header className="google-files-header">
+        <button onClick={activeFolder ? () => setActiveFolder(parentFolders[activeFolder] || null) : onClose} aria-label={activeFolder ? "Back" : "Close Files"}>
+          <IoArrowBack />
+        </button>
+        <h2>{activeFolder || "Files"}</h2>
+        <button aria-label="More options"><IoEllipsisVertical /></button>
+      </header>
+
+      <label className="google-files-search"><IoSearch /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search in Files" /></label>
+
+      {activeTab === "Browse" ? <>
+        {!activeFolder ? <>
+          <p className="google-files-label">Categories</p>
+          <div className="google-files-categories"><button><IoDocumentOutline /> Documents</button><button><IoGridOutline /> Images</button><button><IoFolderOpenOutline /> Downloads</button></div>
+          <p className="google-files-label">Recent</p>
+        </> : <p className="google-files-label">{activeFolder === "Skills" ? "Development skills" : "Files"}</p>}
+        <div className="google-files-list">
+          {filteredContents.map((item) => {
+            const Icon = item.skillIcon;
+            return <button key={item.name} onClick={() => openItem(item)} className="google-file-row">
+              <span className="google-file-icon">{item.icon ? <img src={item.icon} alt="" /> : Icon ? <Icon style={{ color: item.color }} /> : <IoDocumentOutline />}</span>
+              <span><strong>{item.name}</strong><small>{item.category || item.location || item.description || (item.section ? "Folder" : "Portfolio file")}</small></span>
+              <IoEllipsisVertical />
+            </button>;
+          })}
+          {filteredContents.length === 0 && <p className="google-files-empty">No files found</p>}
+        </div>
+      </> : <div className="google-files-empty">{activeTab === "Clean" ? "No files need cleaning" : "Shared files will appear here"}</div>}
+
+      <nav className="google-files-nav" aria-label="Files navigation">
+        <button className={activeTab === "Clean" ? "active" : ""} onClick={() => setActiveTab("Clean")}><IoTrashOutline /><span>Clean</span></button>
+        <button className={activeTab === "Browse" ? "active" : ""} onClick={() => setActiveTab("Browse")}><IoFolderOpenOutline /><span>Browse</span></button>
+        <button className={activeTab === "Share" ? "active" : ""} onClick={() => setActiveTab("Share")}><IoShareSocialOutline /><span>Share</span></button>
+      </nav>
+    </section>
+  );
+}

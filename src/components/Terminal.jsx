@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
+import { IoChevronBack, IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
 
 const USER_NAME = "anshumaan";
 const HOST_NAME = "portfolio-ubuntu";
@@ -347,7 +347,7 @@ function formatLsEntry(name, node, longFormat) {
   )} Jun 22 ${name}`;
 }
 
-function Terminal({ onClose }) {
+function Terminal({ onClose, mobile = false }) {
   const [maximized, setMaximized] = useState(false);
   const [fileSystem, setFileSystem] = useState(() => createInitialFileSystem());
   const [cwdSegments, setCwdSegments] = useState(HOME_SEGMENTS);
@@ -1014,38 +1014,48 @@ function Terminal({ onClose }) {
 
   return (
     <motion.div
-      drag={!maximized}
+      drag={mobile ? false : !maximized}
       dragMomentum={false}
       initial={{ x: 120, y: 50, opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       className={`fixed z-30 overflow-hidden border border-white/20 bg-black/35 text-[#d7f7cf] shadow-[0_8px_32px_rgba(0,0,0,0.37)] backdrop-blur-2xl ${
-        maximized
+        mobile
+          ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app mobile-terminal-app"
+          : maximized
           ? "inset-4 rounded-2xl"
           : "left-10 top-10 h-[68vh] w-[62vw] rounded-2xl"
       }`}
       onMouseDown={() => inputRef.current?.focus()}
     >
-      <div className="flex h-10 items-center border-b border-white/10 bg-black/30 px-3 text-white">
-        <span className="flex-1 text-sm">Terminal</span>
-        <button className="p-2 text-sm hover:bg-white/10" aria-label="Minimize">
-          <IoRemove />
-        </button>
-        <button
-          className="p-2 text-xs hover:bg-white/10"
-          aria-label={maximized ? "Restore" : "Maximize"}
-          onClick={() => setMaximized((current) => !current)}
-        >
-          <IoSquareOutline />
-        </button>
-        <button onClick={onClose} className="p-2 hover:bg-red-600" aria-label="Close">
-          <IoClose />
-        </button>
-      </div>
+      {mobile ? (
+        <div className="ios-terminal-header">
+          <button onClick={onClose} aria-label="Back to home"><IoChevronBack /></button>
+          <div><span>Terminal</span><small>portfolio shell</small></div>
+          <span className="ios-terminal-status">LIVE</span>
+        </div>
+      ) : (
+        <div className="flex h-10 items-center border-b border-white/10 bg-black/30 px-3 text-white">
+          <span className="flex-1 text-sm">Terminal</span>
+          <button className="p-2 text-sm hover:bg-white/10" aria-label="Minimize">
+            <IoRemove />
+          </button>
+          <button
+            className="p-2 text-xs hover:bg-white/10"
+            aria-label={maximized ? "Restore" : "Maximize"}
+            onClick={() => setMaximized((current) => !current)}
+          >
+            <IoSquareOutline />
+          </button>
+          <button onClick={onClose} className="p-2 hover:bg-red-600" aria-label="Close">
+            <IoClose />
+          </button>
+        </div>
+      )}
 
       <div
         ref={scrollRef}
-        className="h-[calc(100%-2.5rem)] overflow-y-auto px-4 py-3 font-mono text-sm leading-6"
+        className={`${mobile ? "ios-terminal-console" : "h-[calc(100%-2.5rem)] px-4 py-3"} overflow-y-auto font-mono text-sm leading-6`}
       >
         {lines.map((line, index) => (
           <div key={`${line.type}-${index}`} className="whitespace-pre-wrap break-words">

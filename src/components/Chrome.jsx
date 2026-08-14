@@ -11,7 +11,7 @@ import {
   IoSquareOutline,
 } from "react-icons/io5";
 
-function Chrome({ onClose }) {
+function Chrome({ onClose, mobile = false }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
@@ -52,16 +52,15 @@ function Chrome({ onClose }) {
       initial={{ x: 100, y: 40, opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="
-        fixed top-10 left-10 z-50
-        h-[85vh] w-[85vw]
+      className={`
+        fixed z-50
+        ${mobile ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app mobile-browser-app" : "top-10 left-10 h-[85vh] w-[85vw] rounded-2xl"}
         overflow-hidden
-        rounded-2xl
         bg-black/20
         backdrop-blur-2xl
         border border-white/10
         shadow-2xl
-      "
+      `}
     >
       {/* Window Header */}
       <div className="flex h-10 items-center border-b border-white/10 bg-black/20 px-3 text-white">
@@ -104,11 +103,11 @@ function Chrome({ onClose }) {
       <div className="h-[calc(100%-88px)] overflow-y-auto p-8 text-white">
         {results.length === 0 ? (
           <div className="flex flex-col items-center pt-20">
-            <h1 className="mb-10 text-7xl font-semibold">
+            <h1 className="mb-10 text-5xl font-semibold sm:text-7xl">
               Google
             </h1>
 
-            <div className="flex w-[700px] items-center rounded-full bg-white/10 px-5 py-3">
+            <div className="flex w-full max-w-[700px] items-center rounded-full bg-white/10 px-5 py-3">
               <IoSearch className="mr-3" />
 
               <input

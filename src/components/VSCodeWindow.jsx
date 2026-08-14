@@ -3,7 +3,7 @@ import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
 import { VscFiles, VscSearch, VscSourceControl } from "react-icons/vsc";
 import Editor from "@monaco-editor/react";
 
-function VSCodeWindow({ onClose }) {
+function VSCodeWindow({ onClose, mobile = false }) {
   return (
     <motion.div
       drag
@@ -11,14 +11,13 @@ function VSCodeWindow({ onClose }) {
       initial={{ x: 120, y: 50, opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
-      className="fixed left-10 top-10 z-30
-           h-[80vh] w-[75vw]
+      className={`fixed z-30
+           ${mobile ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app" : "left-10 top-10 h-[80vh] w-[75vw] rounded-2xl"}
            overflow-hidden
-           rounded-2xl
            bg-white/10
            backdrop-blur-2xl
            border border-white/20
-           shadow-[0_8px_32px_rgba(0,0,0,0.37)]"
+           shadow-[0_8px_32px_rgba(0,0,0,0.37)]`}
     >
       {/* Top Bar */}
       <div className="flex h-10 items-center bg-[#181818] px-3 text-white">
@@ -36,14 +35,14 @@ function VSCodeWindow({ onClose }) {
 
       <div className="flex h-[calc(100%-40px)]">
         {/* Activity Bar */}
-        <div className="flex w-14 flex-col items-center gap-6 bg-[#181818] py-4 text-gray-400">
+        <div className="hidden w-14 flex-col items-center gap-6 bg-[#181818] py-4 text-gray-400 sm:flex">
           <VscFiles size={22} />
           <VscSearch size={22} />
           <VscSourceControl size={22} />
         </div>
 
         {/* Explorer */}
-        <div className="w-60 bg-[#252526] text-white">
+        <div className="hidden w-60 bg-[#252526] text-white sm:block">
           <div className="border-b border-gray-700 p-3 text-xs font-semibold">
             EXPLORER
           </div>

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
+import { IoChevronDown, IoClose, IoHeartOutline, IoPause, IoPlay, IoRemove, IoSquareOutline, IoVolumeHigh } from "react-icons/io5";
 
-function YtMusice({ onClose }) {
+function YtMusice({ onClose, mobile = false }) {
   const [videoId, setVideoId] = useState("jfKfPfyJRdk");
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const songs = [
     
@@ -104,6 +105,10 @@ function YtMusice({ onClose }) {
     },
   ];
 
+  if (mobile) {
+    return <MobileMusicPlayer songs={songs} videoId={videoId} isPlaying={isPlaying} onClose={onClose} onSelect={(id) => { setVideoId(id); setIsPlaying(true); }} onPlayToggle={() => setIsPlaying((current) => !current)} onPlaybackChange={setIsPlaying} />;
+  }
+
   return (
     <motion.div
       drag
@@ -122,14 +127,13 @@ function YtMusice({ onClose }) {
         opacity: 0,
         scale: 0.9,
       }}
-      className="fixed left-10 top-10 z-30
-           h-[75vh] w-[75vw]
+      className={`fixed z-30
+           ${mobile ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app" : "left-10 top-10 h-[75vh] w-[75vw] rounded-2xl"}
            overflow-hidden
-           rounded-2xl
            bg-black/20
            backdrop-blur-2xl
            border border-white/20
-           shadow-[0_8px_32px_rgba(0,0,0,0.37)]"
+           shadow-[0_8px_32px_rgba(0,0,0,0.37)]`}
     >
       {/* Header */}
       <div className="flex h-10 items-center border-white/10 bg-black/20 px-3">
@@ -148,7 +152,7 @@ function YtMusice({ onClose }) {
 
       <div className="flex h-[calc(100%-40px)]">
         {/* Playlist */}
-        <div className="w-72 overflow-y-auto border-white/10 bg-black/20 text-white">
+        <div className="w-28 overflow-y-auto border-white/10 bg-black/20 text-white sm:w-72">
           {songs.map((song) => (
             <button
               key={song.videoId}
@@ -161,7 +165,7 @@ function YtMusice({ onClose }) {
                 className="h-14 w-14 rounded object-cover"
               />
 
-              <span className="text-sm">{song.title}</span>
+              <span className="hidden text-sm sm:block">{song.title}</span>
             </button>
           ))}
         </div>
@@ -182,3 +186,98 @@ function YtMusice({ onClose }) {
 }
 
 export default YtMusice;
+
+function MobileMusicPlayer({ songs, videoId, isPlaying, onClose, onSelect, onPlayToggle, onPlaybackChange }) {
+  const currentSong = songs.find((song) => song.videoId === videoId) || songs[0];
+  const playerRef = useRef(null);
+  const [playerReady, setPlayerReady] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  const sendPlayerCommand = (func, args = []) => {
+    playerRef.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+  };
+
+  useEffect(() => {
+    if (!playerReady) return;
+    sendPlayerCommand(isPlaying ? "playVideo" : "pauseVideo");
+  }, [isPlaying, playerReady, videoId]);
+
+  useEffect(() => {
+    if (!playerReady) return undefined;
+
+    const pollPlayer = () => {
+      sendPlayerCommand("getCurrentTime");
+      sendPlayerCommand("getDuration");
+    };
+    const interval = window.setInterval(pollPlayer, 500);
+    pollPlayer();
+    return () => window.clearInterval(interval);
+  }, [playerReady]);
+
+  useEffect(() => {
+    const receivePlayerState = (event) => {
+      if (!event.origin.includes("youtube")) return;
+      let data;
+      try {
+        data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+      const info = data?.info;
+      if (typeof info?.currentTime === "number") setCurrentTime(info.currentTime);
+      if (typeof info?.duration === "number") setDuration(info.duration);
+      if (typeof info?.playerState === "number") onPlaybackChange(info.playerState === 1);
+    };
+
+    window.addEventListener("message", receivePlayerState);
+    return () => window.removeEventListener("message", receivePlayerState);
+  }, [onPlaybackChange]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${remainingSeconds}`;
+  };
+
+  const seek = (event) => {
+    const nextTime = Number(event.target.value);
+    setCurrentTime(nextTime);
+    sendPlayerCommand("seekTo", [nextTime, true]);
+  };
+
+  const selectSong = (nextVideoId) => {
+    setCurrentTime(0);
+    setDuration(0);
+    setPlayerReady(false);
+    onSelect(nextVideoId);
+  };
+
+  return (
+    <section className="ios-music-app" aria-label="YouTube Music">
+      <header className="ios-music-header">
+        <button onClick={onClose} aria-label="Close music"><IoChevronDown /></button>
+        <span>NOW PLAYING</span>
+        <button aria-label="Volume"><IoVolumeHigh /></button>
+      </header>
+
+      <main className="ios-music-main">
+        <iframe
+          ref={playerRef}
+          className="ios-music-engine"
+          src={`https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&playsinline=1&autoplay=${isPlaying ? 1 : 0}`}
+          title="YouTube Music playback"
+          allow="autoplay; encrypted-media"
+          onLoad={() => setPlayerReady(true)}
+        />
+        <div className="ios-music-art"><img src={currentSong.image} alt={`${currentSong.title} cover`} /></div>
+        <div className="ios-music-track"><div><h2>{currentSong.title}</h2><p>Anshumaan's focus mix</p></div><button aria-label="Favourite track"><IoHeartOutline /></button></div>
+        <input className="ios-music-progress" type="range" min="0" max={duration || 100} value={duration ? currentTime : 0} onChange={seek} aria-label="Track progress" />
+        <div className="ios-music-times"><span>{formatTime(currentTime)}</span><strong>{duration ? `${Math.round((currentTime / duration) * 100)}%` : "0%"}</strong><span>{duration ? formatTime(duration) : "0:00"}</span></div>
+        <div className="ios-music-controls"><button aria-label="Previous track">|&lt;</button><button className="ios-music-play" onClick={onPlayToggle} aria-label={isPlaying ? "Pause" : "Play"}>{isPlaying ? <IoPause /> : <IoPlay />}</button><button aria-label="Next track">&gt;|</button></div>
+
+        <div className="ios-music-queue"><div><h3>Up next</h3><span>{songs.length} tracks</span></div>{songs.slice(0, 5).map((song) => <button key={song.videoId} className={song.videoId === videoId ? "active" : ""} onClick={() => selectSong(song.videoId)}><img src={song.image} alt="" /><span><strong>{song.title}</strong><small>Focus playlist</small></span>{song.videoId === videoId && <IoPlay />}</button>)}</div>
+      </main>
+    </section>
+  );
+}

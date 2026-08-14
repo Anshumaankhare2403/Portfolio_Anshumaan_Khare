@@ -7,13 +7,9 @@ import HomePage from "./Pages/HomePage";
 import HomepageForMobile from "./Pages/HomepageForMobile";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const isIPad =
-    /iPad/i.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-
   return (
     <>
-      <div className={`${isIPad ? "hidden" : "hidden md:block"} min-h-screen`}>
+      <div className="hidden min-h-screen md:block">
         {isSignedIn ? (
           <HomePage onLogout={() => setIsSignedIn(false)} />
         ) : (
@@ -27,7 +23,9 @@ function App() {
         }`}
         style={{ backgroundImage: `url(${wallpaper})` }}
       > */}
-        <HomepageForMobile/>        
+      <div className="md:hidden">
+        <HomepageForMobile />
+      </div>
       {/* </main> */}
     </>
   );
