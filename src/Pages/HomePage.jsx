@@ -18,11 +18,13 @@ import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 
 function HomePage({ onLogout }) {
-  const [isFileExplorerOpen, setIsFileExplorerOpen] = useState(false);
-  const [isYtOpen, setYtOpen] = useState(false);
-  const [isTerminalOpen, setTerminalOpen] = useState(false);
-  const [isChromeOpen, setChromeOpen] = useState(false);
-  const [isAboutOpen, setAboutOpen] = useState(false);
+  // App window states: 'closed' | 'open' | 'minimized'
+  const [fileExplorerState, setFileExplorerState] = useState("closed");
+  const [ytState, setYtState] = useState("closed");
+  const [terminalState, setTerminalState] = useState("closed");
+  const [chromeState, setChromeState] = useState("closed");
+  const [aboutState, setAboutState] = useState("closed");
+
   const [isLauncherOpen, setIsLauncherOpen] = useState(false);
   const [launcherQuery, setLauncherQuery] = useState("");
   const deferredLauncherQuery = useDeferredValue(launcherQuery);
@@ -61,11 +63,18 @@ function HomePage({ onLogout }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const openFileExplorer = () => setIsFileExplorerOpen(true);
-  const openAbout = () => setAboutOpen(true);
-  const openChrome = () => setChromeOpen(true);
-  const openYouTube = () => setYtOpen(true);
-  const openTerminal = () => setTerminalOpen(true);
+  const toggleAppWindow = (state, setState) => {
+    if (state === "open") {
+      setState("minimized");
+    } else {
+      setState("open");
+    }
+  };
+
+  const openAbout = () => setAboutState("open");
+  const openChrome = () => setChromeState("open");
+  const openYouTube = () => setYtState("open");
+  const openTerminal = () => setTerminalState("open");
 
   const apps = [
     {
@@ -73,35 +82,45 @@ function HomePage({ onLogout }) {
       title: "This PC",
       shortTitle: "This PC",
       image: fileExplorerIcon,
-      open: openFileExplorer,
+      open: () => toggleAppWindow(fileExplorerState, setFileExplorerState),
+      isOpen: fileExplorerState !== "closed",
+      isMinimized: fileExplorerState === "minimized",
     },
     {
       id: "about",
       title: "About Me",
       shortTitle: "About",
       image: aboutIcon,
-      open: openAbout,
+      open: () => toggleAppWindow(aboutState, setAboutState),
+      isOpen: aboutState !== "closed",
+      isMinimized: aboutState === "minimized",
     },
     {
       id: "chrome",
       title: "Chrome",
       shortTitle: "Chrome",
       image: chromeIcon,
-      open: openChrome,
+      open: () => toggleAppWindow(chromeState, setChromeState),
+      isOpen: chromeState !== "closed",
+      isMinimized: chromeState === "minimized",
     },
     {
       id: "youtube",
       title: "YouTube Music",
       shortTitle: "YT Music",
       image: youtubeIcon,
-      open: openYouTube,
+      open: () => toggleAppWindow(ytState, setYtState),
+      isOpen: ytState !== "closed",
+      isMinimized: ytState === "minimized",
     },
     {
       id: "terminal",
       title: "Terminal",
       shortTitle: "Terminal",
       image: terminalIcon,
-      open: openTerminal,
+      open: () => toggleAppWindow(terminalState, setTerminalState),
+      isOpen: terminalState !== "closed",
+      isMinimized: terminalState === "minimized",
     },
   ];
 
@@ -145,10 +164,11 @@ function HomePage({ onLogout }) {
       </AnimatePresence>
 
       <AnimatePresence>
-        {isFileExplorerOpen && (
+        {fileExplorerState === "open" && (
           <FileExp
             key="file-explorer"
-            onClose={() => setIsFileExplorerOpen(false)}
+            onClose={() => setFileExplorerState("closed")}
+            onMinimize={() => setFileExplorerState("minimized")}
             onOpenAbout={openAbout}
             onOpenChrome={openChrome}
             onOpenYouTube={openYouTube}
@@ -158,39 +178,51 @@ function HomePage({ onLogout }) {
       </AnimatePresence>
 
       <AnimatePresence>
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {isYtOpen && (
-          <YtMusice key="youtube-music" onClose={() => setYtOpen(false)} />
+        {ytState === "open" && (
+          <YtMusice
+            key="youtube-music"
+            onClose={() => setYtState("closed")}
+            onMinimize={() => setYtState("minimized")}
+          />
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isTerminalOpen && (
-          <Terminal key="terminal" onClose={() => setTerminalOpen(false)} />
+        {terminalState === "open" && (
+          <Terminal
+            key="terminal"
+            onClose={() => setTerminalState("closed")}
+            onMinimize={() => setTerminalState("minimized")}
+          />
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isChromeOpen && (
-          <Chrome key="chrome" onClose={() => setChromeOpen(false)} />
+        {chromeState === "open" && (
+          <Chrome
+            key="chrome"
+            onClose={() => setChromeState("closed")}
+            onMinimize={() => setChromeState("minimized")}
+          />
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isAboutOpen && (
-          <About key="About" onClose={() => setAboutOpen(false)} />
+        {aboutState === "open" && (
+          <About
+            key="About"
+            onClose={() => setAboutState("closed")}
+            onMinimize={() => setAboutState("minimized")}
+          />
         )}
       </AnimatePresence>
-      {/* <FileExp/> */}
+
       <Dock
         launcherIcon={launcherIcon}
         apps={apps}
         onLauncherToggle={toggleLauncher}
         onLogout={onLogout}
       />
-
     </>
   );
 }

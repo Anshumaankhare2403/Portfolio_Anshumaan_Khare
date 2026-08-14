@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IoChevronDown, IoClose, IoHeartOutline, IoPause, IoPlay, IoRemove, IoSquareOutline, IoVolumeHigh } from "react-icons/io5";
 
-function YtMusice({ onClose, mobile = false }) {
+function YtMusice({ onClose, onMinimize, mobile = false }) {
   const [videoId, setVideoId] = useState("jfKfPfyJRdk");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [maximized, setMaximized] = useState(true);
 
   const songs = [
     
@@ -111,61 +112,48 @@ function YtMusice({ onClose, mobile = false }) {
 
   return (
     <motion.div
-      drag
+      drag={mobile || maximized ? false : true}
       dragMomentum={false}
-      initial={{
-        x: 120,
-        y: 50,
-        opacity: 0,
-        scale: 0.9,
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-      }}
-      exit={{
-        opacity: 0,
-        scale: 0.9,
-      }}
-      className={`fixed z-30
-           ${mobile ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app" : "left-10 top-10 h-[75vh] w-[75vw] rounded-2xl"}
-           overflow-hidden
-           bg-black/20
-           backdrop-blur-2xl
-           border border-white/20
-           shadow-[0_8px_32px_rgba(0,0,0,0.37)]`}
+      initial={mobile ? { opacity: 0, scale: 0.95 } : { x: 0, y: 0, opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className={`fixed z-30 overflow-hidden border border-white/20 bg-black/20 text-white shadow-2xl backdrop-blur-3xl ${
+        mobile
+          ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app"
+          : maximized
+          ? "inset-0 h-full w-full rounded-none z-50"
+          : "left-10 top-10 h-[75vh] w-[75vw] rounded-2xl"
+      }`}
     >
       {/* Header */}
-      <div className="flex h-10 items-center border-white/10 bg-black/20 px-3">
-        <span className="flex-1 text-sm text-white">YouTube Music</span>
-        <button className="p-2 text-white hover:bg-white/10 text-sm">
-          <IoRemove  />
+      <div className="flex h-10 items-center border-b border-white/10 bg-black/20 px-3 text-white">
+        <span className="flex-1 text-sm font-medium">YouTube Music</span>
+        <button onClick={onMinimize || onClose} className="p-2 text-white hover:bg-white/10 text-sm" aria-label="Minimize">
+          <IoRemove />
         </button>
-        <button  className="p-2 text-white hover:bg-white/10 text-sm">
+        <button onClick={() => setMaximized((prev) => !prev)} className="p-2 text-white hover:bg-white/10 text-sm" aria-label={maximized ? "Restore" : "Maximize"}>
           <IoSquareOutline />
         </button>
-
-        <button onClick={onClose} className="p-2 text-white hover:bg-red-600">
+        <button onClick={onClose} className="p-2 text-white hover:bg-red-600" aria-label="Close">
           <IoClose />
         </button>
       </div>
 
       <div className="flex h-[calc(100%-40px)]">
         {/* Playlist */}
-        <div className="w-28 overflow-y-auto border-white/10 bg-black/20 text-white sm:w-72">
+        <div className="w-28 overflow-y-auto border-r border-white/10 bg-black/20 text-white sm:w-72">
           {songs.map((song) => (
             <button
               key={song.videoId}
               onClick={() => setVideoId(song.videoId)}
-              className="flex w-full items-center gap-3 p-3 hover:bg-gray-700"
+              className="flex w-full items-center gap-3 p-3 hover:bg-gray-700/50"
             >
               <img
                 src={song.image}
                 alt={song.title}
                 className="h-14 w-14 rounded object-cover"
               />
-
-              <span className="hidden text-sm sm:block">{song.title}</span>
+              <span className="hidden text-sm font-medium sm:block">{song.title}</span>
             </button>
           ))}
         </div>
@@ -175,7 +163,7 @@ function YtMusice({ onClose, mobile = false }) {
           <iframe
             src={`https://www.youtube.com/embed/${videoId}`}
             title="Music Player"
-            className="h-full w-full"
+            className="h-full w-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />

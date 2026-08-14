@@ -4,6 +4,7 @@ import {
   IoArrowBack,
   IoClose,
   IoDocumentOutline,
+  IoDownloadOutline,
   IoEllipsisVertical,
   IoFolderOpenOutline,
   IoGridOutline,
@@ -77,9 +78,9 @@ import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
 import heroImage from "../assets/hero.png";
 import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import localResume from "../assets/resume/Anshumaankhare.pdf";
 
-const resumePdf =
-  "https://drive.google.com/file/d/18JMIryHKjqNDkUVY7VHZ7KfBldjn9Mju/preview";
+const resumePdf = localResume;
 
 const skillGroups = [
   {
@@ -424,13 +425,14 @@ const parentFolders = {
 
 function FileExp({
   onClose,
+  onMinimize,
   onOpenAbout,
   onOpenChrome,
   onOpenYouTube,
   onOpenTerminal,
   mobile = false,
 }) {
-  const [maximized, setMaximized] = useState(false);
+  const [maximized, setMaximized] = useState(true);
   const [activeFolder, setActiveFolder] = useState(null);
   const [selectedPreview, setSelectedPreview] = useState(null);
 
@@ -456,7 +458,12 @@ function FileExp({
     }
 
     if (item.url) {
-      window.open(item.url, "_blank", "noopener,noreferrer");
+      const link = document.createElement("a");
+      link.href = item.url;
+      link.download = item.name.endsWith(".pdf") ? item.name : "Anshumaan_Khare_Resume.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -484,11 +491,11 @@ function FileExp({
 
   return (
     <motion.div
-      drag
+      drag={mobile || maximized ? false : true}
       dragMomentum={false}
-      initial={{ x: 120, y: 50, opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
+      initial={mobile ? { opacity: 0, scale: 0.95 } : { x: 0, y: 0, opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
       className={`fixed pointer-events-auto flex flex-col overflow-hidden border border-white/20 bg-black/20 text-white shadow-2xl backdrop-blur-3xl ${
         mobile
           ? "inset-0 z-50 h-[100svh] w-full rounded-none mobile-file-explorer"
@@ -500,7 +507,7 @@ function FileExp({
       <div className="flex h-11 shrink-0 items-center border-b border-white/10 bg-black/20 px-3">
         <span className="flex-1 text-sm font-medium">File Explorer</span>
 
-        <button className="rounded p-2 hover:bg-white/10" aria-label="Minimize">
+        <button onClick={onMinimize || onClose} className="rounded p-2 hover:bg-white/10" aria-label="Minimize">
           <IoRemove />
         </button>
         <button
@@ -731,6 +738,16 @@ function FileExp({
                     <p className="mt-3 rounded-lg bg-white/5 p-3 text-sm leading-6 text-gray-300">
                       {selectedPreview.content}
                     </p>
+                  )}
+                  {selectedPreview.url && (
+                    <a
+                      href={selectedPreview.url}
+                      download="Anshumaan_Khare_Resume.pdf"
+                      className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg transition-colors hover:bg-emerald-500"
+                    >
+                      <IoDownloadOutline size={16} />
+                      <span>Download PDF File</span>
+                    </a>
                   )}
                   {selectedPreview.skills && (
                     <div className="mt-4 grid grid-cols-2 gap-2">

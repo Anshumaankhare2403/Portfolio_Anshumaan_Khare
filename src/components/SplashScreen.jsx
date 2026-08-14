@@ -79,14 +79,14 @@ function SplashScreen({ onSignIn }) {
 
         <main className="flex flex-1 items-center justify-center pb-[8vh]">
           <div className="w-[min(88vw,320px)] text-center">
-            <FaUser className="h-40 w-40 object-containv mx-auto flex  items-center justify-center overflow-hidden"/>
+            <FaUser className="h-40 w-40 object-containv mx-auto flex  items-center justify-center overflow-hidden" />
             {/* <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/90 shadow-2xl sm:h-36 sm:w-36">
               
               
             </div> */}
 
             <h1 className="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">
-              User
+              Users
             </h1>
 
             <form onSubmit={handleSubmit} className="mt-6">

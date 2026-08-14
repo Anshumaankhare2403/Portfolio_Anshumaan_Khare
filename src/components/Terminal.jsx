@@ -347,8 +347,8 @@ function formatLsEntry(name, node, longFormat) {
   )} Jun 22 ${name}`;
 }
 
-function Terminal({ onClose, mobile = false }) {
-  const [maximized, setMaximized] = useState(false);
+function Terminal({ onClose, onMinimize, mobile = false }) {
+  const [maximized, setMaximized] = useState(true);
   const [fileSystem, setFileSystem] = useState(() => createInitialFileSystem());
   const [cwdSegments, setCwdSegments] = useState(HOME_SEGMENTS);
   const [input, setInput] = useState("");
@@ -940,6 +940,198 @@ function Terminal({ onClose, mobile = false }) {
       return;
     }
 
+    if (command === "rm") {
+      const recursive = args.includes("-r") || args.includes("-rf") || args.includes("-fr");
+      const force = args.includes("-f") || args.includes("-rf") || args.includes("-fr");
+      const targets = args.filter((item) => !item.startsWith("-"));
+
+      if (!targets.length) {
+        appendOutput("rm: missing operand");
+        return;
+      }
+
+      const nextFileSystem = deepClone(fileSystem);
+      const messages = [];
+
+      targets.forEach((targetArg) => {
+        const parent = resolveParent(nextFileSystem, cwdSegments, targetArg);
+
+        if (parent.error) {
+          if (!force) {
+            messages.push(`rm: ${parent.error}`);
+          }
+          return;
+        }
+
+        const existing = parent.parentNode.children[parent.name];
+
+        if (!existing) {
+          if (!force) {
+            messages.push(`rm: cannot remove '${targetArg}': No such file or directory`);
+          }
+          return;
+        }
+
+        if (existing.type === "dir" && !recursive) {
+          messages.push(`rm: cannot remove '${targetArg}': Is a directory`);
+          return;
+        }
+
+        delete parent.parentNode.children[parent.name];
+      });
+
+      setFileSystem(nextFileSystem);
+      appendOutput(messages.join("\n"));
+      return;
+    }
+
+    if (command === "cp" || command === "mv") {
+      const recursive = args.includes("-r");
+      const targets = args.filter((item) => !item.startsWith("-"));
+
+      if (targets.length < 2) {
+        appendOutput(`${command}: missing destination file operand after source`);
+        return;
+      }
+
+      const [sourceArg, destinationArg] = targets;
+      const nextFileSystem = deepClone(fileSystem);
+      const source = resolvePath(nextFileSystem, cwdSegments, sourceArg);
+
+      if (!source.node) {
+        appendOutput(`${command}: cannot stat '${sourceArg}': No such file or directory`);
+        return;
+      }
+
+      if (source.node.type === "dir" && !recursive) {
+        appendOutput(`${command}: -r not specified; omitting directory '${sourceArg}'`);
+        return;
+      }
+
+      const destination = resolvePath(nextFileSystem, cwdSegments, destinationArg);
+      let targetParent;
+      let targetName;
+
+      if (destination.node && destination.node.type === "dir") {
+        targetParent = destination.node;
+        targetName = source.segments[source.segments.length - 1];
+      } else {
+        const parent = resolveParent(nextFileSystem, cwdSegments, destinationArg);
+
+        if (parent.error) {
+          appendOutput(`${command}: ${parent.error}`);
+          return;
+        }
+
+        targetParent = parent.parentNode;
+        targetName = parent.name;
+      }
+
+      targetParent.children[targetName] = deepClone(source.node);
+
+      if (command === "mv") {
+        const sourceParent = resolveParent(nextFileSystem, cwdSegments, sourceArg);
+
+        if (!sourceParent.error) {
+          delete sourceParent.parentNode.children[sourceParent.name];
+        }
+      }
+
+      setFileSystem(nextFileSystem);
+      return;
+    }
+
+    if (command === "apt" || command === "apt-get") {
+      const action = args[0];
+      const packageName = args[1];
+
+      if (action === "update") {
+        appendOutput(
+          [
+            "Hit:1 http://archive.ubuntu.com/ubuntu noble InRelease",
+            "Reading package lists... Done",
+            "All packages are already up to date in portfolio mode.",
+          ].join("\n")
+        );
+        return;
+      }
+
+      if (action === "install") {
+        appendOutput(
+          [
+            `Reading package lists... Done`,
+            `Building dependency tree... Done`,
+            `The following NEW packages will be installed: ${packageName || "demo-package"}`,
+            `Setting up ${packageName || "demo-package"} (1.0-portfolio) ... Done`,
+          ].join("\n")
+        );
+        return;
+      }
+
+      if (action === "search") {
+        appendOutput(
+          `${packageName || "portfolio"} - simulated package available in this Ubuntu demo shell`
+        );
+        return;
+      }
+
+      appendOutput("Usage: apt update | apt install <package> | apt search <term>");
+      return;
+    }
+
+    if (command === "sudo") {
+      if (!args.length) {
+        appendOutput("usage: sudo <command>");
+        return;
+      }
+
+      if (args.join(" ") === "rm -rf /") {
+        appendOutput("Nice try. The portfolio shell refuses destructive sudo commands.");
+        return;
+      }
+
+      appendOutput("[sudo] password for anshumaan: ********");
+      runCommand(args[0], args.slice(1), args.join(" "), true);
+      return;
+    }
+
+    if (command === "git") {
+      if (args[0] === "status") {
+        appendOutput(
+          [
+            "On branch main",
+            "Your branch is up to date with 'origin/main'.",
+            "",
+            "nothing to commit, working tree clean",
+          ].join("\n")
+        );
+        return;
+      }
+
+      appendOutput("git version 2.43.0");
+      return;
+    }
+
+    if (command === "node") {
+      appendOutput(args[0] === "--version" || args[0] === "-v" ? "v22.15.0" : "Node.js REPL is not available in this demo shell.");
+      return;
+    }
+
+    if (command === "npm") {
+      if (args[0] === "-v" || args[0] === "--version") {
+        appendOutput("10.9.2");
+        return;
+      }
+
+      if (args[0] === "run") {
+        appendOutput(`Simulated npm script execution: ${args[1] || "dev"}`);
+        return;
+      }
+
+      appendOutput("npm supports: npm -v, npm --version, npm run <script>");
+      return;
+    }
+
     if (command === "python3") {
       appendOutput(
         args[0] === "--version" || args[0] === "-V"
@@ -949,62 +1141,44 @@ function Terminal({ onClose, mobile = false }) {
       return;
     }
 
-    if (command === "code") {
-      appendOutput("VS Code is available from the desktop and app launcher.");
-      return;
-    }
-
-    if (command === "vim" || command === "nano") {
-      appendOutput(
-        `${command}: interactive editors are disabled in this demo. Try 'cat <file>' instead.`
-      );
-      return;
-    }
-
     appendOutput(
       `${isSudo ? "sudo: " : ""}${command}: command not found`
     );
   };
 
+  const executeCommandString = (cmdStr) => {
+    const tokens = tokenizeInput(cmdStr.trim());
+    const [command, ...args] = tokens;
+    runCommand(command, args, cmdStr);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    if (!input.trim()) return;
     const rawInput = input;
-    const tokens = tokenizeInput(rawInput.trim());
-    const [command, ...args] = tokens;
-
     setInput("");
-    runCommand(command, args, rawInput);
+    executeCommandString(rawInput);
   };
 
   const handleHistoryNavigation = (event) => {
-    if (!history.length) {
-      return;
-    }
+    if (!history.length) return;
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
-      const nextIndex =
-        historyIndex === null ? history.length - 1 : Math.max(historyIndex - 1, 0);
+      const nextIndex = historyIndex === null ? history.length - 1 : Math.max(historyIndex - 1, 0);
       setHistoryIndex(nextIndex);
       setInput(history[nextIndex]);
     }
 
     if (event.key === "ArrowDown") {
       event.preventDefault();
-
-      if (historyIndex === null) {
-        return;
-      }
-
+      if (historyIndex === null) return;
       const nextIndex = historyIndex + 1;
-
       if (nextIndex >= history.length) {
         setHistoryIndex(null);
         setInput("");
         return;
       }
-
       setHistoryIndex(nextIndex);
       setInput(history[nextIndex]);
     }
@@ -1014,40 +1188,58 @@ function Terminal({ onClose, mobile = false }) {
 
   return (
     <motion.div
-      drag={mobile ? false : !maximized}
+      drag={mobile || maximized ? false : true}
       dragMomentum={false}
-      initial={{ x: 120, y: 50, opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      className={`fixed z-30 overflow-hidden border border-white/20 bg-black/35 text-[#d7f7cf] shadow-[0_8px_32px_rgba(0,0,0,0.37)] backdrop-blur-2xl ${
+      initial={mobile ? { opacity: 0, scale: 0.95 } : { x: 0, y: 0, opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      className={`fixed z-30 overflow-hidden border border-white/20 bg-black/20 text-white shadow-2xl backdrop-blur-3xl ${
         mobile
-          ? "inset-0 h-[100svh] w-full rounded-none mobile-glass-app mobile-terminal-app"
+          ? "inset-0 h-[100svh] w-full rounded-none z-50"
           : maximized
-          ? "inset-4 rounded-2xl"
+          ? "inset-0 h-full w-full rounded-none z-50"
           : "left-10 top-10 h-[68vh] w-[62vw] rounded-2xl"
       }`}
       onMouseDown={() => inputRef.current?.focus()}
     >
+      {/* Adaptive Terminal Header Bar */}
       {mobile ? (
-        <div className="ios-terminal-header">
-          <button onClick={onClose} aria-label="Back to home"><IoChevronBack /></button>
-          <div><span>Terminal</span><small>portfolio shell</small></div>
-          <span className="ios-terminal-status">LIVE</span>
+        <div className="flex h-14 items-center justify-between border-b border-white/10 bg-black/30 px-4 text-white backdrop-blur-xl">
+          <button
+            onClick={onClose}
+            className="flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg-white/20"
+            aria-label="Back"
+          >
+            <IoChevronBack size={16} />
+            <span>Back</span>
+          </button>
+          <div className="flex flex-col items-center">
+            <span className="text-sm font-bold text-gray-200">Terminal</span>
+            <small className="text-[10px] text-emerald-400 font-mono">ubuntu shell</small>
+          </div>
+          <button onClick={onClose} className="p-2 text-gray-300 hover:text-red-400" aria-label="Close">
+            <IoClose size={20} />
+          </button>
         </div>
       ) : (
-        <div className="flex h-10 items-center border-b border-white/10 bg-black/30 px-3 text-white">
-          <span className="flex-1 text-sm">Terminal</span>
-          <button className="p-2 text-sm hover:bg-white/10" aria-label="Minimize">
+        <div className="flex h-10 items-center border-b border-white/10 bg-black/20 px-3 text-white backdrop-blur-xl">
+          <div className="flex items-center gap-2 flex-1">
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]" />
+            <span className="text-xs font-mono text-gray-200">
+              anshumaan@portfolio-ubuntu: {promptPath(cwdSegments)}
+            </span>
+          </div>
+          <button onClick={onMinimize || onClose} className="p-2 text-sm text-gray-300 hover:bg-white/10 rounded" aria-label="Minimize">
             <IoRemove />
           </button>
           <button
-            className="p-2 text-xs hover:bg-white/10"
+            className="p-2 text-xs text-gray-300 hover:bg-white/10 rounded"
             aria-label={maximized ? "Restore" : "Maximize"}
             onClick={() => setMaximized((current) => !current)}
           >
             <IoSquareOutline />
           </button>
-          <button onClick={onClose} className="p-2 hover:bg-red-600" aria-label="Close">
+          <button onClick={onClose} className="p-2 text-gray-300 hover:bg-red-600/80 rounded" aria-label="Close">
             <IoClose />
           </button>
         </div>
@@ -1055,7 +1247,7 @@ function Terminal({ onClose, mobile = false }) {
 
       <div
         ref={scrollRef}
-        className={`${mobile ? "ios-terminal-console" : "h-[calc(100%-2.5rem)] px-4 py-3"} overflow-y-auto font-mono text-sm leading-6`}
+        className="h-[calc(100%-2.5rem)] p-4 overflow-y-auto font-mono text-sm leading-6 text-[#d7f7cf]"
       >
         {lines.map((line, index) => (
           <div key={`${line.type}-${index}`} className="whitespace-pre-wrap break-words">
@@ -1085,6 +1277,31 @@ function Terminal({ onClose, mobile = false }) {
             className="min-w-0 flex-1 border-none bg-transparent text-white outline-none"
           />
         </form>
+
+        {mobile && (
+          <div className="mobile-term-toolbar mt-2">
+            {[
+              { label: "help", cmd: "help" },
+              { label: "ls", cmd: "ls" },
+              { label: "clear", cmd: "clear" },
+              { label: "cd ..", cmd: "cd .." },
+              { label: "skills", cmd: "cat skills.txt" },
+              { label: "neofetch", cmd: "neofetch" },
+            ].map((btn) => (
+              <button
+                key={btn.label}
+                type="button"
+                className="mobile-term-btn"
+                onClick={() => {
+                  executeCommandString(btn.cmd);
+                  inputRef.current?.focus();
+                }}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </motion.div>
   );

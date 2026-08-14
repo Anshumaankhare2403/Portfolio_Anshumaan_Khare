@@ -48,16 +48,26 @@ function Dock({
               key={app.id}
               type="button"
               onClick={app.open}
-              title={app.title}
+              title={app.isMinimized ? `${app.title} (Minimized - Click to Restore)` : app.title}
               aria-label={app.title}
-              className="flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
+              className="group relative flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
             >
               <img
                 src={app.image}
                 alt=""
-                className="h-10 w-10 object-contain transition hover:scale-110"
+                className={`h-10 w-10 object-contain transition group-hover:scale-110 ${
+                  app.isMinimized ? "opacity-70 scale-90 grayscale-[30%]" : ""
+                }`}
               />
-              
+              {app.isOpen && (
+                <span
+                  className={`h-1.5 w-1.5 rounded-full transition-all ${
+                    app.isMinimized
+                      ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]"
+                      : "bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.9)]"
+                  }`}
+                />
+              )}
             </button>
           ))}
         </div>
@@ -84,12 +94,15 @@ function Dock({
             </div>
           </div>
 
-          <dev
+          <button
+            type="button"
             onClick={onLogout}
-            className="grid h-13 w-13 place-items-center rounded-lg text-xl transition hover:bg-white/15 hover:text-red-300"
+            title="Log out"
+            aria-label="Log out"
+            className="grid h-10 w-10 place-items-center rounded-lg text-xl text-white transition hover:bg-white/15 hover:text-red-300"
           >
             <IoLogOutOutline />
-          </dev>
+          </button>
         </div>
       </div>
     </div>
