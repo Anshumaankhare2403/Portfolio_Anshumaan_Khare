@@ -8,11 +8,10 @@ import {
   IoWifi,
 } from "react-icons/io5";
 
-import { FaUser } from "react-icons/fa";
-
+import { FaWifi, FaVolumeUp, FaBatteryThreeQuarters } from "react-icons/fa";
 import Logo from "../assets/This PC/Windows11.svg";
-
 import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import heroImage from "../assets/hero.png";
 
 function SplashScreen({ onSignIn }) {
   const [isBooting, setIsBooting] = useState(true);
@@ -79,14 +78,14 @@ function SplashScreen({ onSignIn }) {
 
         <main className="flex flex-1 items-center justify-center pb-[8vh]">
           <div className="w-[min(88vw,320px)] text-center">
-            <FaUser className="h-40 w-40 object-containv mx-auto flex  items-center justify-center overflow-hidden" />
-            {/* <div className="mx-auto flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-white/50 bg-white/90 shadow-2xl sm:h-36 sm:w-36">
-              
-              
-            </div> */}
+            <img
+              src={heroImage}
+              alt="Anshumaan Khare"
+              className="mx-auto h-32 w-32 rounded-full border-2 border-white/80 object-cover shadow-2xl sm:h-36 sm:w-36"
+            />
 
-            <h1 className="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">
-              Users
+            <h1 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">
+              Anshumaan Khare
             </h1>
 
             <form onSubmit={handleSubmit} className="mt-6">

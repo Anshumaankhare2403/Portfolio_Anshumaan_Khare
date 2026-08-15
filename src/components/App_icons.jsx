@@ -3,12 +3,12 @@ function App_icons({ image, title, onClick }) {
   return (
     <button
       type="button"
-      className="flex w-24 flex-col items-center rounded-lg pt-2 transition hover:bg-sky-700/70 focus:bg-sky-700/70 focus:outline-none"
+      className="flex w-20 flex-col items-center rounded-lg p-1.5 transition hover:bg-white/20 focus:bg-white/20 focus:outline-none cursor-pointer"
       onClick={onClick}
     >
-      <img src={image} alt={title} className="h-14 w-14 object-contain" />
+      <img src={image} alt={title} className="h-12 w-12 object-contain" />
 
-      <span className="mt-2 text-center text-xs text-white drop-shadow-md">
+      <span className="mt-1 text-center text-xs font-medium text-white drop-shadow-md leading-tight line-clamp-2">
         {title}
       </span>
     </button>

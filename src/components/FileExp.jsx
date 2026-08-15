@@ -3,17 +3,22 @@ import { motion } from "framer-motion";
 import {
   IoArrowBack,
   IoClose,
+  IoCodeSlashOutline,
   IoDocumentOutline,
+  IoDocumentTextOutline,
   IoDownloadOutline,
   IoEllipsisVertical,
   IoFolderOpenOutline,
   IoGridOutline,
+  IoImageOutline,
+  IoMusicalNotesOutline,
   IoPhonePortraitOutline,
   IoRemove,
   IoSearch,
   IoShareSocialOutline,
   IoSquareOutline,
   IoTrashOutline,
+  IoVideocamOutline,
 } from "react-icons/io5";
 import { GoPin } from "react-icons/go";
 import {
@@ -200,39 +205,34 @@ const readmeSections = [
       "I am Anshumaan Khare, a Software Developer focused on building modern, responsive, and scalable web and mobile applications. I enjoy transforming ideas into polished digital products with clean interfaces, reliable APIs, and maintainable code.",
   },
   {
+    title: "Awards & Achievements",
+    content:
+      "🏆 Hack The Space – Postman Track Winner: Won the Postman track at the Hack The Space hackathon, demonstrating expertise in API design, integration, and architecture.",
+  },
+  {
+    title: "Certifications",
+    content:
+      "• Postman API Fundamentals Student Expert\n• The Linux Command Line Bootcamp: Beginner To Power User",
+  },
+  {
+    title: "Work Experience",
+    content:
+      "Freelance Frontend Developer (Remote | 6 months):\n• Designed and developed a responsive UI using React.js, Bootstrap, and CSS for a client-facing web application.\n• Deployed the application on Netlify, ensuring smooth performance and fast global content delivery.\n• Implemented dynamic menu display, order tracking, and real-time updates using Formspree and Google Sheets integration.\n• Optimized website performance & responsiveness, achieving a 20% reduction in page load time.\n• Tech Stack: React.js, Formspree, Bootstrap, Google Sheets, Netlify.",
+  },
+  {
+    title: "Featured Projects",
+    content:
+      "1. CarbonSense: Carbon Footprint Calculator\n• Developed a Flutter mobile application helping users monitor daily carbon emissions and understand environmental impacts.\n• Integrated real-time air quality data via RESTful API for location-aware environmental insights.\n• Implemented behavioral analysis, gamified challenges, quizzes, and a rewards system.\n• Tech Stack: Flutter, Firebase, RESTful API.\n\n2. Product Scanner for D-Mart\n• Barcode scanner application using Flutter to scan product barcodes and retrieve product information in real time.\n• Implemented camera access and real-time barcode detection using the Barcode_Scanner library.\n• Fetched product details from a Firebase-backed database upon successful scan.\n• Tech Stack: Flutter, Firebase, Barcode Scanner library.",
+  },
+  {
     title: "Education",
     content:
-      "Master of Computer Applications (MCA)\nJAIN (Deemed-to-be University)\n2025–2027",
+      "• Master of Computer Applications (MCA) — JAIN (Deemed-to-be University), Bengaluru, Karnataka (2025–2027)\n• B.Voc in Software Development — Bhilai Institute of Technology, Durg, Chhattisgarh (2021–2024)",
   },
   {
-    title: "Development Stack",
+    title: "Technical Skills",
     content:
-      "Frontend: React.js, JavaScript, HTML5, CSS3, Tailwind CSS, and Bootstrap.\nBackend: Node.js, Express.js, REST APIs, JWT authentication, and authorization.\nMobile: Flutter and Dart.\nDatabases: MongoDB, MySQL, Firebase, and Mongoose.",
-  },
-  {
-    title: "Cloud & DevOps",
-    content:
-      "Experience with AWS EC2, S3, VPC, IAM, CloudWatch, SNS, Application Load Balancer, and NAT Gateway. I also deploy applications using Netlify and Vercel.",
-  },
-  {
-    title: "Tools & Libraries",
-    content:
-      "Git, GitHub, Postman, Linux, WSL2, VS Code, Framer Motion, Axios, Material UI, and responsive UI development workflows.",
-  },
-  {
-    title: "Core Expertise",
-    content:
-      "MERN stack development, Flutter development, full-stack application development, API integration, database design, CRUD operations, authentication and authorization, responsive web design, debugging, and performance optimization.",
-  },
-  {
-    title: "Soft Skills",
-    content:
-      "Problem solving, clear communication, team collaboration, debugging, adaptability, and time management.",
-  },
-  {
-    title: "Portfolio",
-    content:
-      "This portfolio recreates a desktop operating-system experience in the browser. It includes an interactive File Explorer, application launcher, terminal, browser, music player, code editor, resume viewer, login screen, and desktop dock.",
+      "Programming Languages: JavaScript, Dart\nDevelopment: Node.js, Express.js, REST APIs, HTML5, CSS3, Flutter, React.js, Bootstrap\nDatabases: MySQL, MongoDB, Firebase\nTools & Platforms: Git, GitHub, Postman, WSL2, Linux, Netlify, Vercel",
   },
 ];
 
@@ -829,7 +829,36 @@ function MobileFileExplorer({
       {activeTab === "Browse" ? <>
         {!activeFolder ? <>
           <p className="google-files-label">Categories</p>
-          <div className="google-files-categories"><button><IoDocumentOutline /> Documents</button><button><IoGridOutline /> Images</button><button><IoFolderOpenOutline /> Downloads</button></div>
+          <div className="google-files-categories">
+            {[
+              { title: "Downloads", section: "Downloads", icon: IoDownloadOutline, color: "#38bdf8", bg: "rgba(56,189,248,0.2)" },
+              { title: "Images", section: "Pictures", icon: IoImageOutline, color: "#c084fc", bg: "rgba(192,132,252,0.2)" },
+              { title: "Videos", section: "Videos", icon: IoVideocamOutline, color: "#fb7185", bg: "rgba(251,113,133,0.2)" },
+              { title: "Audio", section: "Music", icon: IoMusicalNotesOutline, color: "#fbbf24", bg: "rgba(251,191,36,0.2)" },
+              { title: "Documents", section: "Documents", icon: IoDocumentTextOutline, color: "#34d399", bg: "rgba(52,211,153,0.2)" },
+              { title: "Skills", section: "Skills", icon: IoCodeSlashOutline, color: "#22d3ee", bg: "rgba(34,211,238,0.2)" },
+            ].map((cat) => {
+              const CatIcon = cat.icon;
+              return (
+                <button
+                  key={cat.title}
+                  type="button"
+                  onClick={() => openItem({ section: cat.section })}
+                  className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-3 text-left transition hover:bg-white/20 active:scale-95"
+                >
+                  <span
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 shadow-inner"
+                    style={{ backgroundColor: cat.bg, color: cat.color }}
+                  >
+                    <CatIcon size={20} />
+                  </span>
+                  <span className="text-sm font-semibold text-white tracking-wide truncate">
+                    {cat.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
           <p className="google-files-label">Recent</p>
         </> : <p className="google-files-label">{activeFolder === "Skills" ? "Development skills" : "Files"}</p>}
         <div className="google-files-list">

@@ -9,6 +9,10 @@ import YtMusice from "../components/YtMusice";
 import Terminal from "../components/Terminal";
 import Chrome from "../components/Chrome";
 import About from "../components/About";
+import GitHubWindow from "../components/GitHubWindow";
+import ProjectsApp from "../components/ProjectsApp";
+import ContactApp from "../components/ContactApp";
+import VSCodeWindow from "../components/VSCodeWindow";
 
 import launcherIcon from "../assets/This PC/Windows11.svg";
 import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
@@ -16,6 +20,9 @@ import aboutIcon from "../assets/scalable/users.svg";
 import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
+import githubIcon from "../assets/color-lightblue/folder-github.svg";
+import projectsIcon from "../assets/color-lightblue/folder-projects.svg";
+import vscodeIcon from "../assets/scalable/vscode.svg";
 
 function HomePage({ onLogout }) {
   // App window states: 'closed' | 'open' | 'minimized'
@@ -24,6 +31,10 @@ function HomePage({ onLogout }) {
   const [terminalState, setTerminalState] = useState("closed");
   const [chromeState, setChromeState] = useState("closed");
   const [aboutState, setAboutState] = useState("closed");
+  const [githubState, setGithubState] = useState("closed");
+  const [projectsState, setProjectsState] = useState("closed");
+  const [contactState, setContactState] = useState("closed");
+  const [vscodeState, setVscodeState] = useState("closed");
 
   const [isLauncherOpen, setIsLauncherOpen] = useState(false);
   const [launcherQuery, setLauncherQuery] = useState("");
@@ -122,6 +133,42 @@ function HomePage({ onLogout }) {
       isOpen: terminalState !== "closed",
       isMinimized: terminalState === "minimized",
     },
+    {
+      id: "github",
+      title: "GitHub",
+      shortTitle: "GitHub",
+      image: githubIcon,
+      open: () => toggleAppWindow(githubState, setGithubState),
+      isOpen: githubState !== "closed",
+      isMinimized: githubState === "minimized",
+    },
+    {
+      id: "projects",
+      title: "Projects",
+      shortTitle: "Projects",
+      image: projectsIcon,
+      open: () => toggleAppWindow(projectsState, setProjectsState),
+      isOpen: projectsState !== "closed",
+      isMinimized: projectsState === "minimized",
+    },
+    {
+      id: "contact",
+      title: "Contact Us",
+      shortTitle: "Contact",
+      image: aboutIcon,
+      open: () => toggleAppWindow(contactState, setContactState),
+      isOpen: contactState !== "closed",
+      isMinimized: contactState === "minimized",
+    },
+    {
+      id: "vscode",
+      title: "VS Code",
+      shortTitle: "VS Code",
+      image: vscodeIcon,
+      open: () => toggleAppWindow(vscodeState, setVscodeState),
+      isOpen: vscodeState !== "closed",
+      isMinimized: vscodeState === "minimized",
+    },
   ];
 
   const launchApp = (openApp) => {
@@ -140,7 +187,7 @@ function HomePage({ onLogout }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col flex-wrap max-h-[calc(100vh-90px)] gap-y-1 gap-x-1 content-start p-2 select-none">
         {apps.map((app) => (
           <App_icons
             key={app.id}
@@ -213,6 +260,46 @@ function HomePage({ onLogout }) {
             key="About"
             onClose={() => setAboutState("closed")}
             onMinimize={() => setAboutState("minimized")}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {githubState === "open" && (
+          <GitHubWindow
+            key="GitHub"
+            onClose={() => setGithubState("closed")}
+            onMinimize={() => setGithubState("minimized")}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {projectsState === "open" && (
+          <ProjectsApp
+            key="Projects"
+            onClose={() => setProjectsState("closed")}
+            onMinimize={() => setProjectsState("minimized")}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {contactState === "open" && (
+          <ContactApp
+            key="Contact"
+            onClose={() => setContactState("closed")}
+            onMinimize={() => setContactState("minimized")}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {vscodeState === "open" && (
+          <VSCodeWindow
+            key="VSCode"
+            onClose={() => setVscodeState("closed")}
+            onMinimize={() => setVscodeState("minimized")}
           />
         )}
       </AnimatePresence>

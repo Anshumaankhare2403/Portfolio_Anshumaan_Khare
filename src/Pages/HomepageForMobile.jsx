@@ -22,6 +22,9 @@ import {
   IoWifi,
   IoAccessibilityOutline,
   IoPowerOutline,
+  IoBackspaceOutline,
+  IoLockOpenOutline,
+  IoFingerPrintOutline,
 } from "react-icons/io5";
 
 import filesIcon from "../assets/AndroideICONES/icons8-google-files-96.svg";
@@ -37,15 +40,22 @@ import ChromeWindow from "../components/Chrome";
 import FileExp from "../components/FileExp";
 import Terminal from "../components/Terminal";
 import YtMusice from "../components/YtMusice";
+import CameraApp from "../components/CameraApp";
+import GitHubWindow from "../components/GitHubWindow";
+import ProjectsApp from "../components/ProjectsApp";
+import ContactApp from "../components/ContactApp";
+import VSCodeWindow from "../components/VSCodeWindow";
+import vscodeIcon from "../assets/scalable/vscode.svg";
 
 const categories = ["All", "Tools", "Media", "Info"];
 
 const gridApps = [
   { id: "about", label: "About", icon: IoPersonOutline, color: "#5b6ee1", category: "Info" },
   { id: "projects", label: "Projects", icon: IoCodeSlashOutline, color: "#0b8f84", category: "Info" },
+  { id: "contact", label: "Contact", icon: IoMailOutline, color: "#d85a83", category: "Info" },
   { id: "resume", label: "Resume", icon: IoDocumentTextOutline, color: "#db5e50", category: "Info" },
   { id: "github", label: "GitHub", icon: IoLogoGithub, color: "#24292f", category: "Info" },
-  { id: "contact", label: "Contact", icon: IoMailOutline, color: "#d85a83", category: "Info" },
+  { id: "vscode", label: "VS Code", image: vscodeIcon, category: "Tools" },
   { id: "terminal", label: "Terminal", image: terminalIcon, category: "Tools" },
 ];
 
@@ -80,12 +90,6 @@ const panels = {
     action: "Download Resume (PDF)",
     href: resume,
   },
-  contact: {
-    title: "Get in touch",
-    body: "For opportunities or collaboration, send me an email.",
-    action: "Email Anshumaan",
-    href: "mailto:anshumaankhare@gmail.com",
-  },
   phone: {
     title: "Phone Dialer",
     body: "Call or reach out to Anshumaan Khare.",
@@ -110,9 +114,17 @@ const panels = {
     title: "Browser",
     body: "Search the web from your portfolio browser.",
   },
+  contact: {
+    title: "Contact Us",
+    body: "Send a message to Anshumaan Khare.",
+  },
+  vscode: {
+    title: "VS Code",
+    body: "Interactive code editor and source code viewer.",
+  },
 };
 
-const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera"]);
+const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode"]);
 
 function HomepageForMobile() {
   const [activeApp, setActiveApp] = useState(null);
@@ -120,9 +132,6 @@ function HomepageForMobile() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [dialedNumber, setDialedNumber] = useState("+91 91404 05680");
-  const [flashOn, setFlashOn] = useState(false);
-  const [cameraMode, setCameraMode] = useState("PHOTO");
-  const [captured, setCaptured] = useState(false);
   const [currentDate, setCurrentDate] = useState(() => new Date());
 
   const [mobileIsBooting, setMobileIsBooting] = useState(true);
@@ -173,91 +182,154 @@ function HomepageForMobile() {
     );
   }
 
+  const handleKeypadPress = (digit) => {
+    if (mobilePassword.length < 4) {
+      const nextPasscode = mobilePassword + digit;
+      setMobilePassword(nextPasscode);
+      if (nextPasscode.length >= 4) {
+        setTimeout(() => {
+          setMobileIsSignedIn(true);
+        }, 150);
+      }
+    }
+  };
+
+  const handleKeypadDelete = () => {
+    setMobilePassword((prev) => prev.slice(0, -1));
+  };
+
   if (!mobileIsSignedIn) {
     return (
       <div
-        className="fixed inset-0 z-[9999] overflow-hidden bg-cover bg-center text-white"
+        className="fixed inset-0 z-[9999] overflow-hidden bg-cover bg-center text-white select-none"
         style={{ backgroundImage: `url(${wallpaper})` }}
       >
-        <div className="absolute inset-0 bg-slate-950/35 backdrop-blur-[2px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-md" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
 
-        <div className="relative flex h-full min-h-[560px] flex-col items-center justify-between py-8 px-4">
-          <header className="pt-[4vh] text-center drop-shadow-lg">
-            <p className="text-5xl font-bold tracking-tight sm:text-7xl">{formattedTime}</p>
-            <p className="mt-2 text-base font-bold sm:text-xl">{formattedDate}</p>
+        <div className="relative flex h-full w-full flex-col items-center justify-between py-6 px-4">
+          {/* Header Time & Date */}
+          <header className="pt-2 text-center drop-shadow-md">
+            <p className="text-4xl sm:text-5xl font-bold tracking-tight">{formattedTime}</p>
+            <p className="mt-1 text-xs sm:text-sm font-medium text-gray-200">{formattedDate}</p>
           </header>
 
-          <main className="flex flex-1 items-center justify-center py-4">
-            <div className="w-[min(88vw,320px)] text-center">
-              <FaUser className="mx-auto h-32 w-32 object-contain text-white/90 drop-shadow-xl mb-2" />
-
-              <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+          {/* Center Avatar & Passcode Keypad */}
+          <main className="flex flex-col items-center justify-center my-auto w-full max-w-xs text-center">
+            {/* Avatar & Name */}
+            <div className="flex flex-col items-center mb-3">
+              <img
+                src={heroImage}
+                alt="Anshumaan Khare"
+                className="h-20 w-20 sm:h-24 sm:w-24 rounded-full border-2 border-white/80 object-cover shadow-2xl mb-2"
+              />
+              <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
                 Anshumaan Khare
               </h1>
-
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setMobileIsSignedIn(true);
-                }}
-                className="mt-6"
-              >
-                <div className="flex h-10 overflow-hidden border-2 border-white/75 bg-white/90 shadow-lg transition focus-within:border-white focus-within:bg-white">
-                  <input
-                    type={showMobilePassword ? "text" : "password"}
-                    value={mobilePassword}
-                    onChange={(event) => setMobilePassword(event.target.value)}
-                    placeholder="Password"
-                    aria-label="Password"
-                    className="min-w-0 flex-1 bg-transparent px-3 text-sm text-gray-900 outline-none placeholder:text-gray-600"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowMobilePassword((visible) => !visible)}
-                    className="grid w-10 place-items-center text-lg text-gray-700 hover:bg-black/10"
-                    aria-label={showMobilePassword ? "Hide password" : "Show password"}
-                  >
-                    {showMobilePassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
-                  </button>
-                  <button
-                    type="submit"
-                    className="grid w-10 place-items-center bg-gray-200 text-xl text-gray-800 hover:bg-gray-300"
-                    aria-label="Sign in"
-                  >
-                    <IoArrowForward />
-                  </button>
-                </div>
-
-                <button
-                  type="submit"
-                  className="mt-4 rounded px-3 py-1 text-sm font-bold text-white/90 drop-shadow hover:bg-white/10 hover:text-white transition-colors"
-                >
-                  Sign in to explore my portfolio
-                </button>
-              </form>
+              <p className="text-xs text-gray-300 font-medium mt-0.5">Enter Passcode</p>
             </div>
+
+            {/* Passcode Dots */}
+            <div className="flex items-center justify-center gap-4 mb-6">
+              {[0, 1, 2, 3].map((idx) => (
+                <div
+                  key={idx}
+                  className={`h-3.5 w-3.5 rounded-full border-2 border-white/80 transition-all duration-200 ${
+                    idx < mobilePassword.length
+                      ? "bg-white scale-110 shadow-[0_0_12px_rgba(255,255,255,0.9)]"
+                      : "bg-white/10"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Phone Numeric Keypad Grid (3x4) */}
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 w-full max-w-[250px] mx-auto">
+              {[
+                { num: "1", sub: "" },
+                { num: "2", sub: "ABC" },
+                { num: "3", sub: "DEF" },
+                { num: "4", sub: "GHI" },
+                { num: "5", sub: "JKL" },
+                { num: "6", sub: "MNO" },
+                { num: "7", sub: "PQRS" },
+                { num: "8", sub: "TUV" },
+                { num: "9", sub: "WXYZ" },
+              ].map((key) => (
+                <button
+                  key={key.num}
+                  type="button"
+                  onClick={() => handleKeypadPress(key.num)}
+                  className="flex flex-col items-center justify-center h-16 w-16 sm:h-18 sm:w-18 mx-auto rounded-full bg-white/15 border border-white/20 backdrop-blur-lg hover:bg-white/25 active:bg-white/40 active:scale-95 transition shadow-lg"
+                >
+                  <span className="text-xl font-bold leading-none">{key.num}</span>
+                  {key.sub && (
+                    <span className="text-[8px] font-extrabold tracking-widest text-white/70 mt-0.5">
+                      {key.sub}
+                    </span>
+                  )}
+                </button>
+              ))}
+
+              {/* Bottom Row: Delete, 0, Unlock */}
+              <button
+                type="button"
+                onClick={handleKeypadDelete}
+                className="flex items-center justify-center h-16 w-16 sm:h-18 sm:w-18 mx-auto rounded-full bg-white/10 border border-white/15 hover:bg-white/20 active:scale-95 transition text-white/80"
+                aria-label="Delete"
+              >
+                <IoBackspaceOutline size={22} />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleKeypadPress("0")}
+                className="flex flex-col items-center justify-center h-16 w-16 sm:h-18 sm:w-18 mx-auto rounded-full bg-white/15 border border-white/20 backdrop-blur-lg hover:bg-white/25 active:bg-white/40 active:scale-95 transition shadow-lg"
+              >
+                <span className="text-xl font-bold leading-none">0</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setMobileIsSignedIn(true)}
+                className="flex items-center justify-center h-16 w-16 sm:h-18 sm:w-18 mx-auto rounded-full bg-emerald-500/80 border border-emerald-400/50 hover:bg-emerald-500 active:scale-95 transition text-white shadow-xl"
+                aria-label="Unlock"
+              >
+                <IoLockOpenOutline size={22} />
+              </button>
+            </div>
+
+            {/* Touch ID / Direct Unlock Action */}
+            <button
+              type="button"
+              onClick={() => setMobileIsSignedIn(true)}
+              className="mt-5 flex items-center justify-center gap-1.5 text-xs font-bold text-white/80 hover:text-white transition"
+            >
+              <IoFingerPrintOutline size={18} className="text-emerald-400" />
+              <span>Tap or Touch ID to Unlock</span>
+            </button>
           </main>
 
+          {/* Bottom System Action Icons */}
           <div className="flex items-center gap-1">
             <button
               type="button"
               aria-label="Network"
-              className="rounded p-3 text-xl hover:bg-white/15"
+              className="rounded p-2 text-lg hover:bg-white/15"
             >
               <IoWifi />
             </button>
             <button
               type="button"
               aria-label="Accessibility"
-              className="rounded p-3 text-xl hover:bg-white/15"
+              className="rounded p-2 text-lg hover:bg-white/15"
             >
               <IoAccessibilityOutline />
             </button>
             <button
               type="button"
               aria-label="Power"
-              className="rounded p-3 text-xl hover:bg-white/15"
+              className="rounded p-2 text-lg hover:bg-white/15"
             >
               <IoPowerOutline />
             </button>
@@ -277,11 +349,6 @@ function HomepageForMobile() {
     setDialedNumber((prev) => (prev === "+91 91404 05680" ? digit : prev + digit));
   };
 
-  const handleCapture = () => {
-    setCaptured(true);
-    setTimeout(() => setCaptured(false), 500);
-  };
-
   const renderAppContent = () => {
     const closeApp = () => setActiveApp(null);
     if (activeApp === "about") return <About mobile onClose={closeApp} />;
@@ -299,6 +366,10 @@ function HomepageForMobile() {
     if (activeApp === "music") return <YtMusice mobile onClose={closeApp} />;
     if (activeApp === "terminal") return <Terminal mobile onClose={closeApp} />;
     if (activeApp === "chrome") return <ChromeWindow mobile onClose={closeApp} />;
+    if (activeApp === "github") return <GitHubWindow mobile onClose={closeApp} />;
+    if (activeApp === "projects") return <ProjectsApp mobile onClose={closeApp} />;
+    if (activeApp === "contact") return <ContactApp mobile onClose={closeApp} />;
+    if (activeApp === "vscode") return <VSCodeWindow mobile onClose={closeApp} />;
     if (activeApp === "resume")
       return (
         <div className="fixed inset-0 z-50 flex flex-col bg-[#052541] text-white">
@@ -401,71 +472,7 @@ function HomepageForMobile() {
         </div>
       );
 
-    if (activeApp === "camera")
-      return (
-        <div className="fixed inset-0 z-50 flex flex-col bg-black text-white">
-          <div className="flex h-14 items-center justify-between border-b border-white/10 bg-black/60 px-4 z-10">
-            <button
-              onClick={closeApp}
-              className="flex items-center gap-1 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg-white/20"
-            >
-              <IoChevronBack size={16} />
-              <span>Back</span>
-            </button>
-            <span className="text-sm font-bold tracking-wide">Camera</span>
-            <button
-              onClick={() => setFlashOn((prev) => !prev)}
-              className={`p-2 rounded-full ${flashOn ? "text-yellow-400 bg-yellow-400/20" : "text-white"}`}
-            >
-              <IoFlash size={20} />
-            </button>
-          </div>
-
-          <div className="relative flex-1 bg-gradient-to-b from-[#051c2e] via-[#07243c] to-[#021322] flex items-center justify-center overflow-hidden">
-            {captured && <div className="absolute inset-0 z-20 bg-white animate-fade-out" />}
-
-            <div className="absolute inset-8 border border-white/20 rounded-2xl pointer-events-none flex items-center justify-center">
-              <div className="h-16 w-16 border-2 border-emerald-400/60 rounded-full animate-ping" />
-            </div>
-
-            <div className="text-center p-6 bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 max-w-xs">
-              <img src={heroImage} alt="Preview" className="h-40 w-full object-cover rounded-xl mb-3 shadow-lg" />
-              <p className="text-xs text-gray-300 font-medium">Bioluminescent Camera Viewfinder</p>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center bg-black/80 pb-8 pt-4 px-6 gap-5">
-            <div className="flex gap-6 text-xs font-bold tracking-widest text-gray-400">
-              {["PHOTO", "VIDEO", "PORTRAIT"].map((mode) => (
-                <button
-                  key={mode}
-                  onClick={() => setCameraMode(mode)}
-                  className={cameraMode === mode ? "text-yellow-400 border-b-2 border-yellow-400 pb-1" : ""}
-                >
-                  {mode}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between w-full max-w-xs px-4">
-              <div className="h-12 w-12 rounded-xl overflow-hidden border border-white/30 bg-white/10">
-                <img src={heroImage} alt="Gallery" className="h-full w-full object-cover" />
-              </div>
-
-              <button
-                onClick={handleCapture}
-                className="h-20 w-20 rounded-full border-4 border-white p-1 shadow-2xl transition active:scale-90"
-              >
-                <div className="h-full w-full rounded-full bg-white" />
-              </button>
-
-              <button className="h-12 w-12 flex items-center justify-center rounded-full bg-white/10 text-white">
-                <IoVideocam size={22} />
-              </button>
-            </div>
-          </div>
-        </div>
-      );
+    if (activeApp === "camera") return <CameraApp onClose={closeApp} />;
 
     return (
       <>
@@ -560,7 +567,7 @@ function HomepageForMobile() {
       </section>
 
       <AnimatePresence>
-        {activePanel && fullScreenApps.has(activeApp) && renderAppContent()}
+        {activeApp && fullScreenApps.has(activeApp) && renderAppContent()}
       </AnimatePresence>
 
       <AnimatePresence>

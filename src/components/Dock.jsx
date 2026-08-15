@@ -19,52 +19,51 @@ function Dock({
   }, []);
 
   return (
-    <div
-      className="absolute bottom-4 left-1/2 -translate-x-1/2
-                 w-195 h-16 rounded-2xl
-                 bg-white/10 backdrop-blur-xl
-                 border border-white/20 shadow-lg"
-    >
-      <div className="flex h-full items-center justify-between gap-4 px-4 py-3">
-        {/* App Icons */}
-        <div className="flex flex-wrap items-end gap-1">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 max-w-[95vw] pointer-events-auto select-none">
+      <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-3 rounded-2xl sm:rounded-3xl border border-white/20 bg-black/40 px-3 sm:px-4 shadow-2xl backdrop-blur-2xl transition-all">
+        {/* App Icons Strip - Dynamic Horizontal Row */}
+        <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto scrollbar-none py-1">
+          {/* Launcher Button */}
           <button
             type="button"
             onClick={onLauncherToggle}
-            title="Open app menu"
-            aria-label="Open app menu"
-            className="flex min-w-17 pb-2 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
+            title="Open App Menu"
+            aria-label="Open App Menu"
+            className="flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 p-1.5 hover:bg-white/25 hover:scale-110 active:scale-95 transition-all shadow"
           >
             <img
               src={launcherIcon}
-              alt=""
-              className="h-8 w-8 object-contain opacity-95"
+              alt="Start"
+              className="h-7 w-7 sm:h-8 sm:w-8 object-contain"
             />
-            
           </button>
 
+          {/* Divider */}
+          <div className="h-6 sm:h-7 w-[1px] bg-white/20 shrink-0 mx-0.5" />
+
+          {/* App Icons */}
           {apps.map((app) => (
             <button
               key={app.id}
               type="button"
               onClick={app.open}
-              title={app.isMinimized ? `${app.title} (Minimized - Click to Restore)` : app.title}
+              title={app.isMinimized ? `${app.title} (Minimized)` : app.title}
               aria-label={app.title}
-              className="group relative flex min-w-16 flex-col items-center gap-1 rounded-xl px-2 py-1 cursor-pointer object-contain hover:scale-110 transition"
+              className="group relative flex h-10 w-10 sm:h-11 sm:w-11 shrink-0 flex-col items-center justify-center rounded-xl p-1 hover:bg-white/15 hover:scale-110 active:scale-95 transition-all"
             >
               <img
                 src={app.image}
-                alt=""
-                className={`h-10 w-10 object-contain transition group-hover:scale-110 ${
-                  app.isMinimized ? "opacity-70 scale-90 grayscale-[30%]" : ""
+                alt={app.title}
+                className={`h-7 w-7 sm:h-8 sm:w-8 object-contain transition-transform ${
+                  app.isMinimized ? "opacity-60 scale-90 grayscale-[30%]" : ""
                 }`}
               />
               {app.isOpen && (
                 <span
-                  className={`h-1.5 w-1.5 rounded-full transition-all ${
+                  className={`absolute -bottom-0.5 h-1.5 w-1.5 rounded-full transition-all ${
                     app.isMinimized
                       ? "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)]"
-                      : "bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.9)]"
+                      : "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]"
                   }`}
                 />
               )}
@@ -72,24 +71,29 @@ function Dock({
           ))}
         </div>
 
+        {/* Divider */}
+        <div className="h-6 sm:h-7 w-[1px] bg-white/20 shrink-0 mx-0.5" />
+
         {/* System Tray */}
-        <div className="flex shrink-0 items-center gap-3 text-white">
-          <FaWifi size={17} />
-          <FaVolumeUp size={17} />
-          <FaBatteryThreeQuarters size={17} />
-          <div className="text-right">
-            <div className="text-sm font-medium">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3 text-white">
+          <div className="hidden sm:flex items-center gap-2 text-white/80">
+            <FaWifi size={14} />
+            <FaVolumeUp size={14} />
+            <FaBatteryThreeQuarters size={14} />
+          </div>
+
+          <div className="text-right leading-tight">
+            <div className="text-xs sm:text-sm font-semibold tracking-tight">
               {dateTime.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </div>
-
-            <div className="text-sm font-medium ">
+            <div className="text-[10px] sm:text-xs font-medium text-white/70">
               {dateTime.toLocaleDateString([], {
                 day: "2-digit",
                 month: "2-digit",
-                year: "numeric",
+                year: "2-digit",
               })}
             </div>
           </div>
@@ -99,9 +103,9 @@ function Dock({
             onClick={onLogout}
             title="Log out"
             aria-label="Log out"
-            className="grid h-10 w-10 place-items-center rounded-lg text-xl text-white transition hover:bg-white/15 hover:text-red-300"
+            className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl text-lg text-white/90 hover:bg-red-500/30 hover:text-red-300 active:scale-95 transition"
           >
-            <IoLogOutOutline />
+            <IoLogOutOutline size={18} />
           </button>
         </div>
       </div>
