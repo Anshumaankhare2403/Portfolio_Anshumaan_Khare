@@ -86,7 +86,7 @@ button {
 .android-sheet > p:not(.android-sheet-kicker) { margin: 14px 36px 22px 0; color: rgba(255, 255, 255, 0.86); line-height: 1.55; }
 .android-close, .android-drawer-head button { display: grid; position: absolute; top: 18px; right: 18px; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 50%; color: #fff; background: rgba(255, 255, 255, 0.18); font-size: 21px; }
 .android-action { display: inline-block; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 999px; padding: 11px 16px; color: #fff; background: rgba(255, 255, 255, 0.18); font-weight: 700; text-decoration: none; backdrop-filter: blur(14px); }
-.android-drawer { top: 5svh; max-height: none; border-radius: 25px 25px 0 0; }
+.android-drawer { top: 5svh; max-height: none; border-radius: 25px 25px 0 0; background: #0b0f19; border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.95); }
 .android-drawer-head { display: flex; align-items: center; min-height: 38px; margin-bottom: 30px; }
 .android-app-grid-drawer .android-app { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.55); }
 .ios-app-window { top: 0; max-height: none; min-height: 100svh; border-radius: 0; padding-top: max(58px, env(safe-area-inset-top)); }

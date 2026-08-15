@@ -225,13 +225,6 @@ export default function About({ onClose, onMinimize, mobile = false }) {
                     <span>anshumaankhare2403@gmail.com</span>
                   </a>
                   <a
-                    href="tel:+919424143810"
-                    className="flex items-center gap-1.5 rounded-xl bg-emerald-600/30 border border-emerald-500/40 px-3 py-1.5 text-emerald-200 hover:bg-emerald-600/50 transition"
-                  >
-                    <IoCallOutline size={15} />
-                    <span>+91 9424143810</span>
-                  </a>
-                  <a
                     href="https://github.com/Anshumaankhare2403"
                     target="_blank"
                     rel="noreferrer"

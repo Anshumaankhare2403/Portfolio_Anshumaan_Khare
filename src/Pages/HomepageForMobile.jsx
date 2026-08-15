@@ -131,7 +131,7 @@ function HomepageForMobile() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [dialedNumber, setDialedNumber] = useState("+91 91404 05680");
+  const [dialedNumber, setDialedNumber] = useState("");
   const [currentDate, setCurrentDate] = useState(() => new Date());
 
   const [mobileIsBooting, setMobileIsBooting] = useState(true);
@@ -509,7 +509,7 @@ function HomepageForMobile() {
         <div className="ios-profile-widget">
           <p className="tracking-wider">{formattedDate}</p>
           <h1>{formattedTime}</h1>
-          <span>Anshumaan Khare • Developer</span>
+          <span>Anshumaan Khare</span>
         </div>
 
         <div className="android-app-grid">
