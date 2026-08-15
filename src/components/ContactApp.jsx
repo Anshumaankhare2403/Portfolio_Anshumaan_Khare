@@ -38,8 +38,7 @@ export default function ContactApp({ onClose, onMinimize, mobile = false }) {
     setStatus("sending");
     setErrorMessage("");
 
-    const web3formsAccessKey =
-      import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "081403f1-7424-4bb9-9ed2-4700e3647f80";
+    const web3formsAccessKey = "081403f1-7424-4bb9-9ed2-4700e3647f80";
 
     try {
       // Direct Web3Forms submission endpoint
