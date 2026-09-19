@@ -32,7 +32,7 @@ import chromeIcon from "../assets/AndroideICONES/icons8-chrome-96.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 import Logo from "../assets/This PC/Windows11.svg";
-import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import heroImage from "../assets/hero.png";
 import resume from "../assets/resume/Anshumaankhare.pdf";
 import About from "../components/About";
@@ -126,7 +126,7 @@ const panels = {
 
 const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode"]);
 
-function HomepageForMobile() {
+function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpaper }) {
   const [activeApp, setActiveApp] = useState(null);
   const [showDrawer, setShowDrawer] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -202,7 +202,7 @@ function HomepageForMobile() {
     return (
       <div
         className="fixed inset-0 z-[9999] overflow-hidden bg-cover bg-center text-white select-none"
-        style={{ backgroundImage: `url(${wallpaper})` }}
+        style={{ backgroundImage: `url(${activeWallpaper})` }}
       >
         <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-md" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -361,6 +361,7 @@ function HomepageForMobile() {
           onOpenChrome={() => setActiveApp("chrome")}
           onOpenYouTube={() => setActiveApp("music")}
           onOpenTerminal={() => setActiveApp("terminal")}
+          onSetWallpaper={onSetWallpaper}
         />
       );
     if (activeApp === "music") return <YtMusice mobile onClose={closeApp} />;
@@ -494,7 +495,7 @@ function HomepageForMobile() {
   };
 
   return (
-    <main className="android-shell">
+    <main className="android-shell" style={{ backgroundImage: `url(${activeWallpaper})` }}>
       <section className="android-home" aria-label="iPhone portfolio home screen">
         <header className="android-status">
           <time>{formattedTime}</time>

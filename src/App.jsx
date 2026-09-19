@@ -3,31 +3,33 @@ import { useState } from "react";
 
 import SplashScreen from "./components/SplashScreen";
 import HomePage from "./Pages/HomePage";
-// import wallpaper from "./assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
 import HomepageForMobile from "./Pages/HomepageForMobile";
+import defaultWallpaper from "./assets/wallpaper/bioluminescence-3840x2160-25836.png";
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [wallpaper, setWallpaper] = useState(defaultWallpaper);
+
   return (
-    <>
-      <div className="hidden min-h-screen md:block">
+    <main className="relative min-h-screen overflow-hidden">
+      <div
+        className="fixed inset-0 z-0 bg-cover bg-center transition-[background-image] duration-500"
+        style={{ backgroundImage: `url(${wallpaper})` }}
+        aria-hidden="true"
+      />
+      <div className="relative z-10 hidden min-h-screen md:block">
         {isSignedIn ? (
-          <HomePage onLogout={() => setIsSignedIn(false)} />
+          <HomePage
+            onLogout={() => setIsSignedIn(false)}
+            onSetWallpaper={setWallpaper}
+          />
         ) : (
           <SplashScreen onSignIn={() => setIsSignedIn(true)} />
         )}
       </div>
-{/* 
-      <main
-        className={` min-h-screen pt-5 pb-5 bg-cover bg-center px-3 text-center gap-2.5 ${
-          isIPad ? "flex " : "grid md:hidden"
-        }`}
-        style={{ backgroundImage: `url(${wallpaper})` }}
-      > */}
-      <div className="md:hidden">
-        <HomepageForMobile />
+      <div className="relative z-10 md:hidden">
+        <HomepageForMobile wallpaper={wallpaper} onSetWallpaper={setWallpaper} />
       </div>
-      {/* </main> */}
-    </>
+    </main>
   );
 }
 

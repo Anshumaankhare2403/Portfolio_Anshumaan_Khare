@@ -109,7 +109,7 @@ function createInitialFileSystem() {
         }),
         Pictures: dir({
           "wallpaper-info.txt": file(
-            "Default desktop wallpaper: bioluminescence-3840x2160-25836.jpg"
+            "Default desktop wallpaper: bioluminescence-3840x2160-25836.png"
           ),
         }),
         Projects: dir({

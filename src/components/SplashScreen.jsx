@@ -10,7 +10,7 @@ import {
 
 import { FaWifi, FaVolumeUp, FaBatteryThreeQuarters } from "react-icons/fa";
 import Logo from "../assets/This PC/Windows11.svg";
-import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import heroImage from "../assets/hero.png";
 
 function SplashScreen({ onSignIn }) {

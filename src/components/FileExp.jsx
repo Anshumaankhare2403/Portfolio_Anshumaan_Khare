@@ -82,7 +82,7 @@ import youtubeIcon from "../assets/scalable/yt.svg";
 import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
 import heroImage from "../assets/hero.png";
-import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.jpg";
+import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import localResume from "../assets/resume/Anshumaankhare.pdf";
 
 const resumePdf = localResume;
@@ -430,11 +430,13 @@ function FileExp({
   onOpenChrome,
   onOpenYouTube,
   onOpenTerminal,
+  onSetWallpaper,
   mobile = false,
 }) {
   const [maximized, setMaximized] = useState(true);
   const [activeFolder, setActiveFolder] = useState(null);
   const [selectedPreview, setSelectedPreview] = useState(null);
+  const [uploadedImages, setUploadedImages] = useState([]);
 
   const appActions = {
     about: onOpenAbout,
@@ -452,6 +454,10 @@ function FileExp({
 
     setSelectedPreview(item);
 
+    if (item.preview) {
+      onSetWallpaper?.(item.preview);
+    }
+
     if (item.app && appActions[item.app]) {
       appActions[item.app]();
       return;
@@ -465,6 +471,26 @@ function FileExp({
       link.click();
       document.body.removeChild(link);
     }
+  };
+
+  const addImages = (event) => {
+    const imageFiles = Array.from(event.target.files || []).filter((file) =>
+      file.type.startsWith("image/")
+    );
+
+    if (!imageFiles.length) return;
+
+    const newImages = imageFiles.map((file) => ({
+      name: file.name,
+      icon: picturesIcon,
+      preview: URL.createObjectURL(file),
+      description: "Custom wallpaper. Selected automatically.",
+    }));
+    setUploadedImages((current) => [...current, ...newImages]);
+    const [firstImage] = newImages;
+    setSelectedPreview(firstImage);
+    onSetWallpaper?.(firstImage.preview);
+    event.target.value = "";
   };
 
   const openFolder = (folderName) => {
@@ -485,6 +511,7 @@ function FileExp({
         onOpenChrome={onOpenChrome}
         onOpenYouTube={onOpenYouTube}
         onOpenTerminal={onOpenTerminal}
+        onSetWallpaper={onSetWallpaper}
       />
     );
   }
@@ -607,6 +634,13 @@ function FileExp({
           ) : (
             <div className="flex gap-5">
               <div className="min-w-0 flex-1">
+                {activeFolder === "Pictures" && (
+                  <label className="mb-5 flex w-fit items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold transition hover:bg-white/20">
+                    <IoImageOutline className="text-lg" />
+                    Add image as wallpaper
+                    <input type="file" accept="image/*" multiple className="sr-only" onChange={addImages} />
+                  </label>
+                )}
                 {activeFolder === "README" ? (
                   <article className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-black/20 shadow-xl">
                     <header className="border-b border-white/10 bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-7">
@@ -680,7 +714,9 @@ function FileExp({
                   </div>
                 ) : (
                   <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] content-start gap-4">
-                    {(folderContents[activeFolder] || []).map((item) => (
+                    {(activeFolder === "Pictures"
+                      ? [...(folderContents.Pictures || []), ...uploadedImages]
+                      : folderContents[activeFolder] || []).map((item) => (
                       <button
                         type="button"
                         key={item.name}
@@ -732,6 +768,11 @@ function FileExp({
                   {selectedPreview.description && (
                     <p className="mt-2 text-sm leading-6 text-gray-300">
                       {selectedPreview.description}
+                    </p>
+                  )}
+                  {selectedPreview.preview && (
+                    <p className="mt-3 rounded-lg bg-blue-500/15 p-3 text-xs font-medium text-blue-200">
+                      Wallpaper applied automatically.
                     </p>
                   )}
                   {selectedPreview.content && (
@@ -790,6 +831,7 @@ function MobileFileExplorer({
   onOpenChrome,
   onOpenYouTube,
   onOpenTerminal,
+  onSetWallpaper,
 }) {
   const [activeFolder, setActiveFolder] = useState(null);
   const [activeTab, setActiveTab] = useState("Browse");
@@ -809,6 +851,10 @@ function MobileFileExplorer({
     }
     if (item.url) {
       window.open(item.url, "_blank", "noopener,noreferrer");
+      return;
+    }
+    if (item.preview) {
+      onSetWallpaper?.(item.preview);
       return;
     }
     if (Object.prototype.hasOwnProperty.call(item, "section")) setActiveFolder(item.section);

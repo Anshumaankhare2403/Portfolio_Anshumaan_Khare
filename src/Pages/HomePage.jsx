@@ -24,7 +24,7 @@ import githubIcon from "../assets/color-lightblue/folder-github.svg";
 import projectsIcon from "../assets/color-lightblue/folder-projects.svg";
 import vscodeIcon from "../assets/scalable/vscode.svg";
 
-function HomePage({ onLogout }) {
+function HomePage({ onLogout, onSetWallpaper }) {
   // App window states: 'closed' | 'open' | 'minimized'
   const [fileExplorerState, setFileExplorerState] = useState("closed");
   const [ytState, setYtState] = useState("closed");
@@ -220,6 +220,7 @@ function HomePage({ onLogout }) {
             onOpenChrome={openChrome}
             onOpenYouTube={openYouTube}
             onOpenTerminal={openTerminal}
+            onSetWallpaper={onSetWallpaper}
           />
         )}
       </AnimatePresence>
