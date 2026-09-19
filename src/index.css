@@ -50,7 +50,7 @@ button {
 
 .android-shell {
     min-height: 100svh;
-    background: #07243c url("./assets/wallpaper/bioluminescence-3840x2160-25836.png") center / cover;
+    background: #111820 url("./assets/wallpaper/bioluminescence-3840x2160-25836.png") center / cover;
     color: #fff;
 }
 
@@ -63,23 +63,23 @@ button {
     isolation: isolate;
 }
 
-.android-home::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(155deg, rgba(56, 189, 248, .35), rgba(7, 36, 60, .45) 45%, rgba(14, 116, 144, .35)); }
+.android-home::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(155deg, rgba(10, 16, 24, .16), rgba(8, 13, 20, .32) 48%, rgba(11, 18, 25, .18)); }
 .android-status { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 26px; padding: 0 5px; font-size: 12px; font-weight: 700; }
 .ios-dynamic-island { position: absolute; top: -5px; left: 50%; width: 96px; height: 25px; transform: translateX(-50%); border-radius: 999px; background: #050609; box-shadow: inset 0 0 0 1px rgba(255,255,255,.05); }
-.ios-profile-widget { min-height: 136px; margin: clamp(24px, 5.5svh, 54px) 0 24px; padding: 20px 22px; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 24px; background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 16px 40px rgba(0, 0, 0, 0.3); backdrop-filter: blur(28px) saturate(1.4); -webkit-backdrop-filter: blur(28px) saturate(1.4); }
-.ios-profile-widget p { margin: 0 0 4px; color: rgba(56, 189, 248, 0.95); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.ios-profile-widget { min-height: 136px; margin: clamp(24px, 5.5svh, 54px) 0 24px; padding: 20px 22px; border: 1px solid rgba(222, 230, 235, .28); border-radius: 24px; background: rgba(13, 20, 28, .48); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 16px 40px rgba(0, 0, 0, .42); backdrop-filter: blur(28px) saturate(.9); -webkit-backdrop-filter: blur(28px) saturate(.9); }
+.ios-profile-widget p { margin: 0 0 4px; color: rgba(185, 211, 219, .95); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .android-sheet-kicker { margin: 0 0 8px; color: rgba(56, 189, 248, .9); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
 .ios-profile-widget h1 { margin: 0; font-size: clamp(34px, 9.5vw, 46px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: #ffffff; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
 .ios-profile-widget span { display: block; margin-top: 6px; color: rgba(255, 255, 255, 0.88); font-size: 13px; font-weight: 500; }
 .android-app-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 10px; }
 .android-app { display: grid; min-width: 0; place-items: center; gap: 6px; border: 0; padding: 0; color: #fff; background: transparent; font-size: 12px; line-height: 1.2; text-shadow: 0 1px 3px rgba(0,0,0,.55); }
 .android-app > span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.android-app-icon { display: grid; width: clamp(50px, 14.5vw, 62px); aspect-ratio: 1; place-items: center; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 16px; background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 6px 16px rgba(0, 0, 0, 0.25); backdrop-filter: blur(20px); }
+.android-app-icon { display: grid; width: clamp(50px, 14.5vw, 62px); aspect-ratio: 1; place-items: center; overflow: hidden; border: 1px solid rgba(232, 238, 241, .22); border-radius: 16px; background: rgba(15, 23, 31, .38); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .22), 0 6px 16px rgba(0, 0, 0, .35); backdrop-filter: blur(20px) saturate(.92); }
 .android-app-icon img { width: 100%; height: 100%; padding: 4px; object-fit: contain; }
 .android-app-icon svg { width: 29px; height: 29px; }
-.android-dock { display: flex; justify-content: space-around; align-items: center; gap: 14px; margin-top: auto; padding: 13px 18px; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 28px; background: rgba(255, 255, 255, 0.12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 12px 32px rgba(0, 0, 0, 0.35); backdrop-filter: blur(28px) saturate(1.4); -webkit-backdrop-filter: blur(28px) saturate(1.4); }
+.android-dock { display: flex; justify-content: space-around; align-items: center; gap: 14px; margin-top: auto; padding: 13px 18px; border: 1px solid rgba(224, 232, 235, .25); border-radius: 28px; background: rgba(10, 16, 23, .58); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 12px 32px rgba(0, 0, 0, .48); backdrop-filter: blur(28px) saturate(.88); -webkit-backdrop-filter: blur(28px) saturate(.88); }
 .android-dock .android-app { gap: 0; }
-.android-drawer-button { display: flex; align-items: center; justify-content: center; gap: 7px; width: min(100%, 320px); margin: 15px auto 9px; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; padding: 10px 16px; color: #fff; background: rgba(255, 255, 255, 0.14); font-size: 14px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.android-drawer-button { display: flex; align-items: center; justify-content: center; gap: 7px; width: min(100%, 320px); margin: 15px auto 9px; border: 1px solid rgba(224, 232, 235, .24); border-radius: 999px; padding: 10px 16px; color: #fff; background: rgba(10, 16, 23, .5); font-size: 14px; backdrop-filter: blur(20px) saturate(.9); -webkit-backdrop-filter: blur(20px) saturate(.9); }
 .android-gesture { width: 116px; height: 5px; margin: 3px auto 0; border-radius: 999px; background: rgba(255, 255, 255, 0.92); }
 .android-sheet, .android-drawer { position: fixed; z-index: 10; right: 0; bottom: 0; left: 0; max-height: min(68svh, 560px); overflow: auto; border: 1px solid rgba(255, 255, 255, 0.25); border-bottom: 0; border-radius: 25px 25px 0 0; padding: 34px 24px max(28px, env(safe-area-inset-bottom)); color: #fff; background: rgba(0, 0, 0, 0.45); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 -12px 36px rgba(0, 0, 0, 0.45); backdrop-filter: blur(32px) saturate(1.4); -webkit-backdrop-filter: blur(32px) saturate(1.4); }
 .android-sheet h2, .android-drawer h2 { margin: 0; font-size: 26px; }
