@@ -46,7 +46,7 @@ function Dock({
         {workspaces.length > 0 && (
           <div
             className="flex items-center gap-1 bg-white/10 p-1 rounded-xl sm:rounded-2xl border border-white/10 shrink-0"
-            title="Desktop Spaces (Use 3-finger touchpad swipe to switch)"
+            title="Desktop Spaces (Use 5-finger touchpad swipe to switch)"
           >
             {workspaces.map((ws, i) => {
               const isActive = i === activeWorkspace;
@@ -57,7 +57,7 @@ function Dock({
                   key={ws.id}
                   type="button"
                   onClick={() => onSelectWorkspace(i)}
-                  title={`${ws.name}: ${ws.label} (${count} active apps)\nTip: 3-finger touchpad swipe to switch spaces`}
+                  title={`${ws.name}: ${ws.label} (${count} active apps)\nTip: 5-finger touchpad swipe to switch spaces`}
                   className={`relative flex items-center justify-center rounded-lg sm:rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     isActive
                       ? "h-8 sm:h-9 px-2.5 sm:px-3 bg-white/25 text-white shadow-md border border-white/30 scale-105"
@@ -144,11 +144,11 @@ function Dock({
 
         {/* System Tray */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3 text-white">
-          {/* Touchpad 3-Finger Gesture Button */}
+          {/* Touchpad 5-Finger Gesture Button */}
           <button
             type="button"
             onClick={onOpenGestureGuide}
-            title="3-Finger Touchpad & Trackpad Gestures Guide"
+            title="5-Finger Touchpad & Trackpad Gestures Guide"
             className="flex items-center justify-center p-1.5 rounded-xl hover:bg-white/15 text-white/70 hover:text-white transition cursor-pointer"
           >
             <IoHandLeftOutline size={16} />
