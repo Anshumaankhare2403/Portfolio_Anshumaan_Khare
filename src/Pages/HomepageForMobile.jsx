@@ -46,6 +46,8 @@ import ProjectsApp from "../components/ProjectsApp";
 import ContactApp from "../components/ContactApp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import vscodeIcon from "../assets/scalable/vscode.svg";
+import settingsIcon from "../assets/scalable/settings.svg";
+import SettingsApp from "../components/Settings/SettingsApp";
 
 const categories = ["All", "Tools", "Media", "Info"];
 
@@ -57,6 +59,7 @@ const gridApps = [
   { id: "github", label: "GitHub", icon: IoLogoGithub, color: "#24292f", category: "Info" },
   { id: "vscode", label: "VS Code", image: vscodeIcon, category: "Tools" },
   { id: "terminal", label: "Terminal", image: terminalIcon, category: "Tools" },
+  { id: "settings", label: "Settings", image: settingsIcon, category: "Tools" },
 ];
 
 const dockApps = [
@@ -124,7 +127,7 @@ const panels = {
   },
 };
 
-const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode"]);
+const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode", "settings"]);
 
 function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpaper }) {
   const [activeApp, setActiveApp] = useState(null);
@@ -371,6 +374,17 @@ function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpa
     if (activeApp === "projects") return <ProjectsApp mobile onClose={closeApp} />;
     if (activeApp === "contact") return <ContactApp mobile onClose={closeApp} />;
     if (activeApp === "vscode") return <VSCodeWindow mobile onClose={closeApp} />;
+    if (activeApp === "settings")
+      return (
+        <SettingsApp
+          mobile
+          onClose={closeApp}
+          onLockDesktop={() => {
+            closeApp();
+            setMobileIsSignedIn(false);
+          }}
+        />
+      );
     if (activeApp === "resume")
       return (
         <div className="fixed inset-0 z-50 flex flex-col bg-[#052541] text-white">

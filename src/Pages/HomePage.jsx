@@ -13,6 +13,7 @@ import GitHubWindow from "../components/GitHubWindow";
 import ProjectsApp from "../components/ProjectsApp";
 import ContactApp from "../components/ContactApp";
 import VSCodeWindow from "../components/VSCodeWindow";
+import SettingsApp from "../components/Settings/SettingsApp";
 import WorkspaceOSD from "../components/WorkspaceOSD";
 import GestureGuideModal from "../components/GestureGuideModal";
 import DesktopTutorialModal from "../components/DesktopTutorialModal";
@@ -26,6 +27,7 @@ import terminalIcon from "../assets/scalable/terminal.svg";
 import githubIcon from "../assets/color-lightblue/folder-github.svg";
 import projectsIcon from "../assets/color-lightblue/folder-projects.svg";
 import vscodeIcon from "../assets/scalable/vscode.svg";
+import settingsIcon from "../assets/scalable/settings.svg";
 
 const WORKSPACES = [
   { id: 0, name: "Desktop 1", shortName: "1", label: "Main" },
@@ -45,6 +47,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
   const [projectsState, setProjectsState] = useState("closed");
   const [contactState, setContactState] = useState("closed");
   const [vscodeState, setVscodeState] = useState("closed");
+  const [settingsState, setSettingsState] = useState("closed");
 
   // Multi-Desktop Workspaces State
   const [activeWorkspace, setActiveWorkspace] = useState(0);
@@ -52,6 +55,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
     files: 0,
     about: 0,
     contact: 0,
+    settings: 0,
     terminal: 1,
     vscode: 1,
     github: 1,
@@ -252,6 +256,17 @@ function HomePage({ onLogout, onSetWallpaper }) {
       isMinimized: vscodeState === "minimized",
       state: vscodeState,
       setState: setVscodeState,
+    },
+    {
+      id: "settings",
+      title: "Settings",
+      shortTitle: "Settings",
+      image: settingsIcon,
+      open: () => handleAppClick("settings", settingsState, setSettingsState),
+      isOpen: settingsState !== "closed",
+      isMinimized: settingsState === "minimized",
+      state: settingsState,
+      setState: setSettingsState,
     },
   ];
 
@@ -523,6 +538,17 @@ function HomePage({ onLogout, onSetWallpaper }) {
             key="VSCode"
             onClose={() => setVscodeState("closed")}
             onMinimize={() => setVscodeState("minimized")}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {settingsState === "open" && appWorkspaces.settings === wsId && (
+          <SettingsApp
+            key="Settings"
+            onClose={() => setSettingsState("closed")}
+            onMinimize={() => setSettingsState("minimized")}
+            onLockDesktop={onLogout}
           />
         )}
       </AnimatePresence>
