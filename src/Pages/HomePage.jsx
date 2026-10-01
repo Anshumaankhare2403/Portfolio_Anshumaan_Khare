@@ -260,7 +260,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
   }, {});
 
   // ---------------------------------------------------------------------------
-  // Touchpad 3-Finger Gestures, Trackpad Wheel, & Keyboard Listeners
+  // Touchpad 5-Finger Gestures, Trackpad Wheel, & Keyboard Listeners
   // ---------------------------------------------------------------------------
   useEffect(() => {
     // 1. Touch Events (5-Finger Swipe on Touchscreens & Touchpads)
