@@ -260,36 +260,33 @@ function HomePage({ onLogout, onSetWallpaper }) {
   }, {});
 
   // ---------------------------------------------------------------------------
-  // Touchpad 5-Finger Gestures, Trackpad Wheel, & Keyboard Listeners
+  // Touchpad 2-Finger Gestures, Trackpad Wheel, & Keyboard Listeners
   // ---------------------------------------------------------------------------
   useEffect(() => {
-    // 1. Touch Events (5-Finger Swipe on Touchscreens & Touchpads)
+    // 1. Touch Events (2-Finger Swipe on Touchscreens & Touchpads - Default)
     let touchStartX = 0;
     let touchStartTime = 0;
-    let isFiveFinger = false;
+    let isTwoFinger = false;
 
     const handleTouchStart = (e) => {
-      if (e.touches.length === 5) {
-        isFiveFinger = true;
+      // Default to 2-finger gesture
+      if (e.touches.length === 2) {
+        isTwoFinger = true;
         touchStartTime = Date.now();
-        let totalX = 0;
-        for (let i = 0; i < e.touches.length; i++) {
-          totalX += e.touches[i].clientX;
-        }
-        touchStartX = totalX / 5;
+        touchStartX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
       } else {
-        isFiveFinger = false;
+        isTwoFinger = false;
       }
     };
 
     const handleTouchMove = (e) => {
-      if (!isFiveFinger || e.touches.length !== 5) return;
+      if (!isTwoFinger || e.touches.length !== 2) return;
       if (e.cancelable) e.preventDefault();
     };
 
     const handleTouchEnd = (e) => {
-      if (!isFiveFinger) return;
-      isFiveFinger = false;
+      if (!isTwoFinger) return;
+      isTwoFinger = false;
 
       if (e.changedTouches.length > 0) {
         let endX = 0;
