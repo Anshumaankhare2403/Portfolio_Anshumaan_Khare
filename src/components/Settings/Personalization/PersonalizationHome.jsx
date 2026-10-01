@@ -7,8 +7,12 @@ import {
   IoLayersOutline,
   IoChevronForward,
   IoRefreshOutline,
+  IoLogoGithub,
+  IoOpenOutline,
+  IoSparkles,
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
+import { CATPPUCCIN_REPO_URL } from "../../../data/catppuccinWallpapers";
 
 export default function PersonalizationHome({ onNavigate, onOpenResetModal }) {
   const { desktopWallpaper, theme, activeAccent } = useSettings();
@@ -17,10 +21,10 @@ export default function PersonalizationHome({ onNavigate, onOpenResetModal }) {
     {
       id: "background",
       title: "Background",
-      desc: "Desktop background image, picture URL, or local file upload",
+      desc: "Desktop background image, 330+ Catppuccin Mocha walls, URL, or upload",
       icon: IoImageOutline,
       subPage: "background",
-      badge: "Active",
+      badge: "330+ Walls",
     },
     {
       id: "colors",
@@ -111,6 +115,59 @@ export default function PersonalizationHome({ onNavigate, onOpenResetModal }) {
             >
               Adjust Colors
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Catppuccin Mocha Wallpapers Section Banner with Credit */}
+      <div className="relative overflow-hidden rounded-2xl border border-[#cba6f7]/30 bg-gradient-to-r from-[#1e1e2e]/90 via-[#181825]/90 to-[#11111b]/95 p-4 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#cba6f7] to-[#89b4fa] text-[#11111b] shadow-lg shadow-[#cba6f7]/20">
+              <IoSparkles size={22} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-sm font-bold text-white">
+                  Catppuccin Mocha Wallpapers
+                </h4>
+                <span className="rounded-full bg-[#cba6f7]/20 border border-[#cba6f7]/40 px-2 py-0.5 text-[10px] font-semibold text-[#cba6f7]">
+                  330+ Walls
+                </span>
+              </div>
+              <p className="text-xs text-[#a6adc8] mt-0.5">
+                Aesthetic collection curated by{" "}
+                <a
+                  href={CATPPUCCIN_REPO_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-[#cba6f7] font-semibold hover:underline inline-flex items-center gap-0.5"
+                >
+                  orangci/walls-catppuccin-mocha
+                  <IoOpenOutline size={11} className="inline ml-0.5" />
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-center">
+            <button
+              type="button"
+              onClick={() => onNavigate("background")}
+              className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[#cba6f7] text-[#11111b] hover:bg-[#b4befe] shadow-md transition active:scale-95 cursor-pointer"
+            >
+              Browse Gallery
+            </button>
+            <a
+              href={CATPPUCCIN_REPO_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition cursor-pointer"
+              title="View on GitHub"
+            >
+              <IoLogoGithub size={15} />
+              <span>GitHub</span>
+            </a>
           </div>
         </div>
       </div>

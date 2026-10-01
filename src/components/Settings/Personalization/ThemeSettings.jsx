@@ -1,8 +1,35 @@
-import { IoChevronBack, IoCheckmark } from "react-icons/io5";
+import {
+  IoChevronBack,
+  IoCheckmark,
+  IoLogoGithub,
+  IoOpenOutline,
+  IoSparkles,
+} from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
+import {
+  CATPPUCCIN_WALLPAPERS,
+  CATPPUCCIN_REPO_URL,
+} from "../../../data/catppuccinWallpapers";
+
+const catppuccinSample =
+  CATPPUCCIN_WALLPAPERS.find(
+    (w) =>
+      w.filename.includes("aesthetic") ||
+      w.filename.includes("cat-vibin") ||
+      w.filename.includes("pixel-galaxy")
+  ) || CATPPUCCIN_WALLPAPERS[0];
 
 const THEME_PRESETS = [
+  {
+    id: "theme-catppuccin-mocha",
+    title: "Catppuccin Mocha",
+    wallpaperUrl: catppuccinSample?.url || PRESET_WALLPAPERS[0].url,
+    theme: "dark",
+    accent: "purple",
+    accentHex: "#cba6f7",
+    thumbnail: catppuccinSample?.thumbnail || PRESET_WALLPAPERS[0].thumbnail,
+  },
   {
     id: "theme-bioluminescence",
     title: "Bioluminescent Glass",
@@ -149,6 +176,44 @@ export default function ThemeSettings({ onBack }) {
             </button>
           );
         })}
+      </div>
+
+      {/* Catppuccin Mocha Repository Attribution Card */}
+      <div className="mt-2 rounded-2xl border border-[#cba6f7]/25 bg-gradient-to-r from-[#1e1e2e]/90 to-[#181825]/90 p-4 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#cba6f7]/20 border border-[#cba6f7]/40 text-[#cba6f7]">
+              <IoSparkles size={20} />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-white block">
+                Catppuccin Mocha Wallpaper Collection
+              </span>
+              <p className="text-[11px] text-[#a6adc8] mt-0.5">
+                Curated by{" "}
+                <a
+                  href={CATPPUCCIN_REPO_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-semibold text-[#cba6f7] hover:underline inline-flex items-center gap-0.5"
+                >
+                  orangci/walls-catppuccin-mocha
+                  <IoOpenOutline size={11} className="inline ml-0.5" />
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <a
+            href={CATPPUCCIN_REPO_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition cursor-pointer self-start sm:self-auto"
+          >
+            <IoLogoGithub size={15} />
+            <span>GitHub Repository</span>
+          </a>
+        </div>
       </div>
     </div>
   );

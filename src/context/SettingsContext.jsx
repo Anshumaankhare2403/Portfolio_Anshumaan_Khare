@@ -1,5 +1,9 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import defaultWallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
+import {
+  CATPPUCCIN_WALLPAPERS,
+  CATPPUCCIN_REPO_URL,
+} from "../data/catppuccinWallpapers";
 
 export const PRESET_WALLPAPERS = [
   {

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="tm-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00a88f"/>
+      <stop offset="50%" stop-color="#0078d4"/>
+      <stop offset="100%" stop-color="#103f6e"/>
+    </linearGradient>
+    <linearGradient id="tm-pulse-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="50%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#00f2fe"/>
+    </linearGradient>
+    <filter id="tm-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0078d4" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Monitor Frame -->
+  <rect x="6" y="8" width="52" height="42" rx="10" fill="url(#tm-bg-grad)" filter="url(#tm-glow)"/>
+
+  <!-- Inner Display Area -->
+  <rect x="10" y="12" width="44" height="34" rx="7" fill="#0d1b2a" opacity="0.88"/>
+
+  <!-- Graph Grid Lines -->
+  <line x1="10" y1="21" x2="54" y2="21" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+  <line x1="10" y1="29" x2="54" y2="29" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+  <line x1="10" y1="37" x2="54" y2="37" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+  <line x1="21" y1="12" x2="21" y2="46" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+  <line x1="32" y1="12" x2="32" y2="46" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+  <line x1="43" y1="12" x2="43" y2="46" stroke="#ffffff" stroke-opacity="0.08" stroke-dasharray="2,2"/>
+
+  <!-- Real-time Pulse Heartbeat Polyline -->
+  <polyline
+    points="11,35 18,35 23,28 27,41 33,18 38,36 44,30 48,35 53,35"
+    fill="none"
+    stroke="url(#tm-pulse-grad)"
+    stroke-width="2.75"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Active Glowing Point -->
+  <circle cx="33" cy="18" r="2.5" fill="#00f2fe" filter="drop-shadow(0 0 4px #00f2fe)"/>
+
+  <!-- Stand / Base -->
+  <path d="M26 50 H38 L42 56 H22 Z" fill="#203a43" opacity="0.9"/>
+  <rect x="20" y="55" width="24" height="2.5" rx="1.25" fill="#0078d4" opacity="0.85"/>
+</svg>

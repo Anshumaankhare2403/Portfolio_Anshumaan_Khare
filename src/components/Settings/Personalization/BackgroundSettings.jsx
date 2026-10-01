@@ -9,6 +9,7 @@ import {
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
+import CatppuccinWallpaperGallery from "./CatppuccinWallpaperGallery";
 
 export default function BackgroundSettings({ onBack }) {
   const {
@@ -210,6 +211,16 @@ export default function BackgroundSettings({ onBack }) {
           })}
         </div>
       </div>
+
+      {/* Catppuccin Mocha Wallpapers Collection (with credit to https://github.com/orangci/walls-catppuccin-mocha) */}
+      <CatppuccinWallpaperGallery
+        selectedWallpaper={desktopWallpaper}
+        onSelectWallpaper={(url, title) => {
+          setDesktopWallpaper(url);
+          showToast(`✓ Wallpaper set to "${title || "Catppuccin Mocha"}"`);
+        }}
+        type="desktop"
+      />
 
       {/* Choose a photo / File Upload Card */}
       <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-2">

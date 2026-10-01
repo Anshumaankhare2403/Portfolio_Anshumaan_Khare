@@ -10,6 +10,7 @@ import {
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
+import CatppuccinWallpaperGallery from "./CatppuccinWallpaperGallery";
 
 export default function LockScreenSettings({ onBack, onLockDesktop }) {
   const {
@@ -209,6 +210,16 @@ export default function LockScreenSettings({ onBack, onLockDesktop }) {
           })}
         </div>
       </div>
+
+      {/* Catppuccin Mocha Lock Screen Wallpapers Collection (with credit to https://github.com/orangci/walls-catppuccin-mocha) */}
+      <CatppuccinWallpaperGallery
+        selectedWallpaper={lockScreenWallpaper}
+        onSelectWallpaper={(url, title) => {
+          setLockScreenWallpaper(url);
+          showToast(`✓ Lock screen wallpaper set to "${title || "Catppuccin Mocha"}"`);
+        }}
+        type="lockscreen"
+      />
 
       {/* Choose a photo / File Upload Card */}
       <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-2">
