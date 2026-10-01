@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaWifi, FaVolumeUp, FaBatteryThreeQuarters } from "react-icons/fa";
-import { IoLogOutOutline, IoHandLeftOutline } from "react-icons/io5";
+import { IoLogOutOutline, IoHandLeftOutline, IoHelpCircleOutline } from "react-icons/io5";
 
 function Dock({
   launcherIcon,
@@ -13,6 +13,7 @@ function Dock({
   onSelectWorkspace = () => {},
   workspaceWindowCounts = {},
   onOpenGestureGuide = () => {},
+  onOpenTutorial = () => {},
 }) {
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -154,6 +155,16 @@ function Dock({
             className="flex items-center justify-center p-1.5 rounded-xl hover:bg-cyan-500/20 text-cyan-300 hover:text-cyan-100 border border-transparent hover:border-cyan-500/30 hover:shadow-[0_0_12px_rgba(6,182,212,0.35)] transition cursor-pointer"
           >
             <IoHandLeftOutline size={16} />
+          </button>
+
+          {/* Desktop & 2-Finger Gesture Tutorial Button */}
+          <button
+            type="button"
+            onClick={onOpenTutorial}
+            title="Interactive Desktop & Gesture Tutorial"
+            className="flex items-center justify-center p-1.5 rounded-xl hover:bg-cyan-500/20 text-cyan-300 hover:text-cyan-100 border border-transparent hover:border-cyan-500/30 hover:shadow-[0_0_12px_rgba(6,182,212,0.35)] transition cursor-pointer"
+          >
+            <IoHelpCircleOutline size={17} />
           </button>
 
           <div className="hidden sm:flex items-center gap-2 text-cyan-200/70">

@@ -15,6 +15,7 @@ import ContactApp from "../components/ContactApp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import WorkspaceOSD from "../components/WorkspaceOSD";
 import GestureGuideModal from "../components/GestureGuideModal";
+import DesktopTutorialModal from "../components/DesktopTutorialModal";
 
 import launcherIcon from "../assets/This PC/Windows11.svg";
 import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
@@ -60,8 +61,26 @@ function HomePage({ onLogout, onSetWallpaper }) {
   });
 
   const [isGestureGuideOpen, setIsGestureGuideOpen] = useState(false);
+  const [isTutorialOpen, setIsTutorialOpen] = useState(() => {
+    try {
+      return localStorage.getItem("hasSeenDesktopTutorial") !== "true";
+    } catch {
+      return false;
+    }
+  });
   const [showOsd, setShowOsd] = useState(false);
   const osdTimerRef = useRef(null);
+
+  const handleCloseTutorial = (dontShowAgain = true) => {
+    if (dontShowAgain) {
+      try {
+        localStorage.setItem("hasSeenDesktopTutorial", "true");
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    setIsTutorialOpen(false);
+  };
 
   // App launcher state
   const [isLauncherOpen, setIsLauncherOpen] = useState(false);
@@ -555,7 +574,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
         ))}
       </div>
 
-      {/* 3-Finger Touchpad & Trackpad Gesture Guide Modal */}
+      {/* 2-Finger Touchpad & Trackpad Gesture Guide Modal */}
       <AnimatePresence>
         {isGestureGuideOpen && (
           <GestureGuideModal
@@ -563,6 +582,20 @@ function HomePage({ onLogout, onSetWallpaper }) {
             onClose={() => setIsGestureGuideOpen(false)}
             activeWorkspace={activeWorkspace}
             workspaces={WORKSPACES}
+            onSelectWorkspace={goToWorkspace}
+            onOpenTutorial={() => setIsTutorialOpen(true)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Desktop & 2-Finger Gestures Tutorial Modal (with Skip option) */}
+      <AnimatePresence>
+        {isTutorialOpen && (
+          <DesktopTutorialModal
+            isOpen={isTutorialOpen}
+            onClose={handleCloseTutorial}
+            workspaces={WORKSPACES}
+            activeWorkspace={activeWorkspace}
             onSelectWorkspace={goToWorkspace}
           />
         )}
@@ -593,6 +626,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
         onSelectWorkspace={goToWorkspace}
         workspaceWindowCounts={workspaceWindowCounts}
         onOpenGestureGuide={() => setIsGestureGuideOpen(true)}
+        onOpenTutorial={() => setIsTutorialOpen(true)}
       />
     </div>
   );

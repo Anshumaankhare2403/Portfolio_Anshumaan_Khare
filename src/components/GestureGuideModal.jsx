@@ -15,6 +15,7 @@ function GestureGuideModal({
   activeWorkspace,
   workspaces,
   onSelectWorkspace,
+  onOpenTutorial,
 }) {
   const [touchCount, setTouchCount] = useState(0);
   const [lastGesture, setLastGesture] = useState("None yet — swipe 2 fingers on the pad below!");
@@ -268,11 +269,23 @@ function GestureGuideModal({
         </div>
 
         {/* Current Desktop Status & Quick Jump */}
-        <div className="mt-4 pt-3 border-t border-cyan-500/25 flex items-center justify-between">
+        <div className="mt-4 pt-3 border-t border-cyan-500/25 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2 text-xs text-cyan-200/70">
+            {onOpenTutorial && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenTutorial();
+                }}
+                className="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 hover:text-cyan-100 border border-cyan-400/30 transition text-xs font-semibold cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+              >
+                ✦ Replay Tutorial
+              </button>
+            )}
             <span>Current:</span>
             <span className="font-semibold text-cyan-100">
-              {workspaces[activeWorkspace]?.name} ({workspaces[activeWorkspace]?.label})
+              {workspaces[activeWorkspace]?.name}
             </span>
           </div>
 
