@@ -2,7 +2,7 @@ function App_icons({ image, title, onClick }) {
   return (
     <button
       type="button"
-      className="flex w-20 flex-col items-center rounded-xl p-1.5 transition-all duration-200 hover:bg-cyan-500/15 hover:border hover:border-cyan-400/30 hover:shadow-[0_0_16px_rgba(6,182,212,0.25)] focus:bg-cyan-500/20 focus:outline-none cursor-pointer group"
+      className="relative flex w-20 flex-col items-center rounded-xl p-1.5 transition-all duration-150 border border-transparent hover:bg-cyan-500/15 hover:border-cyan-400/30 hover:shadow-[0_0_12px_rgba(6,182,212,0.25)] hover:z-20 focus:bg-cyan-500/20 focus:outline-none cursor-pointer group"
       onClick={onClick}
     >
       <img

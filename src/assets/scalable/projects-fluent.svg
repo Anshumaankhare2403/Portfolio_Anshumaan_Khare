@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <defs>
+    <filter id="proj-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0284c7" flood-opacity="0.35"/>
+    </filter>
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#002244" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Folder Front Cover Gradient -->
+    <linearGradient id="folder-front" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+
+    <!-- Folder Back Tab Gradient -->
+    <linearGradient id="folder-back" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+
+    <!-- Document Sheet Gradient -->
+    <linearGradient id="doc-sheet" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0f2fe"/>
+    </linearGradient>
+
+    <!-- Glowing Rocket / Project Accent Badge -->
+    <linearGradient id="rocket-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="50%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Folder Back Flap with Tab -->
+  <path d="M12 28 C12 23.5, 15.5 20, 20 20 L38 20 C41 20, 43 22, 45 25 L49 30 L80 30 C84.5 30, 88 33.5, 88 38 L88 72 C88 76.5, 84.5 80, 80 80 L20 80 C15.5 80, 12 76.5, 12 72 Z" fill="url(#folder-back)" filter="url(#proj-glow)"/>
+
+  <!-- Inside Project Document Sheets Emerging with 3D Depth -->
+  <rect x="24" y="24" width="48" height="34" rx="4" fill="url(#doc-sheet)" opacity="0.75" transform="rotate(-4 48 41)"/>
+  <rect x="26" y="22" width="48" height="34" rx="4" fill="url(#doc-sheet)" filter="url(#card-shadow)"/>
+  <!-- Code lines on document sheet -->
+  <rect x="32" y="28" width="18" height="2.5" rx="1.25" fill="#0284c7" opacity="0.7"/>
+  <rect x="32" y="34" width="34" height="2" rx="1" fill="#94a3b8" opacity="0.6"/>
+  <rect x="32" y="39" width="28" height="2" rx="1" fill="#94a3b8" opacity="0.6"/>
+  <rect x="32" y="44" width="20" height="2" rx="1" fill="#0284c7" opacity="0.5"/>
+
+  <!-- Folder Front Pocket (Overlapping 3D Cover) -->
+  <path d="M8 44 C8 39.5, 11.5 36, 16 36 L40 36 C43 36, 46 38.5, 48 42 L52 46 L84 46 C86.2 46, 88 47.8, 88 50 L88 74 C88 78.5, 84.5 82, 80 82 L16 82 C11.5 82, 8 78.5, 8 74 Z" fill="url(#folder-front)" filter="url(#card-shadow)"/>
+  <path d="M8.5 44.5 L87.5 46.5" stroke="#ffffff" stroke-width="1" stroke-opacity="0.4" fill="none"/>
+
+  <!-- Glowing Rocket Showcase Badge at Bottom-Right -->
+  <circle cx="70" cy="66" r="14" fill="url(#rocket-grad)" filter="drop-shadow(0 3px 6px rgba(0,0,0,0.35))"/>
+  <!-- Modern Rocket Glyph inside badge -->
+  <path d="M70 57 C74 61, 74 66, 73 70 L67 70 C66 66, 66 61, 70 57 Z" fill="#ffffff"/>
+  <circle cx="70" cy="63" r="1.5" fill="#ea580c"/>
+  <path d="M66 67 L63 71 L67 71 Z" fill="#fed7aa"/>
+  <path d="M74 67 L77 71 L73 71 Z" fill="#fed7aa"/>
+  <!-- Rocket exhaust flame -->
+  <path d="M68 70 L70 75 L72 70 Z" fill="#fef08a"/>
+</svg>

@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { IoChevronBack, IoClose, IoRemove, IoSquareOutline } from "react-icons/io5";
-import { VscFiles, VscSearch, VscSourceControl } from "react-icons/vsc";
+import {
+  VscFiles,
+  VscSearch,
+  VscSourceControl,
+  VscDebugAlt,
+  VscExtensions,
+  VscSettingsGear,
+  VscAccount,
+  VscFolderOpened,
+  VscChevronDown,
+} from "react-icons/vsc";
+import { RiReactjsFill } from "react-icons/ri";
 import Editor from "@monaco-editor/react";
 
 const codeSamples = {
@@ -111,13 +122,14 @@ function VSCodeWindow({ onClose, mobile = false }) {
             <button
               key={file}
               onClick={() => setActiveFile(file)}
-              className={`rounded px-3 py-1.5 font-mono transition-colors ${
+              className={`flex items-center gap-1.5 rounded px-3 py-1.5 font-mono transition-colors ${
                 activeFile === file
                   ? "bg-[#1e1e1e] font-semibold text-blue-400 border border-blue-500/40"
                   : "bg-white/5 text-gray-400"
               }`}
             >
-              📄 {file}
+              <RiReactjsFill size={14} className="text-[#00d8ff] shrink-0" />
+              <span>{file}</span>
             </button>
           ))}
         </div>
@@ -125,27 +137,44 @@ function VSCodeWindow({ onClose, mobile = false }) {
 
       <div className={`flex ${mobile ? "h-[calc(100%-100px)]" : "h-[calc(100%-40px)]"}`}>
         {/* Activity Bar (Desktop) */}
-        <div className="hidden w-14 flex-col items-center gap-6 bg-[#181818] py-4 text-gray-400 sm:flex">
-          <VscFiles size={22} />
-          <VscSearch size={22} />
-          <VscSourceControl size={22} />
+        <div className="hidden w-12 flex-col items-center justify-between bg-[#181818] py-3 text-gray-400 sm:flex select-none border-r border-[#252526]">
+          <div className="flex flex-col items-center gap-5">
+            <button className="text-white border-l-2 border-white pl-0.5" title="Explorer"><VscFiles size={22} /></button>
+            <button className="hover:text-white transition" title="Search"><VscSearch size={22} /></button>
+            <button className="hover:text-white transition" title="Source Control"><VscSourceControl size={22} /></button>
+            <button className="hover:text-white transition" title="Run and Debug"><VscDebugAlt size={22} /></button>
+            <button className="hover:text-white transition" title="Extensions"><VscExtensions size={22} /></button>
+          </div>
+          <div className="flex flex-col items-center gap-4">
+            <button className="hover:text-white transition" title="Accounts"><VscAccount size={20} /></button>
+            <button className="hover:text-white transition" title="Settings"><VscSettingsGear size={20} /></button>
+          </div>
         </div>
 
         {/* Explorer (Desktop) */}
-        <div className="hidden w-60 bg-[#252526] text-white sm:block">
-          <div className="border-b border-gray-700 p-3 text-xs font-semibold">EXPLORER</div>
+        <div className="hidden w-56 bg-[#252526] text-white sm:block select-none border-r border-gray-800">
+          <div className="flex items-center justify-between border-b border-gray-700/60 px-3 py-2 text-[11px] font-bold tracking-wider text-gray-400">
+            <span>EXPLORER: PORTFOLIO</span>
+          </div>
 
-          <div className="p-3 text-sm">
-            📁 src
+          <div className="p-2 text-xs">
+            <div className="flex items-center gap-1.5 font-bold text-gray-300 py-1 px-1">
+              <VscChevronDown size={14} className="text-gray-400" />
+              <VscFolderOpened size={16} className="text-[#dcb67a]" />
+              <span>src</span>
+            </div>
             {files.map((file) => (
               <div
                 key={file}
                 onClick={() => setActiveFile(file)}
-                className={`ml-4 mt-2 cursor-pointer rounded px-2 py-1 ${
-                  activeFile === file ? "bg-blue-600/40 text-blue-200" : "hover:bg-white/5"
+                className={`ml-5 my-0.5 flex items-center gap-2 cursor-pointer rounded px-2 py-1 text-xs transition ${
+                  activeFile === file
+                    ? "bg-[#37373d] text-white font-medium"
+                    : "text-gray-300 hover:bg-white/5"
                 }`}
               >
-                📄 {file}
+                <RiReactjsFill size={15} className="text-[#00d8ff] shrink-0" />
+                <span>{file}</span>
               </div>
             ))}
           </div>
@@ -155,8 +184,11 @@ function VSCodeWindow({ onClose, mobile = false }) {
         <div className="flex flex-1 flex-col">
           {/* Tab Bar (Desktop) */}
           {!mobile && (
-            <div className="flex h-10 items-center bg-[#2d2d2d] px-4 text-sm text-white">
-              {activeFile}
+            <div className="flex h-9 items-center bg-[#1e1e1e] border-b border-gray-800 px-1 text-xs text-white">
+              <div className="flex items-center gap-2 bg-[#2d2d2d] px-3.5 py-1.5 border-t border-t-[#007acc] text-gray-200">
+                <RiReactjsFill size={15} className="text-[#00d8ff]" />
+                <span>{activeFile}</span>
+              </div>
             </div>
           )}
 

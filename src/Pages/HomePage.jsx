@@ -21,13 +21,14 @@ import DesktopTutorialModal from "../components/DesktopTutorialModal";
 import { useProcessManager } from "../hooks/useProcessManager";
 
 import launcherIcon from "../assets/This PC/Windows11.svg";
-import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
-import aboutIcon from "../assets/scalable/users.svg";
+import fileExplorerIcon from "../assets/scalable/this-pc.svg";
+import aboutIcon from "../assets/scalable/about-me.svg";
+import contactIcon from "../assets/scalable/contact.svg";
 import chromeIcon from "../assets/scalable/Google_Chrome_icon_(February_2022).svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
-import terminalIcon from "../assets/scalable/terminal.svg";
-import githubIcon from "../assets/color-lightblue/folder-github.svg";
-import projectsIcon from "../assets/color-lightblue/folder-projects.svg";
+import terminalIcon from "../assets/scalable/terminal-fluent.svg";
+import githubIcon from "../assets/scalable/github-fluent.svg";
+import projectsIcon from "../assets/scalable/projects-fluent.svg";
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import settingsIcon from "../assets/scalable/settings.svg";
 import taskManagerIcon from "../assets/scalable/taskmanager.svg";
@@ -279,7 +280,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
       id: "contact",
       title: "Contact Us",
       shortTitle: "Contact",
-      image: aboutIcon,
+      image: contactIcon,
       open: () => handleAppClick("contact", contactState, setContactState),
       isOpen: contactState !== "closed",
       isMinimized: contactState === "minimized",
@@ -320,6 +321,11 @@ function HomePage({ onLogout, onSetWallpaper }) {
       setState: setTaskManagerState,
     },
   ];
+
+  // Desktop icons (Original 9 applications, single-column layout)
+  const desktopApps = apps.filter(
+    (app) => app.id !== "settings" && app.id !== "taskmanager"
+  );
 
   const launchApp = (openApp) => {
     openApp();
@@ -655,9 +661,9 @@ function HomePage({ onLogout, onSetWallpaper }) {
               mass: 0.85,
             }}
           >
-            {/* Desktop Icons for this workspace */}
-            <div className="flex flex-col flex-wrap max-h-[calc(100vh-90px)] gap-y-1 gap-x-1 content-start p-2 select-none">
-              {apps.map((app) => (
+            {/* Desktop Icons for this workspace (Single column, original apps) */}
+            <div className="flex flex-col flex-nowrap max-h-[calc(100vh-90px)] gap-y-1 content-start p-2 select-none w-fit overflow-y-auto scrollbar-none z-10">
+              {desktopApps.map((app) => (
                 <App_icons
                   key={app.id}
                   image={app.image}

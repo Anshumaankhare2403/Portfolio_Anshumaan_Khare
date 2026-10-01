@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <defs>
+    <filter id="term-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="prompt-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#00f2fe" flood-opacity="0.7"/>
+    </filter>
+
+    <!-- Terminal Outer Frame Gradient -->
+    <linearGradient id="term-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <!-- Inner Terminal Screen Gradient -->
+    <linearGradient id="term-screen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+
+    <!-- Active Tab Cyan Highlight Gradient -->
+    <linearGradient id="tab-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+
+    <!-- Command Prompt Neon Glow -->
+    <linearGradient id="code-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#00f2fe"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Window Frame with Dark Acrylic Glass -->
+  <rect x="8" y="10" width="80" height="76" rx="16" fill="url(#term-frame)" filter="url(#term-glow)"/>
+  <rect x="8.5" y="10.5" width="79" height="75" rx="15.5" fill="none" stroke="#64748b" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Title / Tab Bar -->
+  <path d="M8 22 C8 15.4, 13.4 10, 20 10 L76 10 C82.6 10, 88 15.4, 88 22 L88 26 L8 26 Z" fill="#1e293b" opacity="0.9"/>
+
+  <!-- Active PowerShell Tab -->
+  <path d="M16 26 L16 16 C16 14.5, 17.5 13, 19 13 L42 13 C43.5 13, 45 14.5, 45 16 L45 26 Z" fill="#0f172a"/>
+  <rect x="18" y="13" width="25" height="2" rx="1" fill="url(#tab-grad)"/>
+  <!-- Small Terminal icon in tab -->
+  <path d="M22 18 L25 20.5 L22 23" stroke="#38bdf8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Window Control Dots (Minimize, Maximize, Close) -->
+  <circle cx="76" cy="18" r="2.5" fill="#ef4444" opacity="0.8"/>
+  <circle cx="69" cy="18" r="2.5" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="62" cy="18" r="2.5" fill="#10b981" opacity="0.8"/>
+
+  <!-- Inner Terminal Console Screen -->
+  <rect x="14" y="30" width="68" height="50" rx="9" fill="url(#term-screen)"/>
+
+  <!-- Prompt Command '>_' in Glowing Neon Cyan -->
+  <g filter="url(#prompt-glow)">
+    <!-- Greater-than arrow '>' -->
+    <path d="M24 45 L36 53 L24 61" stroke="url(#code-cyan)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <!-- Underscore / Cursor '_' -->
+    <line x1="42" y1="61" x2="57" y2="61" stroke="url(#code-cyan)" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Output line simulation (dim code lines) -->
+  <rect x="25" y="68" width="30" height="2.5" rx="1.25" fill="#475569" opacity="0.5"/>
+  <rect x="25" y="73" width="46" height="2.5" rx="1.25" fill="#475569" opacity="0.35"/>
+</svg>

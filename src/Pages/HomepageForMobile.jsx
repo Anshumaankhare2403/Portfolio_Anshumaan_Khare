@@ -30,7 +30,7 @@ import {
 import filesIcon from "../assets/AndroideICONES/icons8-google-files-96.svg";
 import chromeIcon from "../assets/AndroideICONES/icons8-chrome-96.svg";
 import youtubeIcon from "../assets/scalable/yt.svg";
-import terminalIcon from "../assets/scalable/terminal.svg";
+import terminalIcon from "../assets/scalable/terminal-fluent.svg";
 import Logo from "../assets/This PC/Windows11.svg";
 import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import heroImage from "../assets/hero.png";

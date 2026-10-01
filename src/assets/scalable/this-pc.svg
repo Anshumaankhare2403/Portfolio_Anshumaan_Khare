@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <defs>
+    <!-- Outer Monitor Glow -->
+    <filter id="pc-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0078d4" flood-opacity="0.35"/>
+    </filter>
+    <filter id="pc-screen-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Monitor Bezel Gradient -->
+    <linearGradient id="bezel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a4b5c"/>
+      <stop offset="50%" stop-color="#212f3d"/>
+      <stop offset="100%" stop-color="#141d26"/>
+    </linearGradient>
+
+    <!-- Screen Glass Gradient (Windows 11 Bloom colors) -->
+    <linearGradient id="screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#005bb5"/>
+      <stop offset="40%" stop-color="#0078d4"/>
+      <stop offset="70%" stop-color="#00bcf9"/>
+      <stop offset="100%" stop-color="#50e6ff"/>
+    </linearGradient>
+
+    <!-- Bloom Petal 1 -->
+    <linearGradient id="bloom-1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#004e92" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00c6ff" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Bloom Petal 2 -->
+    <linearGradient id="bloom-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7f00ff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#e100ff" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- Stand & Base Gradient -->
+    <linearGradient id="stand-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#607285"/>
+      <stop offset="50%" stop-color="#8da2b5"/>
+      <stop offset="100%" stop-color="#556677"/>
+    </linearGradient>
+    <linearGradient id="base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8da2b5"/>
+      <stop offset="100%" stop-color="#475666"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Monitor Stand Stem -->
+  <path d="M42 66 L54 66 L56 79 L40 79 Z" fill="url(#stand-grad)"/>
+
+  <!-- Monitor Base Plate -->
+  <ellipse cx="48" cy="80" rx="22" ry="5.5" fill="url(#base-grad)"/>
+  <ellipse cx="48" cy="79" rx="20" ry="4" fill="#a4b7c9" opacity="0.6"/>
+
+  <!-- Monitor Outer Bezel (Rounded Display) -->
+  <rect x="8" y="10" width="80" height="56" rx="9" fill="url(#bezel-grad)" filter="url(#pc-shadow)"/>
+  <rect x="8.5" y="10.5" width="79" height="55" rx="8.5" fill="none" stroke="#5a7088" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Inner Display Screen -->
+  <rect x="12" y="14" width="72" height="48" rx="5" fill="url(#screen-grad)" filter="url(#pc-screen-shadow)"/>
+
+  <!-- Windows 11 Bloom Abstract Ribbons on Screen -->
+  <path d="M32 50 C36 32, 48 26, 56 34 C64 42, 60 56, 46 58 C38 60, 30 56, 32 50 Z" fill="url(#bloom-1)"/>
+  <path d="M44 48 C48 36, 58 32, 62 38 C66 44, 62 54, 52 56 C46 58, 42 54, 44 48 Z" fill="url(#bloom-2)"/>
+
+  <!-- Taskbar at bottom of screen -->
+  <rect x="12" y="58" width="72" height="4" fill="#0c233c" opacity="0.7"/>
+  <!-- Centered taskbar icons dummy dots -->
+  <circle cx="44" cy="60" r="0.9" fill="#00bcf9"/>
+  <circle cx="47" cy="60" r="0.9" fill="#ffffff" opacity="0.8"/>
+  <circle cx="50" cy="60" r="0.9" fill="#ffffff" opacity="0.8"/>
+  <circle cx="53" cy="60" r="0.9" fill="#ffffff" opacity="0.8"/>
+
+  <!-- Screen Top Glass Glare -->
+  <path d="M12 14 L84 14 L84 28 L12 40 Z" fill="#ffffff" opacity="0.08"/>
+</svg>
