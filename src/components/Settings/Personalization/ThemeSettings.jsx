@@ -7,28 +7,19 @@ import {
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
-import {
-  CATPPUCCIN_WALLPAPERS,
-  CATPPUCCIN_REPO_URL,
-} from "../../../data/catppuccinWallpapers";
+import catppuccinSample from "../../../assets/walls-catppuccin-mocha/cat-vibin.png";
 
-const catppuccinSample =
-  CATPPUCCIN_WALLPAPERS.find(
-    (w) =>
-      w.filename.includes("aesthetic") ||
-      w.filename.includes("cat-vibin") ||
-      w.filename.includes("pixel-galaxy")
-  ) || CATPPUCCIN_WALLPAPERS[0];
+const CATPPUCCIN_REPO_URL = "https://github.com/orangci/walls-catppuccin-mocha";
 
 const THEME_PRESETS = [
   {
     id: "theme-catppuccin-mocha",
     title: "Catppuccin Mocha",
-    wallpaperUrl: catppuccinSample?.url || PRESET_WALLPAPERS[0].url,
+    wallpaperUrl: catppuccinSample || PRESET_WALLPAPERS[0].url,
     theme: "dark",
     accent: "purple",
     accentHex: "#cba6f7",
-    thumbnail: catppuccinSample?.thumbnail || PRESET_WALLPAPERS[0].thumbnail,
+    thumbnail: catppuccinSample || PRESET_WALLPAPERS[0].thumbnail,
   },
   {
     id: "theme-bioluminescence",

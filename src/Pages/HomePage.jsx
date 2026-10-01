@@ -14,9 +14,11 @@ import ProjectsApp from "../components/ProjectsApp";
 import ContactApp from "../components/ContactApp";
 import VSCodeWindow from "../components/VSCodeWindow";
 import SettingsApp from "../components/Settings/SettingsApp";
+import TaskManager from "../components/TaskManager/TaskManager";
 import WorkspaceOSD from "../components/WorkspaceOSD";
 import GestureGuideModal from "../components/GestureGuideModal";
 import DesktopTutorialModal from "../components/DesktopTutorialModal";
+import { useProcessManager } from "../hooks/useProcessManager";
 
 import launcherIcon from "../assets/This PC/Windows11.svg";
 import fileExplorerIcon from "../assets/color-lightblue/folder.svg";
@@ -28,6 +30,7 @@ import githubIcon from "../assets/color-lightblue/folder-github.svg";
 import projectsIcon from "../assets/color-lightblue/folder-projects.svg";
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import settingsIcon from "../assets/scalable/settings.svg";
+import taskManagerIcon from "../assets/scalable/taskmanager.svg";
 
 const WORKSPACES = [
   { id: 0, name: "Desktop 1", shortName: "1", label: "Main" },
@@ -48,6 +51,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
   const [contactState, setContactState] = useState("closed");
   const [vscodeState, setVscodeState] = useState("closed");
   const [settingsState, setSettingsState] = useState("closed");
+  const [taskManagerState, setTaskManagerState] = useState("closed");
 
   // Multi-Desktop Workspaces State
   const [activeWorkspace, setActiveWorkspace] = useState(0);
@@ -56,6 +60,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
     about: 0,
     contact: 0,
     settings: 0,
+    taskmanager: 0,
     terminal: 1,
     vscode: 1,
     github: 1,
@@ -85,6 +90,41 @@ function HomePage({ onLogout, onSetWallpaper }) {
     }
     setIsTutorialOpen(false);
   };
+
+  // Connect to Process Manager Context
+  const { registerAppHandler, updateAppOpenState, activateSimulation } = useProcessManager();
+
+  useEffect(() => {
+    activateSimulation();
+  }, [activateSimulation]);
+
+  // Synchronize app open states with central ProcessContext
+  useEffect(() => { updateAppOpenState("files", fileExplorerState === "open"); }, [fileExplorerState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("youtube", ytState === "open"); }, [ytState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("terminal", terminalState === "open"); }, [terminalState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("chrome", chromeState === "open"); }, [chromeState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("about", aboutState === "open"); }, [aboutState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("github", githubState === "open"); }, [githubState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("projects", projectsState === "open"); }, [projectsState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("contact", contactState === "open"); }, [contactState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("vscode", vscodeState === "open"); }, [vscodeState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("settings", settingsState === "open"); }, [settingsState, updateAppOpenState]);
+  useEffect(() => { updateAppOpenState("taskmanager", taskManagerState === "open"); }, [taskManagerState, updateAppOpenState]);
+
+  // Register open/close handlers so Task Manager can end/launch tasks
+  useEffect(() => {
+    registerAppHandler("files", { close: () => setFileExplorerState("closed"), open: () => setFileExplorerState("open") });
+    registerAppHandler("youtube", { close: () => setYtState("closed"), open: () => setYtState("open") });
+    registerAppHandler("terminal", { close: () => setTerminalState("closed"), open: () => setTerminalState("open") });
+    registerAppHandler("chrome", { close: () => setChromeState("closed"), open: () => setChromeState("open") });
+    registerAppHandler("about", { close: () => setAboutState("closed"), open: () => setAboutState("open") });
+    registerAppHandler("github", { close: () => setGithubState("closed"), open: () => setGithubState("open") });
+    registerAppHandler("projects", { close: () => setProjectsState("closed"), open: () => setProjectsState("open") });
+    registerAppHandler("contact", { close: () => setContactState("closed"), open: () => setContactState("open") });
+    registerAppHandler("vscode", { close: () => setVscodeState("closed"), open: () => setVscodeState("open") });
+    registerAppHandler("settings", { close: () => setSettingsState("closed"), open: () => setSettingsState("open") });
+    registerAppHandler("taskmanager", { close: () => setTaskManagerState("closed"), open: () => setTaskManagerState("open") });
+  }, [registerAppHandler]);
 
   // App launcher state
   const [isLauncherOpen, setIsLauncherOpen] = useState(false);
@@ -268,6 +308,17 @@ function HomePage({ onLogout, onSetWallpaper }) {
       state: settingsState,
       setState: setSettingsState,
     },
+    {
+      id: "taskmanager",
+      title: "Task Manager",
+      shortTitle: "Task Manager",
+      image: taskManagerIcon,
+      open: () => handleAppClick("taskmanager", taskManagerState, setTaskManagerState),
+      isOpen: taskManagerState !== "closed",
+      isMinimized: taskManagerState === "minimized",
+      state: taskManagerState,
+      setState: setTaskManagerState,
+    },
   ];
 
   const launchApp = (openApp) => {
@@ -402,6 +453,14 @@ function HomePage({ onLogout, onSetWallpaper }) {
       if (isSuper && !e.repeat) {
         e.preventDefault();
         toggleLauncher();
+        return;
+      }
+
+      // Ctrl + Shift + Escape -> Open Task Manager
+      if (e.ctrlKey && e.shiftKey && e.key === "Escape") {
+        e.preventDefault();
+        setAppWorkspaces((prev) => ({ ...prev, taskmanager: activeWorkspace }));
+        setTaskManagerState("open");
         return;
       }
 
@@ -549,6 +608,20 @@ function HomePage({ onLogout, onSetWallpaper }) {
             onClose={() => setSettingsState("closed")}
             onMinimize={() => setSettingsState("minimized")}
             onLockDesktop={onLogout}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {taskManagerState === "open" && appWorkspaces.taskmanager === wsId && (
+          <TaskManager
+            key="TaskManager"
+            onClose={() => setTaskManagerState("closed")}
+            onMinimize={() => setTaskManagerState("minimized")}
+            onOpenSettings={() => {
+              setAppWorkspaces((prev) => ({ ...prev, settings: wsId }));
+              setSettingsState("open");
+            }}
           />
         )}
       </AnimatePresence>

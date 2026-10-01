@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import {
   IoChevronBack,
   IoCloudUploadOutline,
@@ -10,7 +10,7 @@ import {
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
-import CatppuccinWallpaperGallery from "./CatppuccinWallpaperGallery";
+const CatppuccinWallpaperGallery = lazy(() => import("./CatppuccinWallpaperGallery"));
 
 export default function LockScreenSettings({ onBack, onLockDesktop }) {
   const {
@@ -212,14 +212,16 @@ export default function LockScreenSettings({ onBack, onLockDesktop }) {
       </div>
 
       {/* Catppuccin Mocha Lock Screen Wallpapers Collection (with credit to https://github.com/orangci/walls-catppuccin-mocha) */}
-      <CatppuccinWallpaperGallery
-        selectedWallpaper={lockScreenWallpaper}
-        onSelectWallpaper={(url, title) => {
-          setLockScreenWallpaper(url);
-          showToast(`✓ Lock screen wallpaper set to "${title || "Catppuccin Mocha"}"`);
-        }}
-        type="lockscreen"
-      />
+      <Suspense fallback={<div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-xs text-white/50 animate-pulse">Loading Catppuccin Mocha wallpapers…</div>}>
+        <CatppuccinWallpaperGallery
+          selectedWallpaper={lockScreenWallpaper}
+          onSelectWallpaper={(url, title) => {
+            setLockScreenWallpaper(url);
+            showToast(`✓ Lock screen wallpaper set to "${title || "Catppuccin Mocha"}"`);
+          }}
+          type="lockscreen"
+        />
+      </Suspense>
 
       {/* Choose a photo / File Upload Card */}
       <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-2">

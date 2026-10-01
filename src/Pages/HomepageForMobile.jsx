@@ -48,6 +48,8 @@ import VSCodeWindow from "../components/VSCodeWindow";
 import vscodeIcon from "../assets/scalable/vscode.svg";
 import settingsIcon from "../assets/scalable/settings.svg";
 import SettingsApp from "../components/Settings/SettingsApp";
+import TaskManager from "../components/TaskManager/TaskManager";
+import taskManagerIcon from "../assets/scalable/taskmanager.svg";
 
 const categories = ["All", "Tools", "Media", "Info"];
 
@@ -60,6 +62,7 @@ const gridApps = [
   { id: "vscode", label: "VS Code", image: vscodeIcon, category: "Tools" },
   { id: "terminal", label: "Terminal", image: terminalIcon, category: "Tools" },
   { id: "settings", label: "Settings", image: settingsIcon, category: "Tools" },
+  { id: "taskmanager", label: "Task Manager", image: taskManagerIcon, category: "Tools" },
 ];
 
 const dockApps = [
@@ -127,7 +130,7 @@ const panels = {
   },
 };
 
-const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode", "settings"]);
+const fullScreenApps = new Set(["about", "files", "music", "terminal", "chrome", "resume", "phone", "camera", "github", "projects", "contact", "vscode", "settings", "taskmanager"]);
 
 function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpaper }) {
   const [activeApp, setActiveApp] = useState(null);
@@ -383,6 +386,14 @@ function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpa
             closeApp();
             setMobileIsSignedIn(false);
           }}
+        />
+      );
+    if (activeApp === "taskmanager")
+      return (
+        <TaskManager
+          mobile
+          onClose={closeApp}
+          onOpenSettings={() => setActiveApp("settings")}
         />
       );
     if (activeApp === "resume")

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import {
   IoChevronBack,
   IoCloudUploadOutline,
@@ -9,7 +9,7 @@ import {
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
 import { PRESET_WALLPAPERS } from "../../../context/SettingsContext";
-import CatppuccinWallpaperGallery from "./CatppuccinWallpaperGallery";
+const CatppuccinWallpaperGallery = lazy(() => import("./CatppuccinWallpaperGallery"));
 
 export default function BackgroundSettings({ onBack }) {
   const {
@@ -213,14 +213,16 @@ export default function BackgroundSettings({ onBack }) {
       </div>
 
       {/* Catppuccin Mocha Wallpapers Collection (with credit to https://github.com/orangci/walls-catppuccin-mocha) */}
-      <CatppuccinWallpaperGallery
-        selectedWallpaper={desktopWallpaper}
-        onSelectWallpaper={(url, title) => {
-          setDesktopWallpaper(url);
-          showToast(`✓ Wallpaper set to "${title || "Catppuccin Mocha"}"`);
-        }}
-        type="desktop"
-      />
+      <Suspense fallback={<div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center text-xs text-white/50 animate-pulse">Loading Catppuccin Mocha wallpapers…</div>}>
+        <CatppuccinWallpaperGallery
+          selectedWallpaper={desktopWallpaper}
+          onSelectWallpaper={(url, title) => {
+            setDesktopWallpaper(url);
+            showToast(`✓ Wallpaper set to "${title || "Catppuccin Mocha"}"`);
+          }}
+          type="desktop"
+        />
+      </Suspense>
 
       {/* Choose a photo / File Upload Card */}
       <div className="rounded-xl border border-white/10 bg-white/[0.04] p-4 space-y-2">

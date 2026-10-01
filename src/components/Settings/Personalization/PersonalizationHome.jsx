@@ -12,7 +12,7 @@ import {
   IoSparkles,
 } from "react-icons/io5";
 import { useSettings } from "../../../hooks/useSettings";
-import { CATPPUCCIN_REPO_URL } from "../../../data/catppuccinWallpapers";
+const CATPPUCCIN_REPO_URL = "https://github.com/orangci/walls-catppuccin-mocha";
 
 export default function PersonalizationHome({ onNavigate, onOpenResetModal }) {
   const { desktopWallpaper, theme, activeAccent } = useSettings();

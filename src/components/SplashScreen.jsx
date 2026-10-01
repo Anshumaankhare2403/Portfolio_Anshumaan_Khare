@@ -29,9 +29,15 @@ function SplashScreen({ onSignIn, wallpaper: customWallpaper }) {
     };
   }, []);
 
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSignIn();
+    if (isLoggingIn) return;
+    setIsLoggingIn(true);
+    setTimeout(() => {
+      onSignIn();
+    }, 400);
   };
 
   const time = now.toLocaleTimeString([], {
@@ -88,41 +94,50 @@ function SplashScreen({ onSignIn, wallpaper: customWallpaper }) {
               Anshumaan Khare
             </h1>
 
-            <form onSubmit={handleSubmit} className="mt-6">
-              <div className="flex h-10 overflow-hidden border-2 border-white/75 bg-white/90 shadow-lg transition focus-within:border-white focus-within:bg-white">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  placeholder="Password"
-                  aria-label="Password"
-                  autoFocus
-                  className="min-w-0 flex-1 bg-transparent px-3 text-sm text-gray-900 outline-none placeholder:text-gray-600"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((visible) => !visible)}
-                  className="grid w-10 place-items-center text-lg text-gray-700 hover:bg-black/10"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
-                </button>
+            {isLoggingIn ? (
+              <div className="mt-8 flex flex-col items-center justify-center gap-3">
+                <div className="windows-spinner" aria-label="Signing in" />
+                <p className="text-sm font-medium tracking-wide text-white/90">
+                  Welcome
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="mt-6">
+                <div className="flex h-10 overflow-hidden border-2 border-white/75 bg-white/90 shadow-lg transition focus-within:border-white focus-within:bg-white">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    placeholder="Password"
+                    aria-label="Password"
+                    autoFocus
+                    className="min-w-0 flex-1 bg-transparent px-3 text-sm text-gray-900 outline-none placeholder:text-gray-600"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((visible) => !visible)}
+                    className="grid w-10 place-items-center text-lg text-gray-700 hover:bg-black/10"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                  </button>
+                  <button
+                    type="submit"
+                    className="grid w-10 place-items-center bg-gray-200 text-xl text-gray-800 hover:bg-gray-300"
+                    aria-label="Sign in"
+                  >
+                    <IoArrowForward />
+                  </button>
+                </div>
+
                 <button
                   type="submit"
-                  className="grid w-10 place-items-center bg-gray-200 text-xl text-gray-800 hover:bg-gray-300"
-                  aria-label="Sign in"
+                  className="mt-4 rounded px-3 py-1 text-sm font-bold text-white/90 drop-shadow hover:bg-white/10 hover:text-white"
                 >
-                  <IoArrowForward />
+                  Sign in to explore my portfolio
                 </button>
-              </div>
-
-              <button
-                type="submit"
-                className="mt-4 rounded px-3 py-1 text-sm font-bold text-white/90 drop-shadow hover:bg-white/10 hover:text-white"
-              >
-                Sign in to explore my portfolio
-              </button>
-            </form>
+              </form>
+            )}
           </div>
         </main>
 
