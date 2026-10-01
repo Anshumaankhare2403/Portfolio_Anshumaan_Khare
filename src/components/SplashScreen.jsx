@@ -13,7 +13,7 @@ import Logo from "../assets/This PC/Windows11.svg";
 import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import heroImage from "../assets/hero.png";
 
-function SplashScreen({ onSignIn }) {
+function SplashScreen({ onSignIn, wallpaper: customWallpaper }) {
   const [isBooting, setIsBooting] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -65,7 +65,7 @@ function SplashScreen({ onSignIn }) {
   return (
     <div
       className="fixed inset-0 z-[9999] overflow-hidden bg-cover bg-center text-white"
-      style={{ backgroundImage: `url(${wallpaper})` }}
+      style={{ backgroundImage: `url(${customWallpaper || wallpaper})` }}
     >
       <div className="absolute inset-0 bg-slate-950/35 backdrop-blur-[2px]" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />

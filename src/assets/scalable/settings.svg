@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="win11-gear-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4cc2ff"/>
+      <stop offset="50%" stop-color="#0078d4"/>
+      <stop offset="100%" stop-color="#004e8c"/>
+    </linearGradient>
+    <linearGradient id="inner-circle-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c3238"/>
+      <stop offset="100%" stop-color="#14181c"/>
+    </linearGradient>
+    <filter id="gear-shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#gear-shadow)">
+    <!-- Outer Gear Body -->
+    <path fill="url(#win11-gear-grad)" d="M35.6 4.8l-1.8 4.2c-.6.2-1.3.4-1.9.7l-4.4-1.4-3.8 3.8 1.4 4.4c-.3.6-.5 1.3-.7 1.9l-4.2 1.8v5.4l4.2 1.8c.2.6.4 1.3.7 1.9l-1.4 4.4 3.8 3.8 4.4-1.4c.6.3 1.3.5 1.9.7l1.8 4.2h5.4l1.8-4.2c.6-.2 1.3-.4 1.9-.7l4.4 1.4 3.8-3.8-1.4-4.4c.3-.6.5-1.3.7-1.9l4.2-1.8v-5.4l-4.2-1.8c-.2-.6-.4-1.3-.7-1.9l1.4-4.4-3.8-3.8-4.4 1.4c-.6-.3-1.3-.5-1.9-.7l-1.8-4.2h-5.4z" transform="scale(1.3) translate(-7, -5)"/>
+
+    <!-- Inner Hole -->
+    <circle cx="32" cy="32" r="11" fill="url(#inner-circle-grad)" stroke="#ffffff" stroke-width="0.75" stroke-opacity="0.25"/>
+    <circle cx="32" cy="32" r="6" fill="#0078d4" opacity="0.9"/>
+  </g>
+</svg>
