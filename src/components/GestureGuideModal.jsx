@@ -119,27 +119,27 @@ function GestureGuideModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#020b14]/75 backdrop-blur-xl p-4 select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl p-4 select-none"
       onClick={onClose}
     >
       <motion.div
         initial={{ scale: 0.92, y: 15 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.95, y: 10 }}
-        className="relative w-full max-w-xl rounded-3xl border border-cyan-400/35 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.22),_rgba(3,14,27,0.95)_80%)] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_40px_rgba(6,182,212,0.3)] text-white"
+        className="relative w-full max-w-xl rounded-3xl border border-white/20 bg-slate-950/75 backdrop-blur-2xl p-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.2)] text-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-cyan-500/25">
+        <div className="flex items-center justify-between pb-3 border-b border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white border border-white/20 shadow-sm backdrop-blur-md">
               <IoHandLeftOutline size={20} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-cyan-100">
+              <h2 className="text-base font-bold text-white">
                 2-Finger Touchpad & Trackpad Gestures
               </h2>
-              <p className="text-xs text-cyan-300/60">
+              <p className="text-xs text-white/60">
                 Seamless Desktop Space Switching
               </p>
             </div>
@@ -148,7 +148,7 @@ function GestureGuideModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-cyan-500/20 text-cyan-300/60 hover:text-cyan-100 transition cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-white/10 text-white/60 hover:text-white transition cursor-pointer"
           >
             <IoClose size={20} />
           </button>
@@ -156,59 +156,59 @@ function GestureGuideModal({
 
         {/* Gestures List */}
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/25">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-300 font-bold shrink-0 shadow-[0_0_8px_rgba(6,182,212,0.25)]">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-white/10 text-white font-bold shrink-0 border border-white/15">
               <IoArrowForward size={16} />
             </div>
             <div>
-              <span className="font-semibold text-cyan-100 block">
+              <span className="font-semibold text-white block">
                 2-Finger Swipe Left / Right
               </span>
-              <p className="text-cyan-200/60 text-[11px] mt-0.5">
+              <p className="text-white/60 text-[11px] mt-0.5">
                 Default: 2-finger horizontal swipe smoothly glides between Desktop 1, 2, 3, and 4.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/25">
-            <div className="p-2 rounded-xl bg-sky-500/20 text-sky-300 font-bold shrink-0">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-white/10 text-white font-bold shrink-0 border border-white/15">
               <IoDesktopOutline size={16} />
             </div>
             <div>
-              <span className="font-semibold text-cyan-100 block">
+              <span className="font-semibold text-white block">
                 Trackpad Horizontal Scroll
               </span>
-              <p className="text-cyan-200/60 text-[11px] mt-0.5">
+              <p className="text-white/60 text-[11px] mt-0.5">
                 Standard 2-finger horizontal pan on any laptop trackpad switches desktop spaces.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/25">
-            <div className="p-2 rounded-xl bg-teal-500/20 text-teal-300 font-bold shrink-0">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-white/10 text-white font-bold shrink-0 border border-white/15">
               <IoArrowUp size={16} />
             </div>
             <div>
-              <span className="font-semibold text-cyan-100 block">
+              <span className="font-semibold text-white block">
                 Dock Switcher Buttons
               </span>
-              <p className="text-cyan-200/60 text-[11px] mt-0.5">
-                Click any of the <code className="bg-cyan-900/40 px-1 rounded text-cyan-300 text-[10px]">1  2  3  4</code> pills in your Dock.
+              <p className="text-white/60 text-[11px] mt-0.5">
+                Click any of the <code className="bg-white/15 px-1 rounded text-white text-[10px] border border-white/10">1  2  3  4</code> pills in your Dock.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-500/25">
-            <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-300 font-bold shrink-0">
+          <div className="flex items-start gap-2.5 p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md">
+            <div className="p-2 rounded-xl bg-white/10 text-white font-bold shrink-0 border border-white/15">
               ⌨️
             </div>
             <div>
-              <span className="font-semibold text-cyan-100 block">
+              <span className="font-semibold text-white block">
                 Keyboard Shortcuts
               </span>
-              <p className="text-cyan-200/60 text-[11px] mt-0.5">
-                <code className="bg-cyan-900/40 px-1 rounded text-cyan-300 text-[10px]">Ctrl+Alt+←/→</code> or{" "}
-                <code className="bg-cyan-900/40 px-1 rounded text-cyan-300 text-[10px]">Alt+1..4</code>.
+              <p className="text-white/60 text-[11px] mt-0.5">
+                <code className="bg-white/15 px-1 rounded text-white text-[10px] border border-white/10">Ctrl+Alt+←/→</code> or{" "}
+                <code className="bg-white/15 px-1 rounded text-white text-[10px] border border-white/10">Alt+1..4</code>.
               </p>
             </div>
           </div>
@@ -217,18 +217,18 @@ function GestureGuideModal({
         {/* Live Touchpad / Trackpad Interactive Test Pad */}
         <div className="mt-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-cyan-300/70">
+            <span className="text-xs font-semibold uppercase tracking-wider text-white/70">
               Interactive 2-Finger Test Pad
             </span>
             <div className="flex items-center gap-1.5 text-xs">
-              <span className="text-cyan-300/50">Touches:</span>
+              <span className="text-white/50">Touches:</span>
               <span
                 className={`px-2 py-0.5 rounded-full font-bold text-[11px] ${
                   touchCount === 2
-                    ? "bg-cyan-400 text-slate-950 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                    ? "bg-white text-slate-950 shadow-md"
                     : touchCount > 0
-                    ? "bg-amber-500/30 text-amber-300"
-                    : "bg-cyan-950/50 text-cyan-300/50 border border-cyan-500/20"
+                    ? "bg-amber-400/25 text-amber-200 border border-amber-300/30"
+                    : "bg-white/10 text-white/50 border border-white/10"
                 }`}
               >
                 {touchCount} {touchCount === 2 ? "✓ 2-Fingers (Default)" : "fingers"}
@@ -240,26 +240,26 @@ function GestureGuideModal({
             ref={testPadRef}
             className={`relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-dashed transition-all cursor-grab active:cursor-grabbing select-none ${
               feedbackSuccess
-                ? "border-cyan-400 bg-cyan-500/20 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
-                : "border-cyan-500/30 bg-cyan-950/30 hover:border-cyan-400/50"
+                ? "border-white/50 bg-white/20 shadow-[0_4px_24px_rgba(255,255,255,0.15)]"
+                : "border-white/20 bg-white/[0.03] hover:border-white/35 backdrop-blur-md"
             }`}
           >
             {feedbackSuccess ? (
-              <div className="flex items-center gap-2 text-cyan-300 font-bold text-sm">
-                <IoCheckmarkCircle size={22} className="text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,1)]" />
+              <div className="flex items-center gap-2 text-white font-bold text-sm">
+                <IoCheckmarkCircle size={22} className="text-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
                 <span>2-Finger Gesture Recognized! Switching desktop...</span>
               </div>
             ) : (
               <div className="flex flex-col items-center text-center">
-                <IoHandLeftOutline className="text-3xl text-cyan-400/50 mb-1" />
-                <span className="text-xs font-semibold text-cyan-100">
+                <IoHandLeftOutline className="text-3xl text-white/40 mb-1" />
+                <span className="text-xs font-semibold text-white">
                   Swipe with 2 fingers or scroll trackpad horizontally here!
                 </span>
-                <span className="text-[11px] text-cyan-300/60 mt-1 max-w-sm">
+                <span className="text-[11px] text-white/60 mt-1 max-w-sm">
                   {lastGesture}
                 </span>
                 {testDeltaX !== 0 && (
-                  <span className="text-[10px] text-cyan-300 font-mono mt-1 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/20">
+                  <span className="text-[10px] text-white/90 font-mono mt-1 bg-white/10 px-2 py-0.5 rounded border border-white/15">
                     Live Swipe DeltaX: {testDeltaX > 0 ? `+${testDeltaX}` : testDeltaX}px
                   </span>
                 )}
@@ -269,8 +269,8 @@ function GestureGuideModal({
         </div>
 
         {/* Current Desktop Status & Quick Jump */}
-        <div className="mt-4 pt-3 border-t border-cyan-500/25 flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 text-xs text-cyan-200/70">
+        <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-xs text-white/70">
             {onOpenTutorial && (
               <button
                 type="button"
@@ -278,13 +278,13 @@ function GestureGuideModal({
                   onClose();
                   onOpenTutorial();
                 }}
-                className="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 hover:text-cyan-100 border border-cyan-400/30 transition text-xs font-semibold cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+                className="px-2.5 py-1 rounded-xl bg-white/10 text-white hover:bg-white/20 border border-white/20 transition text-xs font-semibold cursor-pointer shadow-sm"
               >
                 ✦ Replay Tutorial
               </button>
             )}
             <span>Current:</span>
-            <span className="font-semibold text-cyan-100">
+            <span className="font-semibold text-white">
               {workspaces[activeWorkspace]?.name}
             </span>
           </div>
@@ -297,8 +297,8 @@ function GestureGuideModal({
                 onClick={() => onSelectWorkspace(i)}
                 className={`h-7 px-2.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                   i === activeWorkspace
-                    ? "bg-gradient-to-r from-cyan-400 to-sky-500 text-slate-950 font-black shadow-[0_0_12px_rgba(6,182,212,0.8)]"
-                    : "bg-cyan-950/40 hover:bg-cyan-500/20 text-cyan-200/70 border border-cyan-500/20"
+                    ? "bg-white text-slate-950 font-black shadow-md"
+                    : "bg-white/[0.06] hover:bg-white/15 text-white/70 border border-white/10"
                 }`}
               >
                 {ws.shortName}

@@ -93,7 +93,7 @@ function DesktopTutorialModal({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#020b14]/80 backdrop-blur-xl p-4 select-none"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xl p-4 select-none"
       onClick={handleSkip}
     >
       <motion.div
@@ -101,13 +101,13 @@ function DesktopTutorialModal({
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.95, y: 15 }}
         transition={{ type: "spring", stiffness: 300, damping: 26 }}
-        className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-cyan-400/35 bg-[radial-gradient(ellipse_at_top,_rgba(14,165,233,0.22),_rgba(3,14,27,0.96)_75%)] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),0_0_40px_rgba(6,182,212,0.3)] text-white"
+        className="relative w-full max-w-lg overflow-hidden rounded-3xl border border-white/20 bg-slate-950/75 backdrop-blur-2xl p-6 shadow-[0_25px_80px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.2)] text-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header: Step Badge & Skip Button */}
-        <div className="flex items-center justify-between pb-3 border-b border-cyan-500/20">
+        <div className="flex items-center justify-between pb-3 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_10px_rgba(6,182,212,0.25)]">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wide uppercase bg-white/10 text-white/90 border border-white/20 shadow-sm backdrop-blur-md">
               {step.badge}
             </span>
           </div>
@@ -117,7 +117,7 @@ function DesktopTutorialModal({
             <button
               type="button"
               onClick={handleSkip}
-              className="px-3 py-1 rounded-xl text-xs font-semibold text-cyan-200/70 hover:text-cyan-100 hover:bg-cyan-500/15 border border-transparent hover:border-cyan-500/30 transition cursor-pointer"
+              className="px-3 py-1 rounded-xl text-xs font-semibold text-white/70 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20 transition cursor-pointer"
             >
               Skip Tutorial
             </button>
@@ -125,7 +125,7 @@ function DesktopTutorialModal({
             <button
               type="button"
               onClick={handleSkip}
-              className="p-1 rounded-full text-cyan-300/50 hover:text-cyan-100 hover:bg-cyan-500/20 transition cursor-pointer"
+              className="p-1 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition cursor-pointer"
               title="Close Tutorial"
             >
               <IoClose size={18} />
@@ -145,23 +145,23 @@ function DesktopTutorialModal({
           >
             {/* Step Icon & Title */}
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 shadow-[0_0_14px_rgba(6,182,212,0.35)] shrink-0">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-white border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.2)] backdrop-blur-md shrink-0">
                 <step.icon size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-cyan-100 tracking-tight leading-tight">
+                <h3 className="text-lg font-bold text-white tracking-tight leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-xs text-cyan-300/70">{step.subtitle}</p>
+                <p className="text-xs text-white/60">{step.subtitle}</p>
               </div>
             </div>
 
-            <p className="text-xs text-cyan-100/80 leading-relaxed mb-4">
+            <p className="text-xs text-white/80 leading-relaxed mb-4">
               {step.description}
             </p>
 
             {/* Visual Mini-Preview depending on step */}
-            <div className="rounded-2xl border border-cyan-500/25 bg-cyan-950/30 p-4 shadow-inner shadow-cyan-950/70 flex flex-col items-center justify-center min-h-[120px]">
+            <div className="rounded-2xl border border-white/15 bg-white/[0.04] p-4 shadow-inner shadow-black/40 backdrop-blur-md flex flex-col items-center justify-center min-h-[120px]">
               {step.previewType === "spaces" && (
                 <div className="w-full flex items-center justify-center gap-2">
                   {workspaces.map((ws, i) => (
@@ -171,14 +171,14 @@ function DesktopTutorialModal({
                       onClick={() => onSelectWorkspace(i)}
                       className={`flex-1 flex flex-col items-center justify-center p-2 rounded-xl border transition-all cursor-pointer ${
                         i === activeWorkspace
-                          ? "bg-gradient-to-b from-cyan-500/30 to-sky-500/30 border-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.5)] scale-105"
-                          : "bg-cyan-950/40 border-cyan-500/20 hover:border-cyan-400/40 text-cyan-300/60"
+                          ? "bg-white/20 border-white/40 text-white shadow-[0_4px_16px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.3)] scale-105"
+                          : "bg-white/[0.04] border-white/10 hover:border-white/20 text-white/60 hover:text-white hover:bg-white/[0.08]"
                       }`}
                     >
-                      <span className="text-xs font-black text-cyan-200">
+                      <span className="text-xs font-bold text-white">
                         Space {i + 1}
                       </span>
-                      <span className="text-[10px] text-cyan-300/70 truncate max-w-full">
+                      <span className="text-[10px] text-white/70 truncate max-w-full">
                         {ws.label}
                       </span>
                     </button>
@@ -188,17 +188,17 @@ function DesktopTutorialModal({
 
               {step.previewType === "gesture" && (
                 <div className="flex flex-col items-center text-center">
-                  <div className="flex items-center gap-3 text-cyan-300 mb-2">
+                  <div className="flex items-center gap-3 text-white mb-2">
                     <IoHandLeftOutline className="text-3xl animate-bounce" />
-                    <span className="text-2xl font-mono text-cyan-400">↔</span>
-                    <span className="text-xs font-bold bg-cyan-400/20 px-2 py-1 rounded-lg border border-cyan-300/40">
+                    <span className="text-2xl font-mono text-white/80">↔</span>
+                    <span className="text-xs font-bold bg-white/15 px-2 py-1 rounded-lg border border-white/25 shadow-sm text-white">
                       2 FINGERS
                     </span>
                   </div>
-                  <span className="text-xs text-cyan-200/90 font-medium">
+                  <span className="text-xs text-white font-medium">
                     Swipe left or right across your touchpad
                   </span>
-                  <span className="text-[11px] text-cyan-300/60 mt-0.5">
+                  <span className="text-[11px] text-white/60 mt-0.5">
                     Try swiping right now to experience the smooth slide!
                   </span>
                 </div>
@@ -206,22 +206,22 @@ function DesktopTutorialModal({
 
               {step.previewType === "dock" && (
                 <div className="flex flex-col items-center gap-2">
-                  <div className="flex items-center gap-2 bg-[#041220] px-4 py-2 rounded-2xl border border-cyan-400/40 shadow-[0_0_16px_rgba(6,182,212,0.3)]">
-                    <span className="text-[11px] font-bold text-cyan-300 mr-1">Dock:</span>
+                  <div className="flex items-center gap-2 bg-black/60 px-4 py-2 rounded-2xl border border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-xl">
+                    <span className="text-[11px] font-bold text-white/80 mr-1">Dock:</span>
                     {["1", "2", "3", "4"].map((n, i) => (
                       <div
                         key={n}
                         className={`h-7 w-7 rounded-lg flex items-center justify-center font-bold text-xs ${
                           i === activeWorkspace
-                            ? "bg-gradient-to-r from-cyan-400 to-sky-500 text-slate-950 shadow-[0_0_8px_rgba(34,211,238,0.9)]"
-                            : "bg-cyan-950/60 text-cyan-300/60 border border-cyan-500/20"
+                            ? "bg-white text-slate-950 font-bold shadow-md"
+                            : "bg-white/10 text-white/60 border border-white/10"
                         }`}
                       >
                         {n}
                       </div>
                     ))}
                   </div>
-                  <span className="text-[11px] text-cyan-300/70">
+                  <span className="text-[11px] text-white/60">
                     Always accessible at the bottom of your screen
                   </span>
                 </div>
@@ -229,17 +229,17 @@ function DesktopTutorialModal({
 
               {step.previewType === "shortcuts" && (
                 <div className="grid grid-cols-2 gap-2 w-full text-xs">
-                  <div className="flex items-center gap-2 p-2 rounded-xl bg-cyan-950/50 border border-cyan-500/20">
-                    <span className="font-mono bg-cyan-900/50 px-1.5 py-0.5 rounded text-cyan-300 text-[10px]">
+                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white/[0.05] border border-white/10">
+                    <span className="font-mono bg-white/15 px-1.5 py-0.5 rounded text-white text-[10px] border border-white/15">
                       Ctrl+Alt+←/→
                     </span>
-                    <span className="text-[11px] text-cyan-200/80">Next / Prev</span>
+                    <span className="text-[11px] text-white/80">Next / Prev</span>
                   </div>
-                  <div className="flex items-center gap-2 p-2 rounded-xl bg-cyan-950/50 border border-cyan-500/20">
-                    <span className="font-mono bg-cyan-900/50 px-1.5 py-0.5 rounded text-cyan-300 text-[10px]">
+                  <div className="flex items-center gap-2 p-2 rounded-xl bg-white/[0.05] border border-white/10">
+                    <span className="font-mono bg-white/15 px-1.5 py-0.5 rounded text-white text-[10px] border border-white/15">
                       Alt + 1..4
                     </span>
-                    <span className="text-[11px] text-cyan-200/80">Jump to Space</span>
+                    <span className="text-[11px] text-white/80">Jump to Space</span>
                   </div>
                 </div>
               )}
@@ -248,7 +248,7 @@ function DesktopTutorialModal({
         </AnimatePresence>
 
         {/* Footer: Progress Dots, Checkbox, & Navigation Buttons */}
-        <div className="pt-3 border-t border-cyan-500/20 flex flex-col gap-3">
+        <div className="pt-3 border-t border-white/10 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             {/* Step Progress Indicators */}
             <div className="flex items-center gap-1.5">
@@ -259,8 +259,8 @@ function DesktopTutorialModal({
                   onClick={() => setCurrentStep(i)}
                   className={`h-2 rounded-full transition-all cursor-pointer ${
                     i === currentStep
-                      ? "w-6 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]"
-                      : "w-2 bg-cyan-950 hover:bg-cyan-500/40 border border-cyan-500/30"
+                      ? "w-6 bg-white shadow-[0_0_10px_rgba(255,255,255,0.7)]"
+                      : "w-2 bg-white/20 hover:bg-white/40 border border-white/10"
                   }`}
                   title={`Go to Step ${i + 1}`}
                 />
@@ -268,12 +268,12 @@ function DesktopTutorialModal({
             </div>
 
             {/* "Don't show again" Checkbox */}
-            <label className="flex items-center gap-1.5 text-[11px] text-cyan-300/70 hover:text-cyan-200 cursor-pointer">
+            <label className="flex items-center gap-1.5 text-[11px] text-white/70 hover:text-white cursor-pointer">
               <input
                 type="checkbox"
                 checked={dontShowAgain}
                 onChange={(e) => setDontShowAgain(e.target.checked)}
-                className="rounded accent-cyan-400 cursor-pointer"
+                className="rounded accent-slate-400 cursor-pointer"
               />
               <span>Don't show again</span>
             </label>
@@ -288,7 +288,7 @@ function DesktopTutorialModal({
               className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
                 isFirst
                   ? "opacity-30 cursor-not-allowed text-white/40"
-                  : "text-cyan-200/80 hover:text-cyan-100 hover:bg-cyan-500/15 cursor-pointer"
+                  : "text-white/70 hover:text-white hover:bg-white/10 cursor-pointer"
               }`}
             >
               <IoArrowBack size={14} />
@@ -299,7 +299,7 @@ function DesktopTutorialModal({
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-cyan-400 to-sky-500 text-slate-950 shadow-[0_0_16px_rgba(6,182,212,0.6)] hover:brightness-110 active:scale-95 transition cursor-pointer"
+              className="flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-bold bg-white text-slate-950 shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:bg-white/90 active:scale-95 transition cursor-pointer"
             >
               {isLast ? (
                 <>
