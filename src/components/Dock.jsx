@@ -61,11 +61,10 @@ function Dock({
                   title={`${ws.name}: ${ws.label} (${count} active apps)\nTip: 2-finger touchpad swipe to switch spaces`}
                   className={`relative flex items-center justify-center rounded-lg sm:rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? "h-8 sm:h-9 px-2 sm:px-3 bg-white/25 text-white shadow-[0_4px_14px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.35)] border border-white/35 scale-105 backdrop-blur-md font-bold"
-                      : "h-8 sm:h-9 px-2 sm:px-2.5 text-white/60 hover:text-white hover:bg-white/[0.12]"
+                      ? "h-8 sm:h-9 w-8 sm:w-9 bg-white/25 text-white shadow-[0_4px_14px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.35)] border border-white/35 scale-105 backdrop-blur-md font-bold"
+                      : "h-8 sm:h-9 w-7 sm:w-8 text-white/60 hover:text-white hover:bg-white/[0.12]"
                   }`}
                 >
-                  <span className="hidden md:inline mr-1 text-[11px]">Desktop</span>
                   <span>{i + 1}</span>
                   {count > 0 && (
                     <span
