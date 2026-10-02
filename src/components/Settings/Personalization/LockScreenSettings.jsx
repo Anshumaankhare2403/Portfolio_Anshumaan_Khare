@@ -104,7 +104,7 @@ export default function LockScreenSettings({ onBack, onLockDesktop }) {
   };
 
   return (
-    <div className="flex flex-col gap-5 p-6 max-w-4xl select-none">
+    <div className="flex flex-col gap-4 sm:gap-5 p-3.5 sm:p-5 md:p-6 max-w-4xl select-none">
       {/* Breadcrumb Header */}
       <div className="flex items-center gap-2 text-xs text-white/50">
         <button

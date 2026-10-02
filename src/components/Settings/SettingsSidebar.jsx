@@ -52,6 +52,7 @@ export default function SettingsSidebar({
   activeSection,
   onSelectSection,
   onNavigateSubPage,
+  onClose,
 }) {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -62,32 +63,46 @@ export default function SettingsSidebar({
     : [];
 
   return (
-    <aside className="w-64 sm:w-72 shrink-0 border-r border-white/10 bg-[#191919]/60 flex flex-col justify-between p-3 select-none backdrop-blur-xl">
+    <aside className="w-72 max-w-[85vw] md:w-64 lg:w-72 h-full shrink-0 border-r border-white/10 bg-[#191919] md:bg-[#191919]/60 flex flex-col justify-between p-3 select-none backdrop-blur-xl">
       <div className="flex flex-col gap-2">
         {/* User / Profile Header Area */}
-        <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
-          <div className="relative h-10 w-10 shrink-0 rounded-full overflow-hidden border border-white/20 bg-slate-800">
-            <img
-              src={heroImage}
-              alt="Anshumaan Khare"
-              className="h-full w-full object-cover"
-              onError={(e) => {
-                e.target.style.display = "none";
-              }}
-            />
-            <span className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white/90">
-              AK
-            </span>
+        <div className="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-white/[0.04] border border-white/10">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="relative h-9 w-9 shrink-0 rounded-full overflow-hidden border border-white/20 bg-slate-800">
+              <img
+                src={heroImage}
+                alt="Anshumaan Khare"
+                className="h-full w-full object-cover"
+                onError={(e) => {
+                  e.target.style.display = "none";
+                }}
+              />
+              <span className="absolute inset-0 flex items-center justify-center font-bold text-xs text-white/90">
+                AK
+              </span>
+            </div>
+
+            <div className="min-w-0 flex-1 leading-tight">
+              <span className="block text-xs font-bold text-white truncate">
+                Anshumaan Khare
+              </span>
+              <span className="block text-[10px] text-white/50 truncate">
+                Local Account • Admin
+              </span>
+            </div>
           </div>
 
-          <div className="min-w-0 flex-1 leading-tight">
-            <span className="block text-xs font-bold text-white truncate">
-              Anshumaan Khare
-            </span>
-            <span className="block text-[11px] text-white/50 truncate">
-              Local Account • Admin
-            </span>
-          </div>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="p-1 rounded-lg hover:bg-white/10 text-white/60 hover:text-white md:hidden transition cursor-pointer shrink-0"
+              title="Close navigation"
+              aria-label="Close navigation"
+            >
+              <IoClose size={18} />
+            </button>
+          )}
         </div>
 
         {/* Windows 11 "Find a setting" Search Box */}
@@ -123,6 +138,7 @@ export default function SettingsSidebar({
                     onSelectSection(item.section);
                     if (item.subPage) onNavigateSubPage(item.subPage);
                     setSearchQuery("");
+                    if (onClose) onClose();
                   }}
                   className="w-full flex items-center justify-between p-2 rounded-lg text-left text-xs hover:bg-white/10 text-white/90 transition cursor-pointer"
                 >
@@ -137,7 +153,7 @@ export default function SettingsSidebar({
         </div>
 
         {/* Sidebar Categories Navigation List */}
-        <nav className="flex flex-col gap-0.5 overflow-y-auto max-h-[calc(100vh-270px)] pr-1 scrollbar-none">
+        <nav className="flex flex-col gap-0.5 overflow-y-auto max-h-[calc(100vh-230px)] md:max-h-[calc(100vh-270px)] pr-1 scrollbar-none">
           {SETTINGS_SECTIONS.map((item) => {
             const isActive = activeSection === item.id;
             const Icon = item.icon;
@@ -149,6 +165,7 @@ export default function SettingsSidebar({
                 onClick={() => {
                   onSelectSection(item.id);
                   onNavigateSubPage("home");
+                  if (onClose) onClose();
                 }}
                 className={`relative flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${
                   isActive

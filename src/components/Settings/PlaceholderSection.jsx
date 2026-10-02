@@ -121,7 +121,7 @@ export default function PlaceholderSection({ sectionId }) {
   const Icon = config.icon;
 
   return (
-    <div className="flex flex-col gap-5 p-6 max-w-4xl select-none">
+    <div className="flex flex-col gap-4 sm:gap-5 p-3.5 sm:p-5 md:p-6 max-w-4xl select-none">
       {/* Title */}
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-[var(--accent-color,#0078d4)]">

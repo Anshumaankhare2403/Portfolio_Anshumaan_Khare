@@ -29,8 +29,10 @@ export default function TaskManagerSidebar({
 }) {
   return (
     <aside
-      className={`border-r border-white/10 bg-[#181818]/90 flex flex-col justify-between py-2 transition-all duration-200 select-none backdrop-blur-xl shrink-0 ${
-        collapsed ? "w-14 items-center px-1.5" : "w-56 px-2.5"
+      className={`border-r border-white/10 bg-[#181818] md:bg-[#181818]/90 flex flex-col justify-between py-2 transition-all duration-200 select-none backdrop-blur-xl shrink-0 ${
+        collapsed
+          ? "w-12 sm:w-14 items-center px-1"
+          : "absolute md:relative inset-y-0 left-0 z-40 md:z-auto w-56 px-2.5 shadow-2xl md:shadow-none h-full"
       }`}
     >
       <div className="flex flex-col gap-1 w-full">
@@ -39,7 +41,9 @@ export default function TaskManagerSidebar({
           type="button"
           onClick={onToggleCollapse}
           title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer mb-2 self-start"
+          className={`flex h-9 w-9 items-center justify-center rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer mb-2 ${
+            collapsed ? "mx-auto" : "self-start"
+          }`}
         >
           <IoMenuOutline size={20} />
         </button>

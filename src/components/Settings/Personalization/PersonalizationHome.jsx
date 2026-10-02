@@ -69,7 +69,7 @@ export default function PersonalizationHome({ onNavigate, onOpenResetModal }) {
   ];
 
   return (
-    <div className="flex flex-col gap-5 p-6 max-w-4xl select-none">
+    <div className="flex flex-col gap-4 sm:gap-5 p-3.5 sm:p-5 md:p-6 max-w-4xl select-none">
       {/* Title */}
       <div>
         <h2 className="text-2xl font-bold text-white tracking-tight">Personalization</h2>

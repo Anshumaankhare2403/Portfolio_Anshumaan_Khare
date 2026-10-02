@@ -33,7 +33,9 @@ export default function TaskManager({
 }) {
   const [maximized, setMaximized] = useState(false);
   const [activeSection, setActiveSection] = useState("processes");
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 || mobile : false
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   // Process Selection & End Task Dialog
@@ -105,7 +107,7 @@ export default function TaskManager({
             ? "inset-0 h-[100svh] w-full rounded-none"
             : maximized
             ? "inset-0 h-full w-full rounded-none z-50"
-            : "top-12 left-1/2 -translate-x-1/2 w-[92vw] max-w-5xl h-[82vh] rounded-2xl"
+            : "top-2 sm:top-6 md:top-12 left-1/2 -translate-x-1/2 w-[98vw] sm:w-[94vw] md:w-[92vw] max-w-5xl h-[94vh] sm:h-[86vh] md:h-[82vh] rounded-xl sm:rounded-2xl"
         }`}
       >
         {/* Windows 11 Title Bar */}
@@ -120,28 +122,32 @@ export default function TaskManager({
 
           {/* Window Control Buttons */}
           <div className="flex items-center">
-            <button
-              type="button"
-              onClick={onMinimize || onClose}
-              className="flex h-8 w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
-              title="Minimize"
-              aria-label="Minimize"
-            >
-              <IoRemove size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={() => setMaximized((prev) => !prev)}
-              className="flex h-8 w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
-              title={maximized ? "Restore" : "Maximize"}
-              aria-label={maximized ? "Restore" : "Maximize"}
-            >
-              <IoSquareOutline size={12} />
-            </button>
+            {!mobile && (
+              <>
+                <button
+                  type="button"
+                  onClick={onMinimize || onClose}
+                  className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
+                  title="Minimize"
+                  aria-label="Minimize"
+                >
+                  <IoRemove size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMaximized((prev) => !prev)}
+                  className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
+                  title={maximized ? "Restore" : "Maximize"}
+                  aria-label={maximized ? "Restore" : "Maximize"}
+                >
+                  <IoSquareOutline size={12} />
+                </button>
+              </>
+            )}
             <button
               type="button"
               onClick={onClose}
-              className="flex h-8 w-11 items-center justify-center hover:bg-red-600 text-white/80 hover:text-white transition cursor-pointer"
+              className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-red-600 text-white/80 hover:text-white transition cursor-pointer"
               title="Close"
               aria-label="Close"
             >
@@ -151,17 +157,19 @@ export default function TaskManager({
         </div>
 
         {/* Windows 11 Command Bar / Action Toolbar */}
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[#242424] px-3 py-1.5 shrink-0 select-none">
+        <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 border-b border-white/10 bg-[#242424] px-2.5 sm:px-3 py-1.5 shrink-0 select-none">
           {/* Left Action Buttons */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Run new task */}
             <button
               type="button"
               onClick={() => setIsRunModalOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition cursor-pointer active:scale-95"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition cursor-pointer active:scale-95"
+              title="Run new task"
             >
-              <IoPlayOutline size={14} className="text-emerald-400" />
-              <span>Run new task</span>
+              <IoPlayOutline size={14} className="text-emerald-400 shrink-0" />
+              <span className="hidden xs:inline sm:inline">Run new task</span>
+              <span className="xs:hidden sm:hidden">Run</span>
             </button>
 
             {/* End task (Enabled when terminable process is selected) */}
@@ -171,21 +179,23 @@ export default function TaskManager({
               onClick={() => {
                 if (selectedMeta) handleRequestEndTask(selectedMeta);
               }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
                 selectedProcessId && isSelectedOpen && !isSelectedProtected
                   ? "bg-red-600/30 hover:bg-red-600/40 text-red-200 border-red-500/40 shadow-sm cursor-pointer active:scale-95"
                   : "bg-white/5 text-white/30 border-white/5 cursor-not-allowed"
               }`}
+              title="End task"
             >
-              <IoStopCircleOutline size={15} />
-              <span>End task</span>
+              <IoStopCircleOutline size={15} className="shrink-0" />
+              <span className="hidden xs:inline sm:inline">End task</span>
+              <span className="xs:hidden sm:hidden">End</span>
             </button>
           </div>
 
           {/* Right Search Input Filter */}
-          <div className="relative flex items-center w-40 sm:w-64">
-            <div className="flex items-center w-full rounded-lg bg-black/40 border border-white/15 px-2.5 py-1 focus-within:border-[var(--accent-color,#0078d4)] focus-within:ring-1 focus-within:ring-[var(--accent-color,#0078d4)] transition">
-              <IoSearchOutline className="text-white/40 text-xs mr-2 shrink-0" />
+          <div className="relative flex items-center flex-1 sm:flex-none w-auto sm:w-56 md:w-64 max-w-[240px]">
+            <div className="flex items-center w-full rounded-lg bg-black/40 border border-white/15 px-2 sm:px-2.5 py-1 focus-within:border-[var(--accent-color,#0078d4)] focus-within:ring-1 focus-within:ring-[var(--accent-color,#0078d4)] transition">
+              <IoSearchOutline className="text-white/40 text-xs mr-1.5 sm:mr-2 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
@@ -207,11 +217,25 @@ export default function TaskManager({
         </div>
 
         {/* Task Manager Body: Sidebar + Main Content */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="relative flex-1 flex overflow-hidden">
+          {/* Mobile backdrop when sidebar is expanded on small screens */}
+          {!sidebarCollapsed && (
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+              onClick={() => setSidebarCollapsed(true)}
+              aria-label="Close sidebar"
+            />
+          )}
+
           {/* Left Navigation Sidebar */}
           <TaskManagerSidebar
             activeSection={activeSection}
-            onSelectSection={(sec) => setActiveSection(sec)}
+            onSelectSection={(sec) => {
+              setActiveSection(sec);
+              if (typeof window !== "undefined" && (window.innerWidth < 768 || mobile)) {
+                setSidebarCollapsed(true);
+              }
+            }}
             collapsed={sidebarCollapsed}
             onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
             onOpenSettings={onOpenSettings}
@@ -250,15 +274,15 @@ export default function TaskManager({
         </div>
 
         {/* Bottom Windows Status Bar */}
-        <div className="flex items-center justify-between border-t border-white/10 bg-[#191919] px-4 py-1 text-[11px] text-white/50 shrink-0 select-none">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between border-t border-white/10 bg-[#191919] px-3 sm:px-4 py-1 text-[10px] sm:text-[11px] text-white/50 shrink-0 select-none">
+          <div className="flex items-center gap-2 sm:gap-4 truncate">
             <span>Processes: 138</span>
             <span>CPU: {currentMetrics.cpu}%</span>
-            <span>Memory: {Math.round((currentMetrics.memory / 16) * 100)}%</span>
+            <span>Mem: {Math.round((currentMetrics.memory / 16) * 100)}%</span>
             <span className="hidden sm:inline">Disk: {currentMetrics.disk}%</span>
-            <span className="hidden md:inline">Network: {currentMetrics.network} Mbps</span>
+            <span className="hidden md:inline">Net: {currentMetrics.network} Mbps</span>
           </div>
-          <div className="flex items-center gap-1.5 text-white/40">
+          <div className="hidden sm:flex items-center gap-1.5 text-white/40 shrink-0">
             <span>Windows 11 Diagnostics</span>
           </div>
         </div>

@@ -167,93 +167,94 @@ export default function Processes({
   const totalMemoryGB = currentMetrics.memory;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden select-none text-white">
-      {/* Table Header */}
-      <div className="flex items-center text-xs font-semibold text-white/70 border-b border-white/10 bg-[#1f1f1f] px-4 py-2 shrink-0">
-        {/* Name Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("name")}
-          className="flex-1 min-w-[200px] flex items-center gap-1.5 text-left hover:text-white transition cursor-pointer"
-        >
-          <span>Name</span>
-          {sortField === "name" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
+    <div className="flex flex-col h-full overflow-x-auto overflow-y-hidden select-none text-white">
+      <div className="min-w-[340px] sm:min-w-full flex-1 flex flex-col overflow-hidden">
+        {/* Table Header */}
+        <div className="flex items-center text-xs font-semibold text-white/70 border-b border-white/10 bg-[#1f1f1f] px-3 sm:px-4 py-2 shrink-0">
+          {/* Name Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("name")}
+            className="flex-1 min-w-[120px] sm:min-w-[200px] flex items-center gap-1.5 text-left hover:text-white transition cursor-pointer"
+          >
+            <span>Name</span>
+            {sortField === "name" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
 
-        {/* Status Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("status")}
-          className="w-24 text-left hover:text-white transition cursor-pointer hidden sm:flex items-center gap-1"
-        >
-          <span>Status</span>
-          {sortField === "status" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
+          {/* Status Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("status")}
+            className="w-20 sm:w-24 text-left hover:text-white transition cursor-pointer hidden sm:flex items-center gap-1"
+          >
+            <span>Status</span>
+            {sortField === "status" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
 
-        {/* CPU Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("cpu")}
-          className="w-24 text-right hover:text-white transition cursor-pointer flex items-center justify-end gap-1 px-2"
-        >
-          <div className="flex flex-col items-end">
-            <span>CPU</span>
-            <span className="text-[10px] text-white/40">{totalCpuPercent}%</span>
-          </div>
-          {sortField === "cpu" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
+          {/* CPU Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("cpu")}
+            className="w-20 sm:w-24 text-right hover:text-white transition cursor-pointer flex items-center justify-end gap-1 px-1.5 sm:px-2"
+          >
+            <div className="flex flex-col items-end">
+              <span>CPU</span>
+              <span className="text-[10px] text-white/40">{totalCpuPercent}%</span>
+            </div>
+            {sortField === "cpu" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
 
-        {/* Memory Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("memory")}
-          className="w-28 text-right hover:text-white transition cursor-pointer flex items-center justify-end gap-1 px-2"
-        >
-          <div className="flex flex-col items-end">
-            <span>Memory</span>
-            <span className="text-[10px] text-white/40">{totalMemoryGB} GB</span>
-          </div>
-          {sortField === "memory" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
+          {/* Memory Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("memory")}
+            className="w-20 sm:w-28 text-right hover:text-white transition cursor-pointer flex items-center justify-end gap-1 px-1.5 sm:px-2"
+          >
+            <div className="flex flex-col items-end">
+              <span>Memory</span>
+              <span className="text-[10px] text-white/40">{totalMemoryGB} GB</span>
+            </div>
+            {sortField === "memory" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
 
-        {/* Disk Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("disk")}
-          className="w-24 text-right hover:text-white transition cursor-pointer hidden md:flex items-center justify-end gap-1 px-2"
-        >
-          <div className="flex flex-col items-end">
-            <span>Disk</span>
-            <span className="text-[10px] text-white/40">{currentMetrics.disk}%</span>
-          </div>
-          {sortField === "disk" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
+          {/* Disk Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("disk")}
+            className="w-20 sm:w-24 text-right hover:text-white transition cursor-pointer hidden md:flex items-center justify-end gap-1 px-1.5 sm:px-2"
+          >
+            <div className="flex flex-col items-end">
+              <span>Disk</span>
+              <span className="text-[10px] text-white/40">{currentMetrics.disk}%</span>
+            </div>
+            {sortField === "disk" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
 
-        {/* Network Column */}
-        <button
-          type="button"
-          onClick={() => handleSort("network")}
-          className="w-24 text-right hover:text-white transition cursor-pointer hidden lg:flex items-center justify-end gap-1 px-2"
-        >
-          <div className="flex flex-col items-end">
-            <span>Network</span>
-            <span className="text-[10px] text-white/40">{currentMetrics.network} Mbps</span>
-          </div>
-          {sortField === "network" && (
-            <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
-          )}
-        </button>
-      </div>
+          {/* Network Column */}
+          <button
+            type="button"
+            onClick={() => handleSort("network")}
+            className="w-20 sm:w-24 text-right hover:text-white transition cursor-pointer hidden lg:flex items-center justify-end gap-1 px-1.5 sm:px-2"
+          >
+            <div className="flex flex-col items-end">
+              <span>Network</span>
+              <span className="text-[10px] text-white/40">{currentMetrics.network} Mbps</span>
+            </div>
+            {sortField === "network" && (
+              <span>{sortAsc ? <IoChevronUp size={12} /> : <IoChevronDown size={12} />}</span>
+            )}
+          </button>
+        </div>
 
       {/* Process Rows List */}
       <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent divide-y divide-white/[0.04]">
@@ -292,7 +293,7 @@ export default function Processes({
                       }`}
                     >
                       {/* Name & Icon */}
-                      <div className="flex-1 min-w-[200px] flex items-center gap-2.5 pr-2">
+                      <div className="flex-1 min-w-[120px] sm:min-w-[200px] flex items-center gap-2 sm:gap-2.5 pr-1.5 sm:pr-2">
                         <img
                           src={proc.icon}
                           alt=""
@@ -309,14 +310,14 @@ export default function Processes({
                       </div>
 
                       {/* Status */}
-                      <div className="w-24 hidden sm:flex items-center gap-1.5 text-white/70">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <div className="w-20 sm:w-24 hidden sm:flex items-center gap-1.5 text-white/70">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                         <span>{proc.status}</span>
                       </div>
 
                       {/* CPU */}
                       <div
-                        className={`w-24 text-right px-2 py-1 rounded transition-colors ${getCpuHeatStyle(
+                        className={`w-20 sm:w-24 text-right px-1.5 sm:px-2 py-1 rounded transition-colors ${getCpuHeatStyle(
                           proc.cpu
                         )}`}
                       >
@@ -325,7 +326,7 @@ export default function Processes({
 
                       {/* Memory */}
                       <div
-                        className={`w-28 text-right px-2 py-1 rounded transition-colors ${getMemHeatStyle(
+                        className={`w-20 sm:w-28 text-right px-1.5 sm:px-2 py-1 rounded transition-colors ${getMemHeatStyle(
                           proc.memory
                         )}`}
                       >
@@ -333,12 +334,12 @@ export default function Processes({
                       </div>
 
                       {/* Disk */}
-                      <div className="w-24 text-right px-2 text-white/60 hidden md:block">
+                      <div className="w-20 sm:w-24 text-right px-1.5 sm:px-2 py-1 text-white/60 hidden md:block">
                         {proc.disk > 0 ? `${proc.disk} MB/s` : "0 MB/s"}
                       </div>
 
                       {/* Network */}
-                      <div className="w-24 text-right px-2 text-white/60 hidden lg:block">
+                      <div className="w-20 sm:w-24 text-right px-1.5 sm:px-2 py-1 text-white/60 hidden lg:block">
                         {proc.network > 0 ? `${proc.network} Mbps` : "0 Mbps"}
                       </div>
                     </div>
@@ -368,14 +369,14 @@ export default function Processes({
                   <div
                     key={proc.id}
                     onClick={() => onSelectProcess(proc.id)}
-                    className={`flex items-center text-xs px-4 py-2 transition-all cursor-pointer ${
+                    className={`flex items-center text-xs px-3 sm:px-4 py-2 transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[var(--accent-color,#0078d4)]/25 border-l-4 border-[var(--accent-color,#0078d4)] text-white"
                         : "hover:bg-white/[0.05] text-white/70"
                     }`}
                   >
                     {/* Name & Icon */}
-                    <div className="flex-1 min-w-[200px] flex items-center gap-2.5 pr-2">
+                    <div className="flex-1 min-w-[120px] sm:min-w-[200px] flex items-center gap-2 sm:gap-2.5 pr-1.5 sm:pr-2">
                       <img
                         src={proc.icon}
                         alt=""
@@ -392,10 +393,10 @@ export default function Processes({
                     </div>
 
                     {/* Status */}
-                    <div className="w-24 hidden sm:flex items-center gap-1.5 text-white/50 text-[11px]">
+                    <div className="w-20 sm:w-24 hidden sm:flex items-center gap-1.5 text-white/50 text-[11px]">
                       {proc.isProtected ? (
                         <span title="Protected Windows process" className="flex items-center gap-1 text-sky-400">
-                          <IoShieldCheckmarkOutline size={12} />
+                          <IoShieldCheckmarkOutline size={12} className="shrink-0" />
                           <span>System</span>
                         </span>
                       ) : (
@@ -405,7 +406,7 @@ export default function Processes({
 
                     {/* CPU */}
                     <div
-                      className={`w-24 text-right px-2 py-0.5 rounded transition-colors ${getCpuHeatStyle(
+                      className={`w-20 sm:w-24 text-right px-1.5 sm:px-2 py-0.5 rounded transition-colors ${getCpuHeatStyle(
                         proc.cpu
                       )}`}
                     >
@@ -414,7 +415,7 @@ export default function Processes({
 
                     {/* Memory */}
                     <div
-                      className={`w-28 text-right px-2 py-0.5 rounded transition-colors ${getMemHeatStyle(
+                      className={`w-20 sm:w-28 text-right px-1.5 sm:px-2 py-0.5 rounded transition-colors ${getMemHeatStyle(
                         proc.memory
                       )}`}
                     >
@@ -422,12 +423,12 @@ export default function Processes({
                     </div>
 
                     {/* Disk */}
-                    <div className="w-24 text-right px-2 text-white/50 hidden md:block">
+                    <div className="w-20 sm:w-24 text-right px-1.5 sm:px-2 text-white/50 hidden md:block">
                       {proc.disk > 0 ? `${proc.disk} MB/s` : "0 MB/s"}
                     </div>
 
                     {/* Network */}
-                    <div className="w-24 text-right px-2 text-white/50 hidden lg:block">
+                    <div className="w-20 sm:w-24 text-right px-1.5 sm:px-2 text-white/50 hidden lg:block">
                       {proc.network > 0 ? `${proc.network} Mbps` : "0 Mbps"}
                     </div>
                   </div>
@@ -438,5 +439,6 @@ export default function Processes({
         </div>
       </div>
     </div>
+  </div>
   );
 }

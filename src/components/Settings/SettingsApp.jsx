@@ -7,6 +7,7 @@ import {
   IoChevronBack,
   IoSettingsSharp,
   IoCheckmarkCircle,
+  IoMenuOutline,
 } from "react-icons/io5";
 
 import SettingsSidebar from "./SettingsSidebar";
@@ -29,6 +30,7 @@ export default function SettingsApp({
   const [activeSection, setActiveSection] = useState("personalization");
   const [subPage, setSubPage] = useState("home"); // "home" | "background" | "lockscreen" | "colors" | "themes"
   const [isResetOpen, setIsResetOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const { toast, resetSettings } = useSettings();
 
@@ -50,13 +52,24 @@ export default function SettingsApp({
             ? "inset-0 h-[100svh] w-full rounded-none"
             : maximized
             ? "inset-0 h-full w-full rounded-none z-50"
-            : "top-10 left-1/2 -translate-x-1/2 w-[90vw] max-w-5xl h-[84vh] rounded-2xl"
+            : "top-2 sm:top-8 md:top-10 left-1/2 -translate-x-1/2 w-[96vw] sm:w-[92vw] max-w-5xl h-[92vh] sm:h-[86vh] rounded-xl sm:rounded-2xl"
         }`}
       >
         {/* Windows 11 Title Bar */}
         <div className="flex h-10 shrink-0 items-center justify-between border-b border-white/10 bg-[#1c1c1c] px-3 select-none">
           {/* Left Title and Navigation */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Hamburger button on mobile / narrow screens */}
+            <button
+              type="button"
+              onClick={() => setSidebarOpen((prev) => !prev)}
+              className="flex items-center justify-center p-1 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition cursor-pointer md:hidden"
+              title="Toggle navigation categories"
+              aria-label="Toggle navigation categories"
+            >
+              <IoMenuOutline size={18} />
+            </button>
+
             {subPage !== "home" && (
               <button
                 type="button"
@@ -69,7 +82,7 @@ export default function SettingsApp({
             )}
 
             <div className="flex items-center gap-2">
-              <IoSettingsSharp className="text-cyan-400 text-sm" />
+              <IoSettingsSharp className="text-cyan-400 text-sm shrink-0" />
               <span className="text-xs font-semibold tracking-wide text-white/90">
                 Settings
               </span>
@@ -78,28 +91,32 @@ export default function SettingsApp({
 
           {/* Window Control Buttons */}
           <div className="flex items-center">
-            <button
-              type="button"
-              onClick={onMinimize || onClose}
-              className="flex h-8 w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
-              title="Minimize"
-              aria-label="Minimize"
-            >
-              <IoRemove size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={() => setMaximized((prev) => !prev)}
-              className="flex h-8 w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
-              title={maximized ? "Restore" : "Maximize"}
-              aria-label={maximized ? "Restore" : "Maximize"}
-            >
-              <IoSquareOutline size={12} />
-            </button>
+            {!mobile && (
+              <>
+                <button
+                  type="button"
+                  onClick={onMinimize || onClose}
+                  className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
+                  title="Minimize"
+                  aria-label="Minimize"
+                >
+                  <IoRemove size={16} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMaximized((prev) => !prev)}
+                  className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-white/10 text-white/80 transition cursor-pointer"
+                  title={maximized ? "Restore" : "Maximize"}
+                  aria-label={maximized ? "Restore" : "Maximize"}
+                >
+                  <IoSquareOutline size={12} />
+                </button>
+              </>
+            )}
             <button
               type="button"
               onClick={onClose}
-              className="flex h-8 w-11 items-center justify-center hover:bg-red-600 text-white/80 hover:text-white transition cursor-pointer"
+              className="flex h-8 w-10 sm:w-11 items-center justify-center hover:bg-red-600 text-white/80 hover:text-white transition cursor-pointer"
               title="Close"
               aria-label="Close"
             >
@@ -109,16 +126,39 @@ export default function SettingsApp({
         </div>
 
         {/* Windows 11 Settings Body: Sidebar + Main Content */}
-        <div className="flex-1 flex overflow-hidden">
-          {/* Left Sidebar */}
-          <SettingsSidebar
-            activeSection={activeSection}
-            onSelectSection={(sec) => {
-              setActiveSection(sec);
-              setSubPage("home");
-            }}
-            onNavigateSubPage={(page) => setSubPage(page)}
-          />
+        <div className="relative flex-1 flex overflow-hidden">
+          {/* Mobile backdrop overlay when sidebar is open */}
+          {sidebarOpen && (
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden transition-opacity"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close navigation overlay"
+            />
+          )}
+
+          {/* Left Sidebar Drawer / Pinned Panel */}
+          <div
+            className={`absolute md:relative inset-y-0 left-0 z-40 md:z-auto transition-transform duration-200 ease-out h-full ${
+              sidebarOpen
+                ? "translate-x-0 shadow-2xl"
+                : "-translate-x-full md:translate-x-0"
+            }`}
+          >
+            <SettingsSidebar
+              activeSection={activeSection}
+              onSelectSection={(sec) => {
+                setActiveSection(sec);
+                setSubPage("home");
+                setSidebarOpen(false);
+              }}
+              onNavigateSubPage={(page) => {
+                setSubPage(page);
+                setSidebarOpen(false);
+              }}
+              isOpen={sidebarOpen}
+              onClose={() => setSidebarOpen(false)}
+            />
+          </div>
 
           {/* Main Settings Content Area */}
           <main className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
