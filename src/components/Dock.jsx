@@ -46,7 +46,7 @@ function Dock({
         {/* Desktop Spaces Switcher in Dock (Glassy Pill) */}
         {workspaces.length > 0 && (
           <div
-            className="flex items-center gap-1 bg-white/[0.06] p-1 rounded-xl sm:rounded-2xl border border-white/10 shrink-0 shadow-inner"
+            className="flex items-center gap-1 bg-white/[0.08] p-1 rounded-xl sm:rounded-2xl border border-white/15 shrink-0 shadow-inner backdrop-blur-md"
             title="Desktop Spaces (Use 2-finger touchpad swipe to switch)"
           >
             {workspaces.map((ws, i) => {
@@ -61,11 +61,12 @@ function Dock({
                   title={`${ws.name}: ${ws.label} (${count} active apps)\nTip: 2-finger touchpad swipe to switch spaces`}
                   className={`relative flex items-center justify-center rounded-lg sm:rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? "h-8 sm:h-9 px-2.5 sm:px-3 bg-white/20 text-white shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.25)] border border-white/25 scale-105 backdrop-blur-sm"
-                      : "h-8 sm:h-9 w-7 sm:w-8 text-white/50 hover:text-white hover:bg-white/10"
+                      ? "h-8 sm:h-9 px-2 sm:px-3 bg-white/25 text-white shadow-[0_4px_14px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.35)] border border-white/35 scale-105 backdrop-blur-md font-bold"
+                      : "h-8 sm:h-9 px-2 sm:px-2.5 text-white/60 hover:text-white hover:bg-white/[0.12]"
                   }`}
                 >
-                  <span>{ws.shortName}</span>
+                  <span className="hidden md:inline mr-1 text-[11px]">Desktop</span>
+                  <span>{i + 1}</span>
                   {count > 0 && (
                     <span
                       className={`absolute bottom-1 w-1 h-1 rounded-full ${

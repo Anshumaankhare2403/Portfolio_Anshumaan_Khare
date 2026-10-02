@@ -135,7 +135,7 @@ function HomePage({ onLogout, onSetWallpaper }) {
   const triggerOsd = () => {
     setShowOsd(true);
     if (osdTimerRef.current) clearTimeout(osdTimerRef.current);
-    osdTimerRef.current = setTimeout(() => setShowOsd(false), 1200);
+    osdTimerRef.current = setTimeout(() => setShowOsd(false), 1800);
   };
 
   const goToWorkspace = (newIndex) => {
@@ -641,6 +641,13 @@ function HomePage({ onLogout, onSetWallpaper }) {
         show={showOsd}
         activeWorkspace={activeWorkspace}
         workspaces={WORKSPACES}
+        onSelectWorkspace={goToWorkspace}
+        onMouseEnter={() => {
+          if (osdTimerRef.current) clearTimeout(osdTimerRef.current);
+        }}
+        onMouseLeave={() => {
+          osdTimerRef.current = setTimeout(() => setShowOsd(false), 1200);
+        }}
       />
 
       {/* Main Multi-Desktop Container - Clean Full Screen */}

@@ -295,13 +295,13 @@ function GestureGuideModal({
                 key={ws.id}
                 type="button"
                 onClick={() => onSelectWorkspace(i)}
-                className={`h-7 px-2.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                className={`h-7 px-3 rounded-lg text-xs font-bold transition cursor-pointer ${
                   i === activeWorkspace
                     ? "bg-white text-slate-950 font-black shadow-md"
-                    : "bg-white/[0.06] hover:bg-white/15 text-white/70 border border-white/10"
+                    : "bg-white/[0.08] hover:bg-white/20 text-white/80 border border-white/10"
                 }`}
               >
-                {ws.shortName}
+                Desktop {i + 1}
               </button>
             ))}
           </div>
