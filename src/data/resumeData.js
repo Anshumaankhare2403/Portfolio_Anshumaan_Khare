@@ -1,4 +1,4 @@
-import localResumePdf from "../assets/resume/AnshumaanKhare.pdf";
+import localResumePdf from "../assets/resume/Anshumaankhare.pdf";
 
 export const RESUME_DRIVE_URL =
   "https://drive.google.com/file/d/1_evxDy3gjxzrHeIFiDN_-jIaC-sPgFp-/view?usp=sharing";
