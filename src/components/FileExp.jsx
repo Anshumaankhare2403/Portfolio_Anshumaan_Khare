@@ -7,6 +7,7 @@ import {
   IoDocumentOutline,
   IoDocumentTextOutline,
   IoDownloadOutline,
+  IoOpenOutline,
   IoEllipsisVertical,
   IoFolderOpenOutline,
   IoGridOutline,
@@ -83,9 +84,9 @@ import terminalIcon from "../assets/scalable/terminal.svg";
 import windowsIcon from "../assets/This PC/Windows11.svg";
 import heroImage from "../assets/hero.png";
 import wallpaperImage from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
-import localResume from "../assets/resume/Anshumaankhare.pdf";
+import { RESUME_URL, localResume } from "../data/resumeData";
 
-const resumePdf = localResume;
+const resumePdf = RESUME_URL;
 
 const skillGroups = [
   {
@@ -464,12 +465,16 @@ function FileExp({
     }
 
     if (item.url) {
-      const link = document.createElement("a");
-      link.href = item.url;
-      link.download = item.name.endsWith(".pdf") ? item.name : "Anshumaan_Khare_Resume.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      if (item.url.startsWith("http")) {
+        window.open(item.url, "_blank", "noopener,noreferrer");
+      } else {
+        const link = document.createElement("a");
+        link.href = item.url;
+        link.download = item.name.endsWith(".pdf") ? item.name : "Anshumaan_Khare_Resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     }
   };
 
@@ -783,11 +788,13 @@ function FileExp({
                   {selectedPreview.url && (
                     <a
                       href={selectedPreview.url}
-                      download="Anshumaan_Khare_Resume.pdf"
+                      target={selectedPreview.url.startsWith("http") ? "_blank" : undefined}
+                      rel={selectedPreview.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                      download={selectedPreview.url.startsWith("http") ? undefined : "Anshumaan_Khare_Resume.pdf"}
                       className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg transition-colors hover:bg-emerald-500"
                     >
-                      <IoDownloadOutline size={16} />
-                      <span>Download PDF File</span>
+                      {selectedPreview.url.startsWith("http") ? <IoOpenOutline size={16} /> : <IoDownloadOutline size={16} />}
+                      <span>{selectedPreview.url.startsWith("http") ? "Open in Google Drive" : "Download PDF File"}</span>
                     </a>
                   )}
                   {selectedPreview.skills && (

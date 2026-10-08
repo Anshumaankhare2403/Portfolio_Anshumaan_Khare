@@ -7,6 +7,7 @@ import {
   IoCodeSlashOutline,
   IoDocumentTextOutline,
   IoDownloadOutline,
+  IoOpenOutline,
   IoLogoGithub,
   IoMailOutline,
   IoPersonOutline,
@@ -34,7 +35,7 @@ import terminalIcon from "../assets/scalable/terminal-fluent.svg";
 import Logo from "../assets/This PC/Windows11.svg";
 import wallpaper from "../assets/wallpaper/bioluminescence-3840x2160-25836.png";
 import heroImage from "../assets/hero.png";
-import resume from "../assets/resume/Anshumaankhare.pdf";
+import { RESUME_URL, RESUME_PREVIEW_URL, localResume as resume } from "../data/resumeData";
 import About from "../components/About";
 import ChromeWindow from "../components/Chrome";
 import FileExp from "../components/FileExp";
@@ -92,9 +93,9 @@ const panels = {
   },
   resume: {
     title: "Resume",
-    body: "Download or view my resume.",
-    action: "Download Resume (PDF)",
-    href: resume,
+    body: "View or download my resume on Google Drive.",
+    action: "Open in Google Drive",
+    href: RESUME_URL,
   },
   phone: {
     title: "Phone Dialer",
@@ -409,28 +410,38 @@ function HomepageForMobile({ wallpaper: activeWallpaper = wallpaper, onSetWallpa
             </button>
             <span className="text-sm font-bold">Resume</span>
             <a
-              href={resume}
-              download="Anshumaan_Khare_Resume.pdf"
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow hover:bg-emerald-500"
             >
-              <IoDownloadOutline size={16} />
-              <span>PDF</span>
+              <IoOpenOutline size={16} />
+              <span>Drive</span>
             </a>
           </div>
 
-          <div className="p-3 bg-black/20 text-center">
+          <div className="p-3 bg-black/20 text-center flex flex-wrap items-center justify-center gap-2">
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-colors hover:bg-emerald-500"
+            >
+              <IoOpenOutline size={18} />
+              <span>Open in Google Drive</span>
+            </a>
             <a
               href={resume}
               download="Anshumaan_Khare_Resume.pdf"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg transition-colors hover:bg-emerald-500"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/15 px-4 py-2.5 text-xs font-semibold text-white shadow transition hover:bg-white/20"
             >
-              <IoDownloadOutline size={18} />
-              <span>Click to Download Resume PDF</span>
+              <IoDownloadOutline size={16} />
+              <span>Download PDF</span>
             </a>
           </div>
 
           <div className="flex-1">
-            <iframe className="h-full w-full border-0 bg-white" src={resume} title="Anshumaan Khare resume" />
+            <iframe className="h-full w-full border-0 bg-white" src={RESUME_PREVIEW_URL} title="Anshumaan Khare resume" />
           </div>
         </div>
       );

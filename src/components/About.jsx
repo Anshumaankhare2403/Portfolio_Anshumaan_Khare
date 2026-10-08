@@ -40,7 +40,7 @@ import {
   SiFirebase,
 } from "react-icons/si";
 
-import localResume from "../assets/resume/AnshumaanKhare.pdf";
+import { RESUME_URL, RESUME_PREVIEW_URL, localResume } from "../data/resumeData";
 import heroImage from "../assets/hero.png";
 
 export default function About({ onClose, onMinimize, mobile = false }) {
@@ -116,13 +116,14 @@ export default function About({ onClose, onMinimize, mobile = false }) {
           </button>
           <span className="text-sm font-bold tracking-wide text-gray-200">About Anshumaan Khare</span>
           <a
-            href={localResume}
-            download="Anshumaan_Khare_Resume.pdf"
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white shadow hover:bg-emerald-500 active:scale-95 transition"
-            aria-label="Download Resume PDF"
+            aria-label="View Resume (Google Drive)"
           >
-            <IoDownloadOutline size={16} />
-            <span>PDF</span>
+            <IoOpenOutline size={16} />
+            <span>Resume</span>
           </a>
         </div>
       ) : (
@@ -130,12 +131,13 @@ export default function About({ onClose, onMinimize, mobile = false }) {
           <span className="text-sm font-semibold tracking-wide">About Anshumaan Khare — Developer Profile</span>
 
           <a
-            href={localResume}
-            download="Anshumaan_Khare_Resume.pdf"
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="ml-5 flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow transition-colors hover:bg-emerald-500"
           >
-            <IoDownloadOutline size={15} />
-            <span>Download Resume PDF</span>
+            <IoOpenOutline size={15} />
+            <span>View Resume (Google Drive)</span>
           </a>
 
           <div className="flex-1" />
@@ -484,19 +486,30 @@ export default function About({ onClose, onMinimize, mobile = false }) {
 
         {activeTab === "resume" && (
           <div className="h-full w-full flex flex-col items-center min-h-[500px]">
-            <div className="mb-4 flex items-center justify-between w-full">
-              <span className="text-sm font-bold text-white">Official Resume PDF</span>
-              <a
-                href={localResume}
-                download="Anshumaan_Khare_Resume.pdf"
-                className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow hover:bg-emerald-500"
-              >
-                <IoDownloadOutline size={16} />
-                <span>Download PDF File</span>
-              </a>
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 w-full">
+              <span className="text-sm font-bold text-white">Official Resume</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={RESUME_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow hover:bg-emerald-500 transition"
+                >
+                  <IoOpenOutline size={16} />
+                  <span>Open in Google Drive</span>
+                </a>
+                <a
+                  href={localResume}
+                  download="Anshumaan_Khare_Resume.pdf"
+                  className="flex items-center gap-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-2 text-xs font-semibold text-white shadow transition"
+                >
+                  <IoDownloadOutline size={16} />
+                  <span>Download Local PDF</span>
+                </a>
+              </div>
             </div>
             <iframe
-              src={localResume}
+              src={RESUME_PREVIEW_URL}
               title="Anshumaan Khare Resume PDF"
               className="w-full h-[650px] rounded-xl border border-white/10 bg-white"
             />
