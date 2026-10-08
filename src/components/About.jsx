@@ -40,7 +40,7 @@ import {
   SiFirebase,
 } from "react-icons/si";
 
-import localResume from "../assets/resume/Anshumaankhare.pdf";
+import localResume from "../assets/resume/AnshumaanKhare.pdf";
 import heroImage from "../assets/hero.png";
 
 export default function About({ onClose, onMinimize, mobile = false }) {
